@@ -1,18 +1,126 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indicateur TradingView</title>
-</head>
-<body>
-    <h1>Bienvenue sur mon site</h1>
-    <p>Accédez à mon indicateur exclusif pour TradingView.</p>
-    
-    <h2>Achetez maintenant</h2>
-    <p>Cliquez ci-dessous pour acheter l'accès à l'indicateur :</p>
+    <meta name="description" content="Accédez à l'Indicateur TradingView exclusif et boostez vos stratégies de trading avec précision.">
+    <title>Indicateur TradingView Premium</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
 
-    <!-- Bouton Gumroad -->
-    <a href="https://baptistepeyre.gumroad.com/l/AlgoPro" target="_blank">Acheter via Gumroad</a>
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        h2 {
+            color: #444;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .feature {
+            flex-basis: 30%;
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature h3 {
+            color: #333;
+            text-align: center;
+        }
+
+        .buy-now {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .paypal-btn {
+            display: inline-block;
+            padding: 15px;
+            background-color: #0070ba;
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 18px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .paypal-btn:hover {
+            background-color: #005b8a;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Indicateur TradingView Premium</h1>
+        <p>Améliorez vos stratégies de trading avec notre indicateur exclusif pour TradingView. Conçu par des experts du marché, cet outil vous permet d'anticiper les mouvements des marchés avec une précision inégalée. Augmentez vos profits et réduisez vos risques grâce à cet indicateur innovant.</p>
+
+        <h2>Fonctionnalités clés</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>Précision Avancée</h3>
+                <p>Notre indicateur utilise des algorithmes sophistiqués pour vous fournir des signaux d'achat et de vente précis, vous permettant de prendre des décisions éclairées.</p>
+            </div>
+            <div class="feature">
+                <h3>Analyse Multi-Timeframe</h3>
+                <p>Optimisez vos positions grâce à des analyses sur plusieurs horizons de temps, du scalping à l'investissement à long terme.</p>
+            </div>
+            <div class="feature">
+                <h3>Mises à Jour en Temps Réel</h3>
+                <p>Recevez des mises à jour instantanées dès qu'un signal est généré, pour ne jamais manquer une opportunité de trading.</p>
+            </div>
+        </div>
+
+        <h2>Achetez Maintenant</h2>
+        <p class="buy-now">Cliquez sur le bouton ci-dessous pour acheter votre accès exclusif à l'indicateur TradingView.</p>
+
+        <div class="buy-now">
+            <!-- Bouton PayPal -->
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                <input type="hidden" name="cmd" value="_s-xclick" />
+                <input type="hidden" name="hosted_button_id" value="H3F934U2D92RW" />
+                <input type="hidden" name="currency_code" value="USD" />
+                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" title="PayPal, votre réflexe sécurité pour payer en ligne." alt="Acheter" />
+            </form>
+        </div>
+
+        <p style="text-align: center; margin-top: 20px;">Sécurisé via PayPal</p>
+
+    </div>
 </body>
+
 </html>
