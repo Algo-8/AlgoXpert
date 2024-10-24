@@ -1,1 +1,87 @@
-S
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Choisissez votre option de paiement">
+    <title>AlgoPro - Paiement</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #1e3c72;
+        }
+
+        .payment-options {
+            margin-top: 40px;
+        }
+
+        .payment-options form,
+        .payment-options .gumroad-link {
+            margin: 20px 0;
+        }
+
+        .paypal-btn img {
+            width: 200px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .gumroad-link {
+            display: inline-block;
+            background-color: #ff7e47;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .gumroad-link:hover {
+            background-color: #ff5722;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Choisissez votre option d'achat :</h1>
+
+        <!-- PayPal Button -->
+        <div class="payment-options">
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                <input type="hidden" name="cmd" value="_s-xclick" />
+                <input type="hidden" name="hosted_button_id" value="BYMSM3DTZ8GAS" />
+                <input type="hidden" name="currency_code" value="USD" />
+                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" title="PayPal, votre réflexe sécurité pour payer en ligne." alt="Acheter" />
+            </form>
+
+            <!-- Gumroad Button -->
+            <a class="gumroad-link" href="https://algo8.gumroad.com/l/AlgoPro" target="_blank">Acheter via Gumroad</a>
+        </div>
+    </div>
+</body>
+
+</html>
