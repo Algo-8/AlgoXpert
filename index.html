@@ -5,216 +5,264 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Découvrez AlgoPro : L'indicateur révolutionnaire pour les traders">
-    <title>AlgoPro - Indicateur TradingView Premium</title>
+    <title>AlgoPro - L'Indicateur TradingView Premium</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        /* Global Styles */
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            background-color: #565656;
-            color: white;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: 900px;
+            width: 85%;
             margin: 0 auto;
-            padding: 20px;
-            text-align: center;
+            max-width: 1200px;
         }
 
-        h1 {
-            color: #f4f4f4;
+        header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+
+        header h1 {
+            font-size: 48px;
+            font-weight: 600;
+        }
+
+        header p {
+            font-size: 18px;
+            margin-top: 20px;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 20px auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #ffcc00;
+            color: #333;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-top: 20px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #ffcc33;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 80px 0;
+        }
+
+        section h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: #1e3c72;
         }
 
         .features {
-            margin: 20px 0;
-            text-align: left;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
         }
 
-        .features h3 {
-            margin-top: 20px;
-            color: #f4f4f4;
+        .feature-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
         }
 
-        p {
+        .feature-box:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-box h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #2a5298;
+        }
+
+        .feature-box p {
             font-size: 18px;
             line-height: 1.6;
         }
 
-        .buy-now {
-            margin-top: 40px;
-        }
-
-        .buy-now form,
-        .buy-now .gumroad-link {
-            margin: 20px 0;
-        }
-
+        /* Image Section */
         .image-section img {
             width: 100%;
-            max-width: 800px;
-            margin: 20px 0;
+            max-width: 1000px;
+            margin: 0 auto;
+            display: block;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
         }
 
-        .bullet-points {
+        .image-section img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background-color: #1e3c72;
+            color: white;
+            padding: 50px 0;
+            clip-path: polygon(0 0, 100% 15%, 100% 100%, 0 100%);
+        }
+
+        .pricing h2 {
+            color: white;
+        }
+
+        .pricing-options {
             display: flex;
             justify-content: space-around;
-            margin-top: 40px;
+            margin-top: 50px;
         }
 
-        .bullet {
-            background-color: #f4f4f4;
-            color: #565656;
-            padding: 15px;
-            border-radius: 8px;
+        .pricing-box {
+            background-color: #2a5298;
+            padding: 40px;
+            border-radius: 15px;
             text-align: center;
             width: 30%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
         }
 
-        .bullet h3 {
+        .pricing-box h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .pricing-box p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .buy-now {
+            background-color: #ffcc00;
             color: #333;
-        }
-
-        .paypal-btn img {
-            width: 200px;
-        }
-
-        .gumroad-link {
-            display: inline-block;
-            margin-top: 20px;
-            background-color: #ff7e47;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .gumroad-link:hover {
-            background-color: #ff5722;
-        }
-
-        .highlight {
-            font-weight: bold;
-            color: #ffcc00;
-        }
-
-        .cta-button {
-            background-color: #ff7e47;
-            color: white;
             padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            margin-top: 20px;
             display: inline-block;
+            transition: background-color 0.3s ease;
         }
 
-        .cta-button:hover {
-            background-color: #ff5722;
+        .buy-now:hover {
+            background-color: #ffcc33;
         }
 
-        .buy-option {
-            background-color: #333;
-            padding: 20px;
-            margin: 10px;
-            border-radius: 8px;
-        }
-
-        .buy-option h3 {
-            color: #ffcc00;
-        }
-
-        .buy-now-btn {
-            background-color: #ff7e47;
+        /* Footer */
+        footer {
+            background-color: #2a5298;
             color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
         }
 
-        .buy-now-btn:hover {
-            background-color: #ff5722;
+        footer p {
+            margin-bottom: 0;
         }
 
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Découvrez AlgoPro : L'indicateur révolutionnaire pour les traders</h1>
-        <p>Vous en avez assez de passer des heures à analyser les marchés ? AlgoPro est l'outil qu'il vous faut ! Conçu pour les traders modernes, cet indicateur intelligent analyse les tendances du marché en temps réel et vous donne des signaux clairs pour maximiser vos gains.</p>
 
-        <!-- Bouton Acheter Maintenant en haut -->
-        <a href="#purchase-options" class="cta-button">Achetez Maintenant</a>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <h1>Découvrez AlgoPro : L'indicateur Révolutionnaire pour les Traders</h1>
+            <p>AlgoPro est l'outil qu'il vous faut pour prendre des décisions éclairées grâce à une analyse avancée du marché en temps réel. Maximisez vos gains avec des signaux clairs et précis.</p>
+            <a href="#pricing" class="cta-button">Achetez Maintenant</a> <!-- Modification 1: lien vers la section des prix -->
+        </div>
+    </header>
 
-        <!-- Image Section -->
-        <div class="image-section">
+    <!-- Features Section -->
+    <section>
+        <div class="container">
+            <h2>Pourquoi Choisir AlgoPro ?</h2>
+            <div class="features">
+                <div class="feature-box">
+                    <h3>Précision</h3>
+                    <p>Des signaux fiables basés sur des algorithmes avancés pour des décisions éclairées.</p>
+                </div>
+                <div class="feature-box">
+                    <h3>Simplicité</h3>
+                    <p>Interface facile à comprendre, même pour les traders débutants.</p>
+                </div>
+                <div class="feature-box">
+                    <h3>Performance</h3>
+                    <p>Optimisé pour détecter les meilleures opportunités du marché en un clin d'œil.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Section -->
+    <section class="image-section">
+        <div class="container">
             <img src="AlgoProImage1.png" alt="AlgoPro Image">
         </div>
+    </section>
 
-        <h2>Pourquoi choisir AlgoPro ?</h2>
-
-        <div class="features">
-            <h3>Précision</h3>
-            <p>Des signaux fiables basés sur des algorithmes avancés pour des décisions éclairées.</p>
-
-            <h3>Simplicité</h3>
-            <p>Interface facile à comprendre, même pour les traders débutants.</p>
-
-            <h3>Performance</h3>
-            <p>Optimisé pour détecter les meilleures opportunités du marché en un clin d'œil.</p>
-
-            <h3>Temps réel</h3>
-            <p>Restez à jour avec des notifications instantanées et des alertes personnalisées.</p>
-        </div>
-
-        <!-- Bullet Points -->
-        <div class="bullet-points">
-            <div class="bullet">
-                <h3>📈 Augmentez vos gains</h3>
-                <p>Grâce à des signaux précis.</p>
-            </div>
-            <div class="bullet">
-                <h3>⏳ Gagnez du temps</h3>
-                <p>Automatisez votre analyse de marché.</p>
-            </div>
-            <div class="bullet">
-                <h3>🔐 Sécurisez vos investissements</h3>
-                <p>En prenant des décisions éclairées.</p>
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2>Choisissez Votre Plan</h2>
+            <div class="pricing-options">
+                <div class="pricing-box">
+                    <h3>Essai Gratuit</h3>
+                    <p>Testez AlgoPro gratuitement pendant 7 jours</p>
+                    <a href="#" class="buy-now">Essayer Gratuitement</a>
+                </div>
+                <div class="pricing-box">
+                    <h3>Abonnement Mensuel</h3>
+                    <p>Seulement $29.99 par mois</p>
+                    <a href="paiement.html" class="buy-now">Acheter Maintenant</a> <!-- Modification 2: lien vers paiement.html -->
+                </div>
+                <div class="pricing-box">
+                    <h3>Abonnement Annuel</h3>
+                    <p>Seulement $299.99 par an</p>
+                    <a href="paiement_annuel.html" class="buy-now">Acheter Maintenant</a> <!-- Modification 3: lien vers paiement annuel -->
+                </div>
             </div>
         </div>
+    </section>
 
-        <p>Ne manquez pas cette opportunité de faire évoluer votre trading ! <span class="highlight">Testez AlgoPro aujourd'hui</span> et prenez le contrôle de votre réussite financière !</p>
-
-        <!-- Section Options d'Achat -->
-        <div id="purchase-options">
-            <h2>Choisissez votre option d'achat :</h2>
-
-            <!-- Essai Gratuit -->
-            <div class="buy-option">
-                <h3>Essai Gratuit</h3>
-                <p>Profitez de 7 jours d'essai gratuit pour découvrir AlgoPro.</p>
-                <a href="#" class="buy-now-btn">Commencer l'essai</a>
-            </div>
-
-            <!-- Abonnement Mensuel -->
-            <div class="buy-option">
-                <h3>Abonnement Mensuel</h3>
-                <p>Accédez à AlgoPro pour seulement 29,99$/mois.</p>
-                <a href="paiement.html" class="buy-now-btn">Acheter Maintenant</a>
-            </div>
-
-            <!-- Abonnement Annuel -->
-            <div class="buy-option">
-                <h3>Abonnement Annuel</h3>
-                <p>Accédez à AlgoPro pour seulement 299,99$/an.</p>
-                <a href="paiement_annuel.html" class="buy-now-btn">Acheter Maintenant</a>
-            </div>
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 AlgoPro. Tous droits réservés.</p>
         </div>
-    </div>
+    </footer>
+
 </body>
 
 </html>
