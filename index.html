@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Discover AlgoPro: The revolutionary indicator for traders">
-    <title>AlgoPro - The Premium TradingView Indicator</title>
+    <title>AlgoPro - The Premium Trading Indicator</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -84,7 +84,7 @@
             display: flex;
             justify-content: space-around;
             text-align: center;
-            flex-wrap: wrap; /* Allow wrapping for smaller screens */
+            flex-wrap: wrap; /* Permet de s'adapter aux petits écrans */
         }
 
         .feature-box {
@@ -93,8 +93,7 @@
             border-radius: 15px;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease;
-            margin: 10px; /* Add margin for spacing */
-            flex: 1 1 30%; /* Allow flexibility for different screen sizes */
+            margin: 10px; /* Ajoute de l'espace autour des boîtes */
         }
 
         .feature-box:hover {
@@ -143,7 +142,7 @@
             display: flex;
             justify-content: space-around;
             margin-top: 50px;
-            flex-wrap: wrap; /* Allow wrapping for smaller screens */
+            flex-wrap: wrap; /* Permet aux éléments de s'adapter aux petits écrans */
         }
 
         .pricing-box {
@@ -153,7 +152,7 @@
             text-align: center;
             width: 30%;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-            margin: 10px; /* Add margin for spacing */
+            margin: 10px; /* Ajoute de l'espace autour des boîtes */
         }
 
         .pricing-box h3 {
@@ -215,17 +214,17 @@
         }
 
         .faq-question:after {
-            content: '\002B'; /* Plus symbol */
+            content: '\002B'; /* Symbole plus */
             float: right;
             font-size: 20px;
         }
 
         .faq-item.active .faq-question:after {
-            content: '\2212'; /* Minus symbol */
+            content: '\2212'; /* Symbole moins */
         }
 
         .faq-item + .faq-item {
-            margin-top: 0; /* Remove space between items */
+            margin-top: 0; /* Supprimer l'espace entre les éléments */
         }
 
         /* Footer */
@@ -244,27 +243,40 @@
         /* Responsive Styles */
         @media (max-width: 768px) {
             header h1 {
-                font-size: 30px; /* Reduce header size for mobile */
+                font-size: 28px; /* Réduire la taille du titre */
+            }
+
+            header p {
+                font-size: 16px; /* Réduire la taille du texte */
             }
 
             .features {
-                flex-direction: column; /* Stack features vertically */
-                align-items: center; /* Center align */
+                flex-direction: column; /* Empiler les boîtes */
+                align-items: center; /* Centrer les éléments */
             }
 
-            .feature-box {
-                width: 90%; /* Full width for mobile */
-                margin-bottom: 20px; /* Space between boxes */
+            .pricing h2 {
+                font-size: 28px; /* Réduire la taille du titre */
+                margin-bottom: 30px; /* Espacement supplémentaire */
             }
 
             .pricing-options {
-                flex-direction: column; /* Stack pricing options */
-                align-items: center; /* Center align */
+                flex-direction: column; /* Empiler les boîtes de tarification */
+                align-items: center; /* Centre les éléments */
             }
 
             .pricing-box {
-                width: 90%; /* Full width for mobile */
-                margin-bottom: 20px; /* Space between boxes */
+                width: 90%; /* Utiliser 90% de la largeur */
+                margin-bottom: 20px; /* Espacement entre les boîtes */
+                padding: 30px; /* Réduire le remplissage */
+            }
+
+            .pricing-box h3 {
+                font-size: 20px; /* Réduire la taille du titre */
+            }
+
+            .pricing-box p {
+                font-size: 16px; /* Réduire la taille du texte */
             }
         }
     </style>
@@ -276,7 +288,7 @@
     <header>
         <div class="container">
             <h1>Discover AlgoPro: The Revolutionary Indicator for Traders</h1>
-            <p>AlgoPro is the tool you need to make informed decisions through advanced real-time market analysis. Maximize your gains with clear and precise signals.</p>
+            <p>AlgoPro is the tool you need to make informed decisions with advanced real-time market analysis. Maximize your profits with clear and precise signals.</p>
             <a href="#pricing" class="cta-button">Buy Now</a>
         </div>
     </header>
@@ -291,12 +303,12 @@
                     <p>Reliable signals based on advanced algorithms for informed decisions.</p>
                 </div>
                 <div class="feature-box">
-                    <h3>Ease of Use</h3>
+                    <h3>Simplicity</h3>
                     <p>User-friendly interface, even for beginner traders.</p>
                 </div>
                 <div class="feature-box">
                     <h3>Performance</h3>
-                    <p>Optimized to detect the best market opportunities in an instant.</p>
+                    <p>Optimized to detect the best market opportunities in no time.</p>
                 </div>
             </div>
         </div>
@@ -305,7 +317,7 @@
     <!-- Image Section -->
     <section class="image-section">
         <div class="container">
-            <img src="AlgoProImage1.png" alt="AlgoPro Image">
+            <img src="your-image-url.jpg" alt="AlgoPro Interface">
         </div>
     </section>
 
@@ -343,41 +355,39 @@
             <div class="faq-item">
                 <button class="faq-question">What is AlgoPro?</button>
                 <div class="faq-answer">
-                    <p>AlgoPro is an advanced trading indicator designed to help traders make informed decisions based on market data.</p>
+                    <p>AlgoPro is a trading indicator designed to help traders make better decisions by providing accurate market signals.</p>
                 </div>
             </div>
             <div class="faq-item">
                 <button class="faq-question">How does the free trial work?</button>
                 <div class="faq-answer">
-                    <p>You can access all features of AlgoPro for 7 days, completely free. No credit card required!</p>
+                    <p>You can use AlgoPro for free for 7 days. After the trial, you can choose to subscribe to one of our plans.</p>
                 </div>
             </div>
             <div class="faq-item">
-                <button class="faq-question">Is there a money-back guarantee?</button>
+                <button class="faq-question">Can I cancel my subscription?</button>
                 <div class="faq-answer">
-                    <p>Yes! We offer a 30-day money-back guarantee if you're not satisfied with your purchase.</p>
+                    <p>Yes, you can cancel your subscription at any time before the next billing cycle.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer Section -->
     <footer>
-        <div class="container">
-            <p>&copy; 2024 AlgoPro. All Rights Reserved.</p>
-        </div>
+        <p>&copy; 2024 AlgoPro. All Rights Reserved.</p>
     </footer>
 
     <script>
-        const faqQuestions = document.querySelectorAll('.faq-question');
-
-        faqQuestions.forEach(question => {
-            question.addEventListener('click', () => {
-                const faqItem = question.parentElement;
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
                 faqItem.classList.toggle('active');
             });
         });
     </script>
+
 </body>
 
 </html>
