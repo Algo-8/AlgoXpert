@@ -177,6 +177,48 @@
             background-color: #ffcc33;
         }
 
+        /* FAQ Section */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .faq-question {
+            width: 100%;
+            background-color: #1e3c72;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 15px;
+            background-color: #f1f1f1;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-question:after {
+            content: '\002B';
+            float: right;
+            font-size: 20px;
+        }
+
+        .faq-item.active .faq-question:after {
+            content: '\2212';
+        }
+
         /* Footer */
         footer {
             background-color: #2a5298;
@@ -256,12 +298,92 @@
         </div>
     </section>
 
-    <!-- Footer Section -->
-    <footer>
+    <!-- FAQ Section -->
+    <section id="faq" style="padding: 50px 0;">
         <div class="container">
-            <p>&copy; 2024 AlgoPro. Tous droits réservés.</p>
+            <h2 style="text-align: center; color: #1e3c72;">FAQ</h2>
+            <div class="faq-container" style="margin-top: 40px;">
+                <div class="faq-item">
+                    <button class="faq-question">How to get the AlgoPro indicators?</button>
+                    <div class="faq-answer">
+                        <p>To get the AlgoPro indicators, you need to sign up on our website, and then you will be granted access to the indicators on TradingView.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">Do you have tutorials?</button>
+                    <div class="faq-answer">
+                        <p>Yes, we offer tutorials on how to use the AlgoPro indicators and maximize their potential. You can find them on our YouTube channel and in our Telegram group.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">Do I need a paid plan on TradingView?</button>
+                    <div class="faq-answer">
+                        <p>AlgoPro works with both free and paid TradingView accounts, but certain features may be restricted to premium users.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">Does this work on any market?</button>
+                    <div class="faq-answer">
+                        <p>Yes, AlgoPro can be used across various markets, including Forex, Crypto, and Stocks.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">Does it work on my phone?</button>
+                    <div class="faq-answer">
+                        <p>Yes, AlgoPro is compatible with the TradingView mobile app, so you can use it on your phone.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">Do you provide support?</button>
+                    <div class="faq-answer">
+                        <p>We offer customer support via our Telegram group and email. Our team is always ready to help with any issues or questions you may have.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">On what time frames can I use the AlgoPro?</button>
+                    <div class="faq-answer">
+                        <p>AlgoPro works on all time frames, from 1-minute charts to daily charts, depending on your trading strategy.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">Why do I need to join the AlgoPro Telegram group?</button>
+                    <div class="faq-answer">
+                        <p>Joining the AlgoPro Telegram group allows you to get real-time updates, access community support, and receive exclusive tips on how to use the indicators more effectively.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">Does the AlgoPro indicator repaint the signals?</button>
+                    <div class="faq-answer">
+                        <p>No, AlgoPro indicators do not repaint. The signals are fixed and based on real-time market data.</p>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 AlgoPro. Tous droits réservés.</p>
     </footer>
+
+    <!-- JavaScript for FAQ Section -->
+    <script>
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            item.querySelector('.faq-question').addEventListener('click', () => {
+                item.classList.toggle('active');
+            });
+        });
+    </script>
 
 </body>
 
