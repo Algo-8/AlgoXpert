@@ -184,7 +184,7 @@
         }
 
         .faq-item {
-            margin-bottom: 0; /* Supprimer l'espace entre les questions */
+            margin-bottom: 0;
             border-bottom: 1px solid #ccc;
         }
 
@@ -210,17 +210,13 @@
         }
 
         .faq-question:after {
-            content: '\002B'; /* Symbole plus pour indiquer que la réponse est cachée */
+            content: '\002B'; /* Symbole plus */
             float: right;
             font-size: 20px;
         }
 
         .faq-item.active .faq-question:after {
-            content: '\2212'; /* Symbole moins pour indiquer que la réponse est visible */
-        }
-
-        .faq-container .faq-item {
-            border-bottom: none; /* Supprimer la bordure entre les questions */
+            content: '\2212'; /* Symbole moins */
         }
 
         .faq-item + .faq-item {
@@ -322,6 +318,14 @@
                     <div class="faq-question">Puis-je annuler mon abonnement ?</div>
                     <div class="faq-answer">Oui, vous pouvez annuler votre abonnement à tout moment depuis votre compte utilisateur.</div>
                 </div>
+                <div class="faq-item">
+                    <div class="faq-question">Quels marchés sont supportés par AlgoPro ?</div>
+                    <div class="faq-answer">AlgoPro supporte les marchés d'actions, de cryptomonnaies, de Forex et de matières premières.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Puis-je utiliser AlgoPro sur plusieurs appareils ?</div>
+                    <div class="faq-answer">Oui, vous pouvez utiliser AlgoPro sur plusieurs appareils à condition d'utiliser le même compte.</div>
+                </div>
             </div>
         </div>
     </section>
@@ -331,7 +335,16 @@
         <p>© 2024 AlgoPro. Tous droits réservés.</p>
     </footer>
 
+    <script>
+        // JavaScript for FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+    </script>
+
 </body>
 
 </html>
-
