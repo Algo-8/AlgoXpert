@@ -184,7 +184,7 @@
         }
 
         .faq-item {
-            margin-bottom: 20px;
+            margin-bottom: 0; /* Supprimer l'espace entre les questions */
             border-bottom: 1px solid #ccc;
         }
 
@@ -210,13 +210,21 @@
         }
 
         .faq-question:after {
-            content: '\002B';
+            content: '\002B'; /* Symbole plus pour indiquer que la réponse est cachée */
             float: right;
             font-size: 20px;
         }
 
         .faq-item.active .faq-question:after {
-            content: '\2212';
+            content: '\2212'; /* Symbole moins pour indiquer que la réponse est visible */
+        }
+
+        .faq-container .faq-item {
+            border-bottom: none; /* Supprimer la bordure entre les questions */
+        }
+
+        .faq-item + .faq-item {
+            margin-top: 0; /* Supprimer l'espace entre les éléments */
         }
 
         /* Footer */
@@ -231,7 +239,6 @@
         footer p {
             margin-bottom: 0;
         }
-
     </style>
 </head>
 
@@ -242,7 +249,7 @@
         <div class="container">
             <h1>Découvrez AlgoPro : L'indicateur Révolutionnaire pour les Traders</h1>
             <p>AlgoPro est l'outil qu'il vous faut pour prendre des décisions éclairées grâce à une analyse avancée du marché en temps réel. Maximisez vos gains avec des signaux clairs et précis.</p>
-            <a href="#pricing" class="cta-button">Achetez Maintenant</a> <!-- Modification 1: lien vers la section des prix -->
+            <a href="#pricing" class="cta-button">Achetez Maintenant</a>
         </div>
     </header>
 
@@ -287,83 +294,33 @@
                 <div class="pricing-box">
                     <h3>Abonnement Mensuel</h3>
                     <p>Seulement $29.99 par mois</p>
-                    <a href="paiement.html" class="buy-now">Acheter Maintenant</a> <!-- Modification 2: lien vers paiement.html -->
+                    <a href="paiement.html" class="buy-now">Acheter Maintenant</a>
                 </div>
                 <div class="pricing-box">
                     <h3>Abonnement Annuel</h3>
                     <p>Seulement $299.99 par an</p>
-                    <a href="paiement_annuel.html" class="buy-now">Acheter Maintenant</a> <!-- Modification 3: lien vers paiement annuel -->
+                    <a href="paiement_annuel.html" class="buy-now">Acheter Maintenant</a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- FAQ Section -->
-    <section id="faq" style="padding: 50px 0;">
+    <section>
         <div class="container">
-            <h2 style="text-align: center; color: #1e3c72;">FAQ</h2>
-            <div class="faq-container" style="margin-top: 40px;">
+            <h2>Foire Aux Questions</h2>
+            <div class="faq-container">
                 <div class="faq-item">
-                    <button class="faq-question">How to get the AlgoPro indicators?</button>
-                    <div class="faq-answer">
-                        <p>To get the AlgoPro indicators, you need to sign up on our website, and then you will be granted access to the indicators on TradingView.</p>
-                    </div>
+                    <div class="faq-question">Qu'est-ce que AlgoPro ?</div>
+                    <div class="faq-answer">AlgoPro est un indicateur de trading avancé conçu pour fournir des signaux de marché fiables et précis.</div>
                 </div>
-
                 <div class="faq-item">
-                    <button class="faq-question">Do you have tutorials?</button>
-                    <div class="faq-answer">
-                        <p>Yes, we offer tutorials on how to use the AlgoPro indicators and maximize their potential. You can find them on our YouTube channel and in our Telegram group.</p>
-                    </div>
+                    <div class="faq-question">Comment fonctionne l'essai gratuit ?</div>
+                    <div class="faq-answer">L'essai gratuit vous permet d'accéder à toutes les fonctionnalités d'AlgoPro pendant 7 jours, sans frais.</div>
                 </div>
-
                 <div class="faq-item">
-                    <button class="faq-question">Do I need a paid plan on TradingView?</button>
-                    <div class="faq-answer">
-                        <p>AlgoPro works with both free and paid TradingView accounts, but certain features may be restricted to premium users.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">Does this work on any market?</button>
-                    <div class="faq-answer">
-                        <p>Yes, AlgoPro can be used across various markets, including Forex, Crypto, and Stocks.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">Does it work on my phone?</button>
-                    <div class="faq-answer">
-                        <p>Yes, AlgoPro is compatible with the TradingView mobile app, so you can use it on your phone.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">Do you provide support?</button>
-                    <div class="faq-answer">
-                        <p>We offer customer support via our Telegram group and email. Our team is always ready to help with any issues or questions you may have.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">On what time frames can I use the AlgoPro?</button>
-                    <div class="faq-answer">
-                        <p>AlgoPro works on all time frames, from 1-minute charts to daily charts, depending on your trading strategy.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">Why do I need to join the AlgoPro Telegram group?</button>
-                    <div class="faq-answer">
-                        <p>Joining the AlgoPro Telegram group allows you to get real-time updates, access community support, and receive exclusive tips on how to use the indicators more effectively.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">Does the AlgoPro indicator repaint the signals?</button>
-                    <div class="faq-answer">
-                        <p>No, AlgoPro indicators do not repaint. The signals are fixed and based on real-time market data.</p>
-                    </div>
+                    <div class="faq-question">Puis-je annuler mon abonnement ?</div>
+                    <div class="faq-answer">Oui, vous pouvez annuler votre abonnement à tout moment depuis votre compte utilisateur.</div>
                 </div>
             </div>
         </div>
@@ -371,20 +328,10 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 AlgoPro. Tous droits réservés.</p>
+        <p>© 2024 AlgoPro. Tous droits réservés.</p>
     </footer>
-
-    <!-- JavaScript for FAQ Section -->
-    <script>
-        const faqItems = document.querySelectorAll('.faq-item');
-
-        faqItems.forEach(item => {
-            item.querySelector('.faq-question').addEventListener('click', () => {
-                item.classList.toggle('active');
-            });
-        });
-    </script>
 
 </body>
 
 </html>
+
