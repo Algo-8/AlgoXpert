@@ -85,6 +85,7 @@
             display: flex;
             justify-content: space-around;
             text-align: center;
+            flex-wrap: wrap; /* Ajouté pour la responsivité */
         }
 
         .feature-box {
@@ -93,6 +94,8 @@
             border-radius: 15px;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease;
+            flex: 1 1 30%; /* Ajouté pour la responsivité */
+            margin: 10px; /* Ajouté pour l'espacement */
         }
 
         .feature-box:hover {
@@ -146,6 +149,7 @@
             display: flex;
             justify-content: space-around;
             margin-top: 50px;
+            flex-wrap: wrap; /* Ajouté pour la responsivité */
         }
 
         .pricing-box {
@@ -155,6 +159,7 @@
             text-align: center;
             width: 30%;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            margin: 10px; /* Ajouté pour l'espacement */
         }
 
         .pricing-box h3 {
@@ -236,6 +241,31 @@
 
         footer p {
             margin-bottom: 0;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 36px;
+            }
+
+            header p {
+                font-size: 16px;
+            }
+
+            .feature-box, .pricing-box {
+                width: 100%; /* Chaque box occupera toute la largeur sur les petits écrans */
+                margin-bottom: 20px; /* Ajouté pour espacer les boxes */
+            }
+
+            .pricing-options {
+                flex-direction: column; /* Colonne sur les petits écrans */
+                align-items: center; /* Centrer les items */
+            }
+
+            section h2 {
+                font-size: 28px; /* Réduction de la taille du titre */
+            }
         }
     </style>
 </head>
@@ -360,4 +390,5 @@
 </body>
 
 </html>
+
 
