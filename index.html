@@ -84,6 +84,7 @@
             display: flex;
             justify-content: space-around;
             text-align: center;
+            flex-wrap: wrap; /* Allow wrapping for smaller screens */
         }
 
         .feature-box {
@@ -92,6 +93,8 @@
             border-radius: 15px;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease;
+            margin: 10px; /* Add margin for spacing */
+            flex: 1 1 30%; /* Allow flexibility for different screen sizes */
         }
 
         .feature-box:hover {
@@ -140,6 +143,7 @@
             display: flex;
             justify-content: space-around;
             margin-top: 50px;
+            flex-wrap: wrap; /* Allow wrapping for smaller screens */
         }
 
         .pricing-box {
@@ -149,6 +153,7 @@
             text-align: center;
             width: 30%;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            margin: 10px; /* Add margin for spacing */
         }
 
         .pricing-box h3 {
@@ -235,6 +240,33 @@
         footer p {
             margin-bottom: 0;
         }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 30px; /* Reduce header size for mobile */
+            }
+
+            .features {
+                flex-direction: column; /* Stack features vertically */
+                align-items: center; /* Center align */
+            }
+
+            .feature-box {
+                width: 90%; /* Full width for mobile */
+                margin-bottom: 20px; /* Space between boxes */
+            }
+
+            .pricing-options {
+                flex-direction: column; /* Stack pricing options */
+                align-items: center; /* Center align */
+            }
+
+            .pricing-box {
+                width: 90%; /* Full width for mobile */
+                margin-bottom: 20px; /* Space between boxes */
+            }
+        }
     </style>
 </head>
 
@@ -244,7 +276,7 @@
     <header>
         <div class="container">
             <h1>Discover AlgoPro: The Revolutionary Indicator for Traders</h1>
-            <p>AlgoPro is the tool you need to make informed decisions with advanced real-time market analysis. Maximize your gains with clear and precise signals.</p>
+            <p>AlgoPro is the tool you need to make informed decisions through advanced real-time market analysis. Maximize your gains with clear and precise signals.</p>
             <a href="#pricing" class="cta-button">Buy Now</a>
         </div>
     </header>
@@ -260,11 +292,11 @@
                 </div>
                 <div class="feature-box">
                     <h3>Ease of Use</h3>
-                    <p>Easy-to-understand interface, even for beginner traders.</p>
+                    <p>User-friendly interface, even for beginner traders.</p>
                 </div>
                 <div class="feature-box">
                     <h3>Performance</h3>
-                    <p>Optimized to detect the best market opportunities in no time.</p>
+                    <p>Optimized to detect the best market opportunities in an instant.</p>
                 </div>
             </div>
         </div>
@@ -284,18 +316,21 @@
             <div class="pricing-options">
                 <div class="pricing-box">
                     <h3>Free Trial</h3>
-                    <p>Try AlgoPro for free for 7 days</p>
-                    <a href="#" class="buy-now">Try for Free</a>
+                    <p>$0 for 7 days</p>
+                    <p>Try AlgoPro risk-free!</p>
+                    <a href="#" class="buy-now">Start Free Trial</a>
                 </div>
                 <div class="pricing-box">
-                    <h3>Monthly Subscription</h3>
-                    <p>Only $29.99 per month</p>
-                    <a href="payment.html" class="buy-now">Buy Now</a>
+                    <h3>Monthly Plan</h3>
+                    <p>$29/month</p>
+                    <p>Perfect for traders looking for a short-term commitment.</p>
+                    <a href="#" class="buy-now">Subscribe Now</a>
                 </div>
                 <div class="pricing-box">
-                    <h3>Annual Subscription</h3>
-                    <p>Only $299.99 per year</p>
-                    <a href="annual_payment.html" class="buy-now">Buy Now</a>
+                    <h3>Yearly Plan</h3>
+                    <p>$299/year</p>
+                    <p>Save over 15% with our annual plan!</p>
+                    <a href="#" class="buy-now">Subscribe Now</a>
                 </div>
             </div>
         </div>
@@ -303,28 +338,24 @@
 
     <!-- FAQ Section -->
     <section>
-        <div class="container">
+        <div class="container faq-container">
             <h2>Frequently Asked Questions</h2>
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question">What is AlgoPro?</div>
-                    <div class="faq-answer">AlgoPro is an advanced trading indicator designed to provide reliable and accurate market signals.</div>
+            <div class="faq-item">
+                <button class="faq-question">What is AlgoPro?</button>
+                <div class="faq-answer">
+                    <p>AlgoPro is an advanced trading indicator designed to help traders make informed decisions based on market data.</p>
                 </div>
-                <div class="faq-item">
-                    <div class="faq-question">How does the free trial work?</div>
-                    <div class="faq-answer">The free trial allows you to access all features of AlgoPro for 7 days at no cost.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">How does the free trial work?</button>
+                <div class="faq-answer">
+                    <p>You can access all features of AlgoPro for 7 days, completely free. No credit card required!</p>
                 </div>
-                <div class="faq-item">
-                    <div class="faq-question">Can I cancel my subscription?</div>
-                    <div class="faq-answer">Yes, you can cancel your subscription at any time from your user account.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">Which markets are supported by AlgoPro?</div>
-                    <div class="faq-answer">AlgoPro supports stock, cryptocurrency, Forex, and commodity markets.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">Can I use AlgoPro on multiple devices?</div>
-                    <div class="faq-answer">Yes, you can use AlgoPro on multiple devices as long as you use the same account.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Is there a money-back guarantee?</button>
+                <div class="faq-answer">
+                    <p>Yes! We offer a 30-day money-back guarantee if you're not satisfied with your purchase.</p>
                 </div>
             </div>
         </div>
@@ -332,19 +363,21 @@
 
     <!-- Footer -->
     <footer>
-        <p>© 2024 AlgoPro. All rights reserved.</p>
+        <div class="container">
+            <p>&copy; 2024 AlgoPro. All Rights Reserved.</p>
+        </div>
     </footer>
 
     <script>
-        // JavaScript for FAQ Toggle
-        document.querySelectorAll('.faq-question').forEach(question => {
+        const faqQuestions = document.querySelectorAll('.faq-question');
+
+        faqQuestions.forEach(question => {
             question.addEventListener('click', () => {
                 const faqItem = question.parentElement;
                 faqItem.classList.toggle('active');
             });
         });
     </script>
-
 </body>
 
 </html>
