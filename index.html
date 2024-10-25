@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Discover AlgoPro: The revolutionary indicator for traders">
-    <title>AlgoPro - The Premium TradingView Indicator</title>
+    <meta name="description" content="Discover AlgoPro: The Revolutionary Indicator for Traders">
+    <title>AlgoPro - TradingView Premium Indicator</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -20,8 +20,8 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f7f7f7;
-            color: #333;
+            background-color: #111; /* Dark background */
+            color: #eaeaea; /* Light text for readability */
             overflow-x: hidden;
         }
 
@@ -32,8 +32,8 @@
         }
 
         header {
-            background: linear-gradient(45deg, #1e3c72, #2a5298);
-            color: white;
+            background: linear-gradient(135deg, #141e30, #243b55);
+            color: #fff;
             padding: 50px 0;
             text-align: center;
             clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
@@ -42,6 +42,7 @@
         header h1 {
             font-size: 48px;
             font-weight: 600;
+            color: #ffd700;
         }
 
         header p {
@@ -54,8 +55,8 @@
 
         .cta-button {
             display: inline-block;
-            background-color: #ffcc00;
-            color: #333;
+            background-color: #ffd700;
+            color: #111;
             padding: 15px 30px;
             border-radius: 50px;
             font-weight: 600;
@@ -65,7 +66,7 @@
         }
 
         .cta-button:hover {
-            background-color: #ffcc33;
+            background-color: #ffeb3b;
         }
 
         /* Section Styles */
@@ -77,7 +78,7 @@
             text-align: center;
             font-size: 36px;
             margin-bottom: 50px;
-            color: #1e3c72;
+            color: #ffd700;
         }
 
         .features {
@@ -87,10 +88,10 @@
         }
 
         .feature-box {
-            background-color: white;
+            background-color: #1a1a1a;
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease;
         }
 
@@ -101,12 +102,13 @@
         .feature-box h3 {
             font-size: 24px;
             margin-bottom: 20px;
-            color: #2a5298;
+            color: #ffd700;
         }
 
         .feature-box p {
             font-size: 18px;
             line-height: 1.6;
+            color: #eaeaea;
         }
 
         /* Image Section */
@@ -116,7 +118,7 @@
             margin: 0 auto;
             display: block;
             border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease;
         }
 
@@ -126,14 +128,14 @@
 
         /* Pricing Section */
         .pricing {
-            background-color: #1e3c72;
+            background-color: #141e30;
             color: white;
             padding: 50px 0;
             clip-path: polygon(0 0, 100% 15%, 100% 100%, 0 100%);
         }
 
         .pricing h2 {
-            color: white;
+            color: #ffd700;
         }
 
         .pricing-options {
@@ -143,28 +145,30 @@
         }
 
         .pricing-box {
-            background-color: #2a5298;
+            background-color: #1a1a1a;
             padding: 40px;
             border-radius: 15px;
             text-align: center;
             width: 30%;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
         }
 
         .pricing-box h3 {
             font-size: 24px;
             margin-bottom: 20px;
             font-weight: 600;
+            color: #ffd700;
         }
 
         .pricing-box p {
             font-size: 18px;
             margin-bottom: 30px;
+            color: #eaeaea;
         }
 
         .buy-now {
-            background-color: #ffcc00;
-            color: #333;
+            background-color: #ffd700;
+            color: #111;
             padding: 15px 30px;
             border-radius: 50px;
             font-weight: 600;
@@ -174,7 +178,7 @@
         }
 
         .buy-now:hover {
-            background-color: #ffcc33;
+            background-color: #ffeb3b;
         }
 
         /* FAQ Section */
@@ -185,12 +189,12 @@
 
         .faq-item {
             margin-bottom: 0;
-            border-bottom: 1px solid #ccc;
+            border-bottom: 1px solid #444;
         }
 
         .faq-question {
             width: 100%;
-            background-color: #1e3c72;
+            background-color: #141e30;
             color: white;
             padding: 15px;
             text-align: left;
@@ -202,7 +206,8 @@
         .faq-answer {
             display: none;
             padding: 15px;
-            background-color: #f1f1f1;
+            background-color: #1a1a1a;
+            color: #eaeaea;
         }
 
         .faq-item.active .faq-answer {
@@ -219,13 +224,9 @@
             content: '\2212'; /* Minus symbol */
         }
 
-        .faq-item + .faq-item {
-            margin-top: 0; /* Remove space between items */
-        }
-
         /* Footer */
         footer {
-            background-color: #2a5298;
+            background-color: #1a1a1a;
             color: white;
             text-align: center;
             padding: 20px 0;
@@ -244,7 +245,7 @@
     <header>
         <div class="container">
             <h1>Discover AlgoPro: The Revolutionary Indicator for Traders</h1>
-            <p>AlgoPro is the tool you need to make informed decisions with advanced real-time market analysis. Maximize your profits with clear and precise signals.</p>
+            <p>AlgoPro is the tool you need for making informed decisions with real-time, advanced market analysis. Maximize your profits with clear, precise signals.</p>
             <a href="#pricing" class="cta-button">Buy Now</a>
         </div>
     </header>
@@ -264,7 +265,7 @@
                 </div>
                 <div class="feature-box">
                     <h3>Performance</h3>
-                    <p>Optimized to spot the best market opportunities at a glance.</p>
+                    <p>Optimized to detect the best market opportunities at a glance.</p>
                 </div>
             </div>
         </div>
@@ -285,7 +286,7 @@
                 <div class="pricing-box">
                     <h3>Free Trial</h3>
                     <p>Try AlgoPro free for 7 days</p>
-                    <a href="#" class="buy-now">Try Free</a>
+                    <a href="#" class="buy-now">Try for Free</a>
                 </div>
                 <div class="pricing-box">
                     <h3>Monthly Subscription</h3>
@@ -307,24 +308,16 @@
             <h2>Frequently Asked Questions</h2>
             <div class="faq-container">
                 <div class="faq-item">
-                    <div class="faq-question">What is AlgoPro?</div>
-                    <div class="faq-answer">AlgoPro is an advanced trading indicator designed to provide reliable and accurate market signals.</div>
+                    <button class="faq-question">How do I start with AlgoPro?</button>
+                    <div class="faq-answer">
+                        <p>Simply create an account and choose your subscription plan. You can then start using AlgoPro immediately.</p>
+                    </div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question">How does the free trial work?</div>
-                    <div class="faq-answer">The free trial allows you access to all AlgoPro features for 7 days, at no cost.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">Can I cancel my subscription?</div>
-                    <div class="faq-answer">Yes, you can cancel your subscription anytime from your user account.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">Which markets are supported by AlgoPro?</div>
-                    <div class="faq-answer">AlgoPro supports stock, cryptocurrency, Forex, and commodity markets.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">Can I use AlgoPro on multiple devices?</div>
-                    <div class="faq-answer">Yes, you can use AlgoPro on multiple devices as long as you are logged into the same account.</div>
+                    <button class="faq-question">Can I cancel anytime?</button>
+                    <div class="faq-answer">
+                        <p>Yes, you can cancel your subscription at any time through your account settings.</p>
+                    </div>
                 </div>
             </div>
         </div>
