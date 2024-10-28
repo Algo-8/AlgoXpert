@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +9,8 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f7f7f7;
-            color: #333;
+            background: linear-gradient(135deg, #000000, #333333);
+            color: #eee;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -21,16 +20,16 @@
 
         .container {
             text-align: center;
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.1);
             padding: 40px;
             border-radius: 15px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
         }
 
         h1 {
             font-size: 36px;
             margin-bottom: 20px;
-            color: #1e3c72;
+            color: #ff7e47;
         }
 
         .payment-options {
@@ -46,25 +45,30 @@
             width: 200px;
             border-radius: 8px;
             cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .paypal-btn img:hover {
+            transform: scale(1.05);
         }
 
         .gumroad-link {
             display: inline-block;
             background-color: #ff7e47;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         .gumroad-link:hover {
             background-color: #ff5722;
+            transform: scale(1.05);
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <h1>Choose Your Purchase Option :</h1>
@@ -83,5 +87,5 @@
         </div>
     </div>
 </body>
-
 </html>
+
