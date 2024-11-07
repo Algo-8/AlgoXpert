@@ -39,10 +39,21 @@
             text-align: center;
             clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
         }
-
+        /* Animation du titre */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
         header h1 {
             font-size: 48px;
             font-weight: 600;
+            animation: fadeIn 1.5s ease-out; /* Durée et effet */
         }
 
         header p {
