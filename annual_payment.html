@@ -1,94 +1,109 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Choose Your Purchase Option">
-    <title>AlgoPro - Paiement</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #000000, #333333);
-            color: #eee;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Choisissez votre méthode de paiement pour AlgoPro"/>
+  <title>AlgoPro - Paiement Annuel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: #1a1a1a;
+      color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-        .container {
-            text-align: center;
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-        }
+    .container {
+      background-color: #2c2c2c;
+      padding: 50px 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
 
-        h1 {
-            font-size: 36px;
-            margin-bottom: 20px;
-            color: #ff7e47;
-        }
+    h1 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #ff7e47;
+    }
 
-        .payment-options {
-            margin-top: 40px;
-        }
+    p.description {
+      font-size: 16px;
+      color: #ccc;
+      margin-bottom: 30px;
+    }
 
-        .payment-options form,
-        .payment-options .gumroad-link {
-            margin: 20px 0;
-        }
+    .payment-options {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
 
-        .paypal-btn img {
-            width: 200px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
+    .paypal-btn img {
+      width: 100%;
+      max-width: 220px;
+      border-radius: 10px;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
 
-        .paypal-btn img:hover {
-            transform: scale(1.05);
-        }
+    .paypal-btn img:hover {
+      transform: scale(1.05);
+    }
 
-        .gumroad-link {
-            display: inline-block;
-            background-color: #ff7e47;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
+    .gumroad-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background-color: #ff7e47;
+      color: white;
+      padding: 14px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
 
-        .gumroad-link:hover {
-            background-color: #ff5722;
-            transform: scale(1.05);
-        }
-    </style>
+    .gumroad-link:hover {
+      background-color: #ff5a2a;
+      transform: scale(1.05);
+    }
+
+    .gumroad-link img {
+      width: 24px;
+      height: 24px;
+    }
+  </style>
 </head>
-
 <body>
-    <div class="container">
-        <h1>Choose Your Purchase Option :</h1>
+  <div class="container">
+    <h1>Paiement Annuel AlgoPro</h1>
+    <p class="description">Choisissez une méthode pour souscrire à l’abonnement annuel :</p>
+    <div class="payment-options">
 
-        <!-- PayPal Button -->
-        <div class="payment-options">
-            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                <input type="hidden" name="cmd" value="_s-xclick" />
-                <input type="hidden" name="hosted_button_id" value="BYMSM3DTZ8GAS" />
-                <input type="hidden" name="currency_code" value="USD" />
-                <input type="image" class="paypal-btn" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" title="PayPal, votre réflexe sécurité pour payer en ligne." alt="Acheter" />
-            </form>
+      <!-- PayPal Button -->
+      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="paypal-btn">
+        <input type="hidden" name="cmd" value="_s-xclick" />
+        <input type="hidden" name="hosted_button_id" value="BYMSM3DTZ8GAS" />
+        <input type="hidden" name="currency_code" value="USD" />
+        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" alt="Payer avec PayPal" />
+      </form>
 
-            <!-- Gumroad Button -->
-            <a class="gumroad-link" href="https://algo8.gumroad.com/l/AlgoPro" target="_blank">Buy via Gumroad</a>
-        </div>
+      <!-- Gumroad Button -->
+      <a class="gumroad-link" href="https://algo8.gumroad.com/l/AlgoPro" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968705.png" alt="Gumroad icon">
+        Acheter via Gumroad
+      </a>
     </div>
+  </div>
 </body>
-
 </html>
-
