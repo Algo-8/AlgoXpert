@@ -68,8 +68,7 @@
 
       <!-- PayPal Button for Subscription -->
       <div id="paypal-button-container-P-5JV802951F763663RNAGVWNQ"></div>
-      <script src="<script src="https://www.paypal.com/sdk/js?client-id=XN5FLB3QBZKDS&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
-" data-sdk-integration-source="button-factory"></script>
+      <script src="https://www.paypal.com/sdk/js?client-id=XN5FLB3QBZKDS&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
       <script>
         paypal.Buttons({
           style: {
@@ -86,7 +85,7 @@
           },
           onApprove: function(data, actions) {
             // Redirection après paiement réussi
-            window.location.href = "https://formspree.io/f/mnndnbpr"; // Remplace par l'URL où l'utilisateur soumettra son nom d'utilisateur TradingView
+            window.location.href = "https://formspree.io/f/mnndnbpr"; // Redirection vers le formulaire
           }
         }).render('#paypal-button-container-P-5JV802951F763663RNAGVWNQ'); // Renders the PayPal button
       </script>
@@ -95,3 +94,4 @@
   </div>
 </body>
 </html>
+
