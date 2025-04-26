@@ -16,7 +16,7 @@
   <div class="container">
     <h1>Merci pour votre achat ! 🎉</h1>
     <p>Veuillez remplir ce formulaire pour obtenir l'accès à votre indicateur TradingView :</p>
-    <form action="https://formspree.io/f/TON_ID_FORM" method="POST">
+    <form action="https://formspree.io/f/mnndnbpr" method="POST">
       <input type="email" name="email" placeholder="Votre adresse email" required><br>
       <input type="text" name="tradingview_username" placeholder="Votre pseudo TradingView" required><br>
       <button type="submit">Envoyer</button>
