@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merci pour votre achat !</title>
+  <style>
+    body { font-family: 'Poppins', sans-serif; background: #1a1a1a; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; }
+    .container { text-align: center; background: #2c2c2c; padding: 40px; border-radius: 12px; }
+    input, button { margin-top: 10px; padding: 10px; width: 90%; border-radius: 8px; border: none; }
+    button { background: #ff7e47; color: white; cursor: pointer; }
+    button:hover { background: #ff5a2a; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Merci pour votre achat ! 🎉</h1>
+    <p>Veuillez remplir ce formulaire pour obtenir l'accès à votre indicateur TradingView :</p>
+    <form action="https://formspree.io/f/TON_ID_FORM" method="POST">
+      <input type="email" name="email" placeholder="Votre adresse email" required><br>
+      <input type="text" name="tradingview_username" placeholder="Votre pseudo TradingView" required><br>
+      <button type="submit">Envoyer</button>
+    </form>
+  </div>
+</body>
+</html>
