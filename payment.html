@@ -91,11 +91,13 @@
     <div class="payment-options">
 
       <!-- PayPal Button -->
-      
-      <form action="confirmation.html" method="get" class="paypal-btn">
-        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" alt="Buy with PayPal" />
+      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="paypal-btn">
+        <input type="hidden" name="cmd" value="_s-xclick" />
+        <input type="hidden" name="hosted_button_id" value="H3F934U2D92RW" />
+        <input type="hidden" name="currency_code" value="USD" />
+        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" alt="Acheter avec PayPal" />
       </form>
-
+      
       <!-- Gumroad Button -->
       <a class="gumroad-link" href="https://algo8.gumroad.com/l/AlgoPro" target="_blank">
         <img src="https://cdn-icons-png.flaticon.com/512/5968/5968705.png" alt="Gumroad icon">
