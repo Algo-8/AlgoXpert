@@ -351,7 +351,7 @@
     <style>
         /* Ajoute ceci à la section <style> existante */
         .gradient-text {
-            background: linear-gradient(90deg, #ff7e5f, #feb47b, #86e3ce); /* Dégradé de couleurs */
+            background: linear-gradient(90deg, #ff7e5f, #feb47b); /* Dégradé de couleurs */
             -webkit-background-clip: text; /* Appliquer le dégradé au texte */
             -webkit-text-fill-color: transparent; /* Rendre le remplissage du texte transparent */
         }
@@ -378,38 +378,6 @@
         </div>
     </section>
 
-    <!-- Image Section -->
-    <section class="image-section">
-        <div class="container">
-            <img src="ᴀʟɢᴏxᴘᴇʀᴛ Image" alt="ᴀʟɢᴏxᴘᴇʀᴛ Image">
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section id="pricing" class="pricing">
-        <div class="container">
-            <img src="AlgoXpert Logo.png" alt="AlgoXpert Logo.png" style="display: block; margin: 0 auto 20px; width: 120px;">
-            <h2>Choose Your Plan</h2>
-            <div class="pricing-options">
-                <div class="pricing-box">
-                    <h3>Free Trial</h3>
-                    <p>Try <span class="gradient-text">AlgoXpert</span> for free for 7 days</p>
-                    <a href="freetrial.html" class="buy-now">Try for Free</a>
-                </div>
-                <div class="pricing-box">
-                    <h3>Monthly Subscription</h3>
-                    <p>Only $29.99 per month</p>
-                    <a href="payment.html" class="buy-now">Buy Now</a>
-                </div>
-                <div class="pricing-box">
-                    <h3>Annual Subscription</h3>
-                    <p>Only $299.99 per year</p>
-                    <a href="annual_payment.html" class="buy-now">Buy Now</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- FAQ Section -->
     <section>
         <div class="container">
@@ -431,6 +399,18 @@
                     <button class="faq-question">Can I cancel my subscription?</button>
                     <div class="faq-answer">
                         <p>Yes, you can cancel your subscription anytime from your user account.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">How can I contact support?</button>
+                    <div class="faq-answer">
+                        <p>You can contact our support team by using the chat bubble in the bottom right corner.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">What are the system requirements?</button>
+                    <div class="faq-answer">
+                        <p>You need a TradingView account and an active internet connection to use AlgoXpert.</p>
                     </div>
                 </div>
             </div>
@@ -462,6 +442,14 @@
             var form = document.querySelector('.help-form');
             form.style.display = form.style.display === 'block' ? 'none' : 'block';
         }
+
+        // FAQ accordion functionality
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            item.querySelector('.faq-question').addEventListener('click', () => {
+                item.classList.toggle('active');
+            });
+        });
     </script>
 
 </body>
