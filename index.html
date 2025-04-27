@@ -40,20 +40,17 @@
             text-align: center;
             clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
         }
-
         /* Animation du titre */
         @keyframes fadeIn {
             0% {
                 opacity: 0;
                 transform: translateY(-30px);
             }
-
             100% {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-
         header h1 {
             font-size: 48px;
             font-weight: 600;
@@ -284,56 +281,32 @@
             }
         }
 
-        /* Assistance Form */
+        /* Help Icon Styles */
         .help-icon {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background-color: #ff7e5f;
-            color: white;
-            padding: 15px;
+            background-color: #ff7e5f; /* Tu peux changer la couleur du fond */
             border-radius: 50%;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 999;
         }
 
-        .help-form {
-            display: none;
-            position: fixed;
-            bottom: 90px;
-            right: 30px;
-            background-color: #1e1e1e;
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            max-width: 300px;
-            width: 100%;
+        .help-icon a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .help-form input,
-        .help-form textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            background-color: #333;
-            color: white;
-            border: 1px solid #444;
-            border-radius: 5px;
+        .help-icon img {
+            width: 40px;
+            height: 40px;
         }
 
-        .help-form button {
-            background-color: #ff7e5f;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .help-form button:hover {
-            background-color: #feb47b;
+        /* Effet au survol */
+        .help-icon:hover {
+            background-color: #feb47b; /* Changer la couleur lors du survol */
         }
     </style>
 </head>
@@ -348,14 +321,6 @@
             <a href="#pricing" class="cta-button">Buy Now</a>
         </div>
     </header>
-    <style>
-        /* Ajoute ceci à la section <style> existante */
-        .gradient-text {
-            background: linear-gradient(90deg, #ff7e5f, #feb47b); /* Dégradé de couleurs */
-            -webkit-background-clip: text; /* Appliquer le dégradé au texte */
-            -webkit-text-fill-color: transparent; /* Rendre le remplissage du texte transparent */
-        }
-    </style>
 
     <!-- Features Section -->
     <section>
@@ -373,6 +338,38 @@
                 <div class="feature-box">
                     <h3>Performance</h3>
                     <p>Optimized to spot the best market opportunities at a glance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Section -->
+    <section class="image-section">
+        <div class="container">
+            <img src="ᴀʟɢᴏxᴘᴇʀᴛ Image" alt="ᴀʟɢᴏxᴘᴇʀᴛ Image">
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <img src="AlgoXpert Logo.png" alt="AlgoXpert Logo.png" style="display: block; margin: 0 auto 20px; width: 120px;">
+            <h2>Choose Your Plan</h2>
+            <div class="pricing-options">
+                <div class="pricing-box">
+                    <h3>Free Trial</h3>
+                    <p>Try <span class="gradient-text">AlgoXpert</span> for free for 7 days</p>
+                    <a href="freetrial.html" class="buy-now">Try for Free</a>
+                </div>
+                <div class="pricing-box">
+                    <h3>Monthly Subscription</h3>
+                    <p>Only $29.99 per month</p>
+                    <a href="payment.html" class="buy-now">Buy Now</a>
+                </div>
+                <div class="pricing-box">
+                    <h3>Annual Subscription</h3>
+                    <p>Only $299.99 per year</p>
+                    <a href="annual_payment.html" class="buy-now">Buy Now</a>
                 </div>
             </div>
         </div>
@@ -402,56 +399,33 @@
                     </div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question">How can I contact support?</button>
+                    <button class="faq-question">Which markets does <span class="gradient-text">AlgoXpert</span> support?</button>
                     <div class="faq-answer">
-                        <p>You can contact our support team by using the chat bubble in the bottom right corner.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">What are the system requirements?</button>
-                    <div class="faq-answer">
-                        <p>You need a TradingView account and an active internet connection to use AlgoXpert.</p>
+                        <p><span class="gradient-text">AlgoXpert</span> supports major cryptocurrency and forex markets. Stay tuned for more!</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Assistance Button -->
-    <div class="help-icon" onclick="toggleHelpForm()">💬</div>
-
-    <!-- Assistance Form -->
-    <div class="help-form">
-        <form action="https://formspree.io/f/maykzxwg" method="POST">
-            <h3>Need Assistance?</h3>
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <textarea name="message" placeholder="Your Message" required></textarea>
-            <button type="submit">Send</button>
-        </form>
-    </div>
-
     <!-- Footer -->
     <footer>
-        <p>&copy; 2025 AlgoXpert. All Rights Reserved.</p>
+        <p>&copy; 2025 <span class="gradient-text">AlgoXpert</span>. All rights reserved.</p>
     </footer>
 
-    <script>
-        // Toggle the help form visibility
-        function toggleHelpForm() {
-            var form = document.querySelector('.help-form');
-            form.style.display = form.style.display === 'block' ? 'none' : 'block';
-        }
+    <!-- Help Icon -->
+    <div class="help-icon">
+        <a href="mailto:support@algoxpert.com"><img src="help-icon.png" alt="Help Icon"></a>
+    </div>
 
-        // FAQ accordion functionality
-        const faqItems = document.querySelectorAll('.faq-item');
-        faqItems.forEach(item => {
-            item.querySelector('.faq-question').addEventListener('click', () => {
-                item.classList.toggle('active');
+    <script>
+        document.querySelectorAll('.faq-question').forEach(item => {
+            item.addEventListener('click', () => {
+                const parent = item.parentElement;
+                parent.classList.toggle('active');
             });
         });
     </script>
-
 </body>
 
 </html>
