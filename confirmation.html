@@ -41,24 +41,17 @@
       color: #ccc;
     }
 
-    input, button {
+    button {
       width: 100%;
       padding: 12px;
       margin: 10px 0;
       border: none;
       border-radius: 8px;
       font-size: 16px;
-    }
-
-    input {
-      background: #333;
-      color: #f5f5f5;
-    }
-
-    button {
       background: #ff7e47;
       color: #fff;
       cursor: pointer;
+      transition: background 0.3s;
     }
 
     button:hover {
@@ -70,20 +63,13 @@
 
 <div class="container">
   <h1>Almost Done!</h1>
-  <p>We have received your payment. Please enter your TradingView username below:</p>
-  <form action="https://formspree.io/f/mnndnbpr" method="POST">
-    <input type="text" name="tradingview_username" placeholder="Your TradingView Username" required>
-    <input type="hidden" name="subscription_id" id="subscription_id" value="">
-    <button type="submit">Submit</button>
-  </form>
+  <p>We have received your payment. Click the button below to submit your TradingView username:</p>
+  <button onclick="redirectToForm()">Submit TradingView Username</button>
 </div>
 
 <script>
-  // Retrieve the subscription ID from the URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const subId = urlParams.get('sub_id');
-  if (subId) {
-    document.getElementById('subscription_id').value = subId;
+  function redirectToForm() {
+    window.open('https://forms.gle/iYNHPqcBC2RdwgFG6', '_blank');
   }
 </script>
 
