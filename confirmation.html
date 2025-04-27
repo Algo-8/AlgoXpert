@@ -1,95 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Choose your payment method for AlgoPro"/>
-  <title>AlgoPro - Annual Payment</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlgoXpert - Confirmation</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="AlgoXpert Logo.png">
   <style>
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
+      padding: 0;
       background: #1a1a1a;
       color: #f5f5f5;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      text-align: center;
     }
 
     .container {
       background-color: #2c2c2c;
-      padding: 50px 30px;
+      padding: 40px 30px;
       border-radius: 16px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-      text-align: center;
-      max-width: 400px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      max-width: 500px;
       width: 90%;
     }
 
     h1 {
-      font-size: 32px;
-      margin-bottom: 20px;
       color: #ff7e47;
+      margin-bottom: 20px;
     }
 
-    p.description {
+    p {
+      margin-bottom: 20px;
       font-size: 16px;
       color: #ccc;
-      margin-bottom: 30px;
     }
 
-    .payment-options {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .paypal-btn img {
+    input, button {
       width: 100%;
-      max-width: 220px;
-      border-radius: 10px;
-      transition: transform 0.2s ease;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    input {
+      background: #333;
+      color: #f5f5f5;
+    }
+
+    button {
+      background: #ff7e47;
+      color: #fff;
       cursor: pointer;
     }
 
-    .paypal-btn img:hover {
-      transform: scale(1.05);
+    button:hover {
+      background: #ff9a6c;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>AlgoPro Annual Payment</h1>
-    <p class="description">Choose a method to subscribe to the annual plan:</p>
-    <div class="payment-options">
 
-      <!-- PayPal Subscription Button -->
-      <div id="paypal-button-container-P-6BH46178PG4193706NAGXLOI"></div>
-      <script src="https://www.paypal.com/sdk/js?client-id=AXkCEktwul232nh0rxhGPCvoyExZMmpwcYf7r7AzHaAc3V3k1qmRGCTCGMTELUGDcnXv98oz_kOz0Zo0&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
-      <script>
-        paypal.Buttons({
-            style: {
-                shape: 'rect',
-                color: 'silver',
-                layout: 'vertical',
-                label: 'paypal'
-            },
-            createSubscription: function(data, actions) {
-              return actions.subscription.create({
-                /* Creates the subscription */
-                plan_id: 'P-6BH46178PG4193706NAGXLOI'
-              });
-            },
-            onApprove: function(data, actions) {
-              // Subscription has been approved, now redirect to the form page
-              window.location.href = "https://formspree.io/f/mnndnbpr"; // Replace with your actual form URL
-            }
-        }).render('#paypal-button-container-P-6BH46178PG4193706NAGXLOI'); // Renders the PayPal button
-      </script>
-    </div>
-  </div>
+<div class="container">
+  <h1>Almost Done!</h1>
+  <p>We have received your payment. Please enter your TradingView username below:</p>
+  <form action="https://formspree.io/f/your-form-id" method="POST">
+    <input type="text" name="tradingview_username" placeholder="Your TradingView Username" required>
+    <input type="hidden" name="subscription_id" id="subscription_id" value="">
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<script>
+  // Retrieve the subscription ID from the URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const subId = urlParams.get('sub_id');
+  if (subId) {
+    document.getElementById('subscription_id').value = subId;
+  }
+</script>
+
 </body>
 </html>
