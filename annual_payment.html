@@ -68,27 +68,29 @@
 
       <!-- PayPal Subscription Button -->
       <div id="paypal-button-container-P-6BH46178PG4193706NAGXLOI"></div>
+
       <script src="https://www.paypal.com/sdk/js?client-id=AXkCEktwul232nh0rxhGPCvoyExZMmpwcYf7r7AzHaAc3V3k1qmRGCTCGMTELUGDcnXv98oz_kOz0Zo0&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
+      
       <script>
         paypal.Buttons({
-            style: {
-                shape: 'rect',
-                color: 'silver',
-                layout: 'vertical',
-                label: 'paypal'
-            },
-            createSubscription: function(data, actions) {
-              return actions.subscription.create({
-                /* Creates the subscription */
-                plan_id: 'P-6BH46178PG4193706NAGXLOI'
-              });
-            },
-            onApprove: function(data, actions) {
-              // Subscription has been approved, now redirect to the form page
-              window.location.href = "https://algo-8.github.io/AlgoXpert/confirmation"; // Replace with your actual form URL
-            }
-        }).render('#paypal-button-container-P-6BH46178PG4193706NAGXLOI'); // Renders the PayPal button
+          style: {
+            shape: 'rect',
+            color: 'silver',
+            layout: 'vertical',
+            label: 'paypal'
+          },
+          createSubscription: function(data, actions) {
+            return actions.subscription.create({
+              plan_id: 'P-6BH46178PG4193706NAGXLOI'
+            });
+          },
+          onApprove: function(data, actions) {
+            const subscriptionID = data.subscriptionID;
+            window.location.href = `https://algo-8.github.io/AlgoXpert/confirmation.html?sub_id=${subscriptionID}`;
+          }
+        }).render('#paypal-button-container-P-6BH46178PG4193706NAGXLOI');
       </script>
+
     </div>
   </div>
 </body>
