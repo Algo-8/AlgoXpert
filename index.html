@@ -393,23 +393,48 @@
         </div>
     </section>
 
+       
+
     <!-- Footer -->
     <footer>
         <p>© 2024 <span class="gradient-text">AlgoXpert</span>. All rights reserved.</p>
         <p><a href="terms.html" style="color: #ff7e5f; text-decoration: none;">Terms and Conditions</a> | <a href="privacy-policy.html" style="color: #ff7e5f; text-decoration: none;">Privacy Policy</a></p>
     </footer>
 
+    <!-- Section d'assistance (chat) à insérer ici juste avant la balise de fermeture </body> -->
+    <div id="assistance" style="position: fixed; bottom: 20px; right: 20px; background-color: #ff7e5f; color: white; padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+        Need Assistance?
+    </div>
+
+    <!-- Form for Assistance (Popup) -->
+    <div id="assistance-form" style="display: none; position: fixed; bottom: 80px; right: 20px; background-color: #333; color: white; padding: 20px; border-radius: 10px; width: 300px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+        <h3>Contact Us</h3>
+        <form action="https://formspree.io/f/yourformid" method="POST">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px;">
+            
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px;">
+            
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required style="width: 100%; padding: 10px; height: 100px; border: none; border-radius: 5px;"></textarea>
+            
+            <button type="submit" style="background-color: #ff7e5f; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin-top: 10px; cursor: pointer;">Send</button>
+        </form>
+        <button id="close-assistance" style="background-color: #888; color: white; padding: 5px 10px; border: none; border-radius: 5px; margin-top: 10px; cursor: pointer;">Close</button>
+    </div>
 
     <script>
-        // JavaScript for FAQ Toggle
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const faqItem = question.parentElement;
-                faqItem.classList.toggle('active');
-            });
+        // Show the assistance form
+        document.getElementById("assistance").addEventListener("click", function() {
+            document.getElementById("assistance-form").style.display = "block";
+        });
+
+        // Close the assistance form
+        document.getElementById("close-assistance").addEventListener("click", function() {
+            document.getElementById("assistance-form").style.display = "none";
         });
     </script>
-
 </body>
-
 </html>
+
