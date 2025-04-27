@@ -86,10 +86,10 @@
                 });
             },
             onApprove: function(data, actions) {
-                // Redirection après paiement réussi
-                window.location.href = "https://algo-8.github.io/AlgoXpert/confirmation.html"; // Remplace par l'URL de ton formulaire
+                const subscriptionID = data.subscriptionID;
+                window.location.href = `https://algo-8.github.io/AlgoXpert/confirmation.html?sub_id=${subscriptionID}`;
             }
-        }).render('#paypal-button-container-P-2FF51416VK231872JNAGXFAI'); // Renders the PayPal button
+        }).render('#paypal-button-container-P-2FF51416VK231872JNAGXFAI');
       </script>
       
     </div>
