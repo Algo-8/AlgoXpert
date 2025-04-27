@@ -280,6 +280,34 @@
                 font-size: 28px; /* Réduction de la taille du titre */
             }
         }
+
+        /* Help Icon Styles */
+        .help-icon {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #ff7e5f; /* Tu peux changer la couleur du fond */
+            border-radius: 50%;
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+        }
+
+        .help-icon a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .help-icon img {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Effet au survol */
+        .help-icon:hover {
+            background-color: #feb47b; /* Changer la couleur lors du survol */
+        }
     </style>
 </head>
 
@@ -293,14 +321,7 @@
             <a href="#pricing" class="cta-button">Buy Now</a>
         </div>
     </header>
-    <style>
-        /* Ajoute ceci à la section <style> existante */
-        .gradient-text {
-            background: linear-gradient(90deg, #ff7e5f, #feb47b, #86e3ce); /* Dégradé de couleurs */
-            -webkit-background-clip: text; /* Appliquer le dégradé au texte */
-            -webkit-text-fill-color: transparent; /* Rendre le remplissage du texte transparent */
-        }
-    </style>
+
     <!-- Features Section -->
     <section>
         <div class="container">
@@ -380,13 +401,7 @@
                 <div class="faq-item">
                     <button class="faq-question">Which markets does <span class="gradient-text">AlgoXpert</span> support?</button>
                     <div class="faq-answer">
-                        <p><span class="gradient-text">AlgoXpert</span> supports stock, cryptocurrency, Forex, and commodity markets.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">Can I use <span class="gradient-text">AlgoXpert</span> on multiple devices?</button>
-                    <div class="faq-answer">
-                        <p>Yes, you can use <span class="gradient-text">AlgoXpert</span> on multiple devices as long as you use the same account.</p>
+                        <p><span class="gradient-text">AlgoXpert</span> supports major cryptocurrency and forex markets. Stay tuned for more!</p>
                     </div>
                 </div>
             </div>
@@ -395,23 +410,22 @@
 
     <!-- Footer -->
     <footer>
-        <p>© 2024 <span class="gradient-text">AlgoXpert</span>. All rights reserved.</p>
-        <p><a href="terms.html" style="color: #ff7e5f; text-decoration: none;">Terms and Conditions</a> | <a href="privacy-policy.html" style="color: #ff7e5f; text-decoration: none;">Privacy Policy</a></p>
+        <p>&copy; 2025 <span class="gradient-text">AlgoXpert</span>. All rights reserved.</p>
     </footer>
 
+    <!-- Help Icon -->
+    <div class="help-icon">
+        <a href="mailto:support@algoxpert.com"><img src="help-icon.png" alt="Help Icon"></a>
+    </div>
 
     <script>
-        // JavaScript for FAQ Toggle
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const faqItem = question.parentElement;
-                faqItem.classList.toggle('active');
+        document.querySelectorAll('.faq-question').forEach(item => {
+            item.addEventListener('click', () => {
+                const parent = item.parentElement;
+                parent.classList.toggle('active');
             });
         });
     </script>
-
 </body>
 
 </html>
-
-
