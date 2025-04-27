@@ -58,31 +58,6 @@
     .paypal-btn img:hover {
       transform: scale(1.05);
     }
-
-    .gumroad-link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background-color: #ff7e47;
-      color: white;
-      padding: 14px 20px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 16px;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    .gumroad-link:hover {
-      background-color: #ff5a2a;
-      transform: scale(1.05);
-    }
-
-    .gumroad-link img {
-      width: 24px;
-      height: 24px;
-    }
   </style>
 </head>
 <body>
@@ -91,19 +66,29 @@
     <p class="description">Choose a method to subscribe to the annual plan:</p>
     <div class="payment-options">
 
-      <!-- PayPal Button -->
-      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="paypal-btn">
-        <input type="hidden" name="cmd" value="_s-xclick" />
-        <input type="hidden" name="hosted_button_id" value="BYMSM3DTZ8GAS" />
-        <input type="hidden" name="currency_code" value="USD" />
-        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" alt="Pay with PayPal" />
-      </form>
-
-      <!-- Gumroad Button -->
-      <a class="gumroad-link" href="https://algo8.gumroad.com/l/AlgoPro" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968705.png" alt="Gumroad icon">
-        Buy via Gumroad
-      </a>
+      <!-- PayPal Subscription Button -->
+      <div id="paypal-button-container-P-6BH46178PG4193706NAGXLOI"></div>
+      <script src="https://www.paypal.com/sdk/js?client-id=AXkCEktwul232nh0rxhGPCvoyExZMmpwcYf7r7AzHaAc3V3k1qmRGCTCGMTELUGDcnXv98oz_kOz0Zo0&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
+      <script>
+        paypal.Buttons({
+            style: {
+                shape: 'rect',
+                color: 'silver',
+                layout: 'vertical',
+                label: 'paypal'
+            },
+            createSubscription: function(data, actions) {
+              return actions.subscription.create({
+                /* Creates the subscription */
+                plan_id: 'P-6BH46178PG4193706NAGXLOI'
+              });
+            },
+            onApprove: function(data, actions) {
+              // Subscription has been approved, now redirect to the form page
+              window.location.href = "https://algo-8.github.io/AlgoXpert/confirmation"; // Replace with your actual form URL
+            }
+        }).render('#paypal-button-container-P-6BH46178PG4193706NAGXLOI'); // Renders the PayPal button
+      </script>
     </div>
   </div>
 </body>
