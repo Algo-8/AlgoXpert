@@ -41,22 +41,14 @@
       color: #ccc;
     }
 
-    input, button {
+    button {
       width: 100%;
       padding: 12px;
-      margin: 10px 0;
+      margin-top: 20px;
+      background: #ff7e47;
       border: none;
       border-radius: 8px;
       font-size: 16px;
-    }
-
-    input {
-      background: #333;
-      color: #f5f5f5;
-    }
-
-    button {
-      background: #ff7e47;
       color: #fff;
       cursor: pointer;
     }
@@ -70,21 +62,22 @@
 
 <div class="container">
   <h1>Almost Done!</h1>
-  <p>We have received your payment. Please enter your TradingView username below:</p>
-  <form action="https://formspree.io/f/mnndnbpr" method="POST">
-    <input type="text" name="tradingview_username" placeholder="Your TradingView Username" required>
-    <input type="hidden" name="subscription_id" id="subscription_id" value="">
-    <button type="submit">Submit</button>
-  </form>
+  <p>We have received your payment. Please click the button below to complete your confirmation:</p>
+  <button id="confirmButton">Confirm my TradingView username</button>
 </div>
 
 <script>
-  // Retrieve the subscription ID from the URL
+  // Récupérer le sub_id depuis l'URL
   const urlParams = new URLSearchParams(window.location.search);
   const subId = urlParams.get('sub_id');
-  if (subId) {
-    document.getElementById('subscription_id').value = subId;
-  }
+
+  document.getElementById('confirmButton').addEventListener('click', function() {
+    let url = "https://tally.so/r/wbg600"; // Ton lien Tally
+    if (subId) {
+      url += "?sub_id=" + encodeURIComponent(subId);
+    }
+    window.location.href = url;
+  });
 </script>
 
 </body>
