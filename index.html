@@ -392,6 +392,42 @@
             </div>
         </div>
     </section>
+    <!-- Le CSS pour gérer le + et − -->
+    <style>
+    .faq-question {
+        position: relative;
+        padding-right: 25px; /* Laisse de l'espace pour le symbole */
+        cursor: pointer;
+        background: none;
+        border: none;
+        font-size: 18px;
+        text-align: left;
+        width: 100%;
+    }
+
+    .faq-question:after {
+        content: '\002B'; /* + par défaut */
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 20px;
+    }
+    
+    .faq-item.active .faq-question:after {
+        content: '\2212'; /* − si ouvert */
+    }
+    
+    .faq-answer {
+        display: none;
+        padding: 10px 0;
+    }
+    
+    .faq-item.active .faq-answer {
+        display: block;
+    }
+    </style>
+
     <script>
         // Fonction pour faire apparaître ou disparaître les réponses des questions
         const faqItems = document.querySelectorAll('.faq-item');
@@ -399,17 +435,11 @@
         faqItems.forEach(item => {
             const questionButton = item.querySelector('.faq-question');
             questionButton.addEventListener('click', () => {
-                const answer = item.querySelector('.faq-answer');
-                const isVisible = answer.style.display === 'block';
-                // Si la réponse est visible, on la cache, sinon on l'affiche
-                answer.style.display = isVisible ? 'none' : 'block';
-
-                // Changer le symbole + / - dans la question
-                const questionSymbol = questionButton.querySelector('span');
-                questionSymbol.textContent = isVisible ? '+' : '−';
+                item.classList.toggle('active');
             });
         });
     </script>
+
        
 
     <!-- Footer -->
