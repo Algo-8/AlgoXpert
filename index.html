@@ -288,7 +288,26 @@
                 font-size: 28px; /* Réduction de la taille du titre */
             }
         }
+        .best-seller-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, #ff7e5f, #feb47b);
+            color: white;
+            padding: 5px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    
+        .pricing-box-wrapper {
+            position: relative;
+            margin-top: 20px;
+        }
     </style>
+
 </head>
 
 <body>
@@ -343,11 +362,15 @@
             <img src="AlgoXpert Logo.png" alt="AlgoXpert Logo.png" style="display: block; margin: 0 auto 20px; width: 120px;">
             <h2>Choose Your Plan</h2>
             <div class="pricing-options">
-                <div class="pricing-box">
-                    <h3>Free Trial</h3>
-                    <p>Try <span class="gradient-text">AlgoXpert</span> for free for 7 days</p>
-                    <a href="freetrial.html" class="buy-now">Try for Free</a>
+                <div class="pricing-box-wrapper">
+                    <div class="best-seller-badge">Best Seller</div>
+                    <div class="pricing-box">
+                        <h3>Free Trial</h3>
+                        <p>Try <span class="gradient-text">AlgoXpert</span> for free for 7 days</p>
+                        <a href="freetrial.html" class="buy-now">Try for Free</a>
+                    </div>
                 </div>
+
                 <div class="pricing-box">
                     <h3>Monthly Subscription</h3>
                     <p>Only $29.99 per month</p>
