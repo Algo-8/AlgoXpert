@@ -306,6 +306,34 @@
             position: relative;
             margin-top: 20px;
         }
+        .animated-text {
+            margin-top: 20px;
+            height: 30px;
+            overflow: hidden;
+            position: relative;
+            font-size: 20px;
+            font-weight: 500;
+            color: #ff7e5f;
+        }
+        
+        .animated-text span {
+            display: block;
+            height: 30px;
+            animation: slide 14s infinite;
+        }
+        
+        @keyframes slide {
+            0% { transform: translateY(0); }
+            14% { transform: translateY(0); }
+            28% { transform: translateY(-30px); }
+            42% { transform: translateY(-60px); }
+            56% { transform: translateY(-90px); }
+            70% { transform: translateY(-120px); }
+            84% { transform: translateY(-150px); }
+            98% { transform: translateY(-180px); }
+            100% { transform: translateY(0); }
+        }
+
     </style>
 
 </head>
@@ -316,6 +344,15 @@
     <header>
         <div class="container">
             <h1>Discover <span class="gradient-text">AlgoXpert</span>: The Revolutionary Indicator for Traders</h1>
+            <div class="animated-text">
+                <span>3 Types of Signals</span>
+                <span>Adjustable Sensitivity</span>
+                <span>Take Profits & Targets</span>
+                <span>Reversal Points Detection</span>
+                <span>Built-in Volume Profile</span>
+                <span>Customizable Bar Colors</span>
+                <span>Smart Trading Panel</span>
+            </div>
             <p>AlgoXpert is the tool you need for informed decisions, thanks to advanced real-time market analysis. Maximize gains with clear and precise signals.</p>
             <a href="#pricing" class="cta-button">Buy Now</a>
         </div>
@@ -344,6 +381,39 @@
                 <div class="feature-box">
                     <h3>Performance</h3>
                     <p>Optimized to spot the best market opportunities at a glance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Key Features Section -->
+    <section style="background: linear-gradient(45deg, #1e1e1e, #2c2c2c);">
+        <div class="container">
+            <h2>Key Features of <span class="gradient-text">AlgoXpert</span></h2>
+            <div class="features" style="margin-top: 40px;">
+                <div class="feature-box" style="background-color: #2c2c2c;">
+                    <h3>Multi-Signal Detection</h3>
+                    <p>Three types of powerful signals to guide your trades like a professional.</p>
+                </div>
+                <div class="feature-box" style="background-color: #2c2c2c;">
+                    <h3>Adjustable Sensitivity</h3>
+                    <p>Fine-tune the sensitivity to match your trading style and market volatility.</p>
+                </div>
+                <div class="feature-box" style="background-color: #2c2c2c;">
+                    <h3>Targets & Take Profits</h3>
+                    <p>Clear target zones and automatic take-profit points for smarter exits.</p>
+                </div>
+                <div class="feature-box" style="background-color: #2c2c2c;">
+                    <h3>Reversal Points Detection</h3>
+                    <p>Identify key reversal areas to optimize your entries and exits with precision.</p>
+                </div>
+                <div class="feature-box" style="background-color: #2c2c2c;">
+                    <h3>Integrated Volume Profile</h3>
+                    <p>Spot high-activity zones with built-in volume profiling for deeper insights.</p>
+                </div>
+                <div class="feature-box" style="background-color: #2c2c2c;">
+                    <h3>Fully Customizable</h3>
+                    <p>Customize panel settings, colors, and bar styles to fit your trading preferences.</p>
                 </div>
             </div>
         </div>
