@@ -357,33 +357,44 @@
     </section>
 
     <!-- Pricing Section -->
-    <section id="pricing" class="pricing">
+    <section id="pricing" class="pricing" style="background: #111; padding: 50px 0;">
         <div class="container">
-            <img src="AlgoXpert Logo.png" alt="AlgoXpert Logo.png" style="display: block; margin: 0 auto 20px; width: 120px;">
-            <h2>Choose Your Plan</h2>
-            <div class="pricing-options">
-                <div class="pricing-box" style="position: relative; overflow: hidden;">
-                    <!-- Badge Best Seller -->
-                    <div style="position: absolute; top: -10px; right: -40px; background: linear-gradient(90deg, #ff7e5f, #feb47b); color: white; padding: 5px 50px; transform: rotate(45deg); font-weight: bold; font-size: 14px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+            <img src="AlgoXpert Logo.png" alt="AlgoXpert Logo" style="display: block; margin: 0 auto 20px; width: 120px;">
+            <h2 style="text-align: center; color: white; margin-bottom: 40px;">Choose Your Plan</h2>
+            <div class="pricing-options" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+    
+                <!-- Free Trial Box -->
+                <div class="pricing-box" style="background: #1c1c1c; border-radius: 15px; padding: 30px 20px; text-align: center; position: relative; width: 300px;">
+                    <!-- Ribbon -->
+                    <div style="
+                        position: absolute; 
+                        top: 10px; 
+                        right: -45px; 
+                        background: #f2994a; 
+                        color: white; 
+                        font-size: 12px; 
+                        font-weight: bold; 
+                        padding: 5px 50px;
+                        transform: rotate(45deg);
+                        transform-origin: top right;
+                        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                    ">
                         BEST SELLER
                     </div>
-                    <h3>Free Trial</h3>
-                    <p>Try <span class="gradient-text">AlgoXpert</span> for free for 7 days</p>
-                    <a href="freetrial.html" class="buy-now">Try for Free</a>
+    
+                    <h3 style="color: white; font-size: 24px; margin-bottom: 15px;">Free Trial</h3>
+                    <p style="color: #ccc; font-size: 16px; margin-bottom: 30px;">
+                        Try <span style="background: linear-gradient(90deg, #ff7e5f, #feb47b); -webkit-background-clip: text; color: transparent;">AlgoXpert</span> for free for 7 days
+                    </p>
+                    <a href="freetrial.html" style="display: inline-block; background: white; color: black; padding: 12px 30px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 16px;">
+                        Try for Free
+                    </a>
                 </div>
-                <div class="pricing-box">
-                    <h3>Monthly Subscription</h3>
-                    <p>Only $29.99 per month</p>
-                    <a href="payment.html" class="buy-now">Buy Now</a>
-                </div>
-                <div class="pricing-box">
-                    <h3>Annual Subscription</h3>
-                    <p>Only $299.99 per year</p>
-                    <a href="annual_payment.html" class="buy-now">Buy Now</a>
-                </div>
+    
             </div>
         </div>
     </section>
+
 
 
     <!-- FAQ Section -->
