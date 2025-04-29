@@ -336,44 +336,53 @@
             100% { transform: translateY(0); }
         }
         .feature-box {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+            flex: 1 1 30%;
+            margin: 10px;
+            min-height: 250px; /* Hauteur minimale pour garder un bon espace */
             position: relative;
-            overflow: hidden;
-            cursor: pointer;
+            overflow: hidden; /* Masque le contenu qui dépasse */
         }
         
-        .feature-box .text-content,
+        /* Contenu texte */
+        .feature-box .text-content {
+            transition: opacity 0.3s ease;
+        }
+        
+        /* Contenu image masqué par défaut */
         .feature-box .image-content {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            padding: 30px;
-            box-sizing: border-box;
-            transition: opacity 0.3s ease;
-        }
-        
-        .feature-box .image-content {
             opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
         }
         
         .feature-box .image-content img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 15px;
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 10px;
         }
         
-        /* Afficher l'image au survol */
+        /* Effet au survol : texte invisible, image visible */
         .feature-box:hover .text-content {
             opacity: 0;
         }
         
         .feature-box:hover .image-content {
             opacity: 1;
+            pointer-events: auto;
         }
 
     </style>
