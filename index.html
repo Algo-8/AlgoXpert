@@ -10,6 +10,8 @@
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
         /* Global Styles */
@@ -387,37 +389,38 @@
     </section>
     
     <!-- Key Features Section -->
-    <section style="background: linear-gradient(45deg, #1e1e1e, #2c2c2c);">
+    <section style="background: linear-gradient(45deg, #1e1e1e, #2c2c2c);" data-aos="fade-up">
         <div class="container">
             <h2>Key Features of <span class="gradient-text">AlgoXpert</span></h2>
             <div class="features" style="margin-top: 40px;">
-                <div class="feature-box" style="background-color: #2c2c2c;">
+                <div class="feature-box" style="background-color: #2c2c2c;" data-aos="zoom-in" data-aos-delay="0">
                     <h3>Multi-Signal Detection</h3>
                     <p>Three types of powerful signals to guide your trades like a professional.</p>
                 </div>
-                <div class="feature-box" style="background-color: #2c2c2c;">
+                <div class="feature-box" style="background-color: #2c2c2c;" data-aos="zoom-in" data-aos-delay="100">
                     <h3>Adjustable Sensitivity</h3>
                     <p>Fine-tune the sensitivity to match your trading style and market volatility.</p>
                 </div>
-                <div class="feature-box" style="background-color: #2c2c2c;">
+                <div class="feature-box" style="background-color: #2c2c2c;" data-aos="zoom-in" data-aos-delay="200">
                     <h3>Targets & Take Profits</h3>
                     <p>Clear target zones and automatic take-profit points for smarter exits.</p>
                 </div>
-                <div class="feature-box" style="background-color: #2c2c2c;">
+                <div class="feature-box" style="background-color: #2c2c2c;" data-aos="zoom-in" data-aos-delay="300">
                     <h3>Reversal Points Detection</h3>
                     <p>Identify key reversal areas to optimize your entries and exits with precision.</p>
                 </div>
-                <div class="feature-box" style="background-color: #2c2c2c;">
+                <div class="feature-box" style="background-color: #2c2c2c;" data-aos="zoom-in" data-aos-delay="400">
                     <h3>Integrated Volume Profile</h3>
                     <p>Spot high-activity zones with built-in volume profiling for deeper insights.</p>
                 </div>
-                <div class="feature-box" style="background-color: #2c2c2c;">
+                <div class="feature-box" style="background-color: #2c2c2c;" data-aos="zoom-in" data-aos-delay="500">
                     <h3>Fully Customizable</h3>
                     <p>Customize panel settings, colors, and bar styles to fit your trading preferences.</p>
                 </div>
             </div>
         </div>
     </section>
+
 
     <!-- Image Section -->
     <section class="image-section">
@@ -549,6 +552,16 @@
             }
         });
     </script>   
+        <!-- AOS Animation JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        once: true, // Ne rejoue pas l’animation quand on remonte
+        duration: 800, // Durée des animations (ms)
+        offset: 120 // Distance avant que l’élément entre dans le viewport
+      });
+    </script>
+
 </body>
 </html>
 
