@@ -369,12 +369,12 @@
         }
         
         .feature-box .image-content img {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Remplit tout le conteneur, quitte à rogner */
             border-radius: 10px;
         }
-        
+
         /* Effet au survol : texte invisible, image visible */
         .feature-box:hover .text-content {
             opacity: 0;
