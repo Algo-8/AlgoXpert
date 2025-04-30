@@ -645,17 +645,18 @@
             overflow-x: auto;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
-            padding: 20px;
             gap: 16px;
-            margin: 0 -20px; /* 🔧 EXTENSION pour échapper au container */
+        
+            padding: 20px 16px 20px 16px; /* marges à gauche/droite pour ne pas coller */
+            margin-left: -16px; /* 🔧 retire le padding du container qui peut décaler */
+            margin-right: -16px;
           }
         
           .color-gallery img {
             flex: 0 0 auto;
             width: 240px;
-            max-width: unset;
+            max-width: none; /* important */
             scroll-snap-align: center;
-            border-radius: 15px;
           }
         }
 
