@@ -863,7 +863,20 @@
         offset: 120 // Distance avant que l’élément entre dans le viewport
       });
     </script>
+    <script>
+    // Slider automatique pour la version mobile
+        document.addEventListener("DOMContentLoaded", function () {
+            const boxes = document.querySelectorAll(".mobile-slider .feature-box");
+            let currentIndex = 0;
     
+            setInterval(() => {
+                boxes[currentIndex].classList.remove("active");
+                currentIndex = (currentIndex + 1) % boxes.length;
+                boxes[currentIndex].classList.add("active");
+            }, 2000); // 2000 ms = 2 secondes
+        });
+    </script>
+
 
 
 </body>
