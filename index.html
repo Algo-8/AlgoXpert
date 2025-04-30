@@ -32,6 +32,7 @@
             width: 90%;
             margin: 0 auto;
             max-width: 1200px;
+            overflow-x: visible;
         }
 
         /* Header */
@@ -637,7 +638,6 @@
           box-shadow: 0 8px 24px rgba(255, 126, 95, 0.5);
         }
         
-        /* Mobile scroll gallery */
         @media (max-width: 768px) {
           .color-gallery {
             display: flex;
@@ -645,18 +645,20 @@
             overflow-x: auto;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
-            padding: 20px 24px 20px 24px; /* marge à gauche ET à droite */
-            gap: 16px; /* espace entre les images */
+            padding: 20px;
+            gap: 16px;
+            margin: 0 -20px; /* 🔧 EXTENSION pour échapper au container */
           }
         
           .color-gallery img {
             flex: 0 0 auto;
-            width: 240px; /* ✅ FIX: impose une largeur fixe pour chaque image */
-            max-width: unset; /* empêche max-width de 260px de s'appliquer ici */
+            width: 240px;
+            max-width: unset;
             scroll-snap-align: center;
             border-radius: 15px;
           }
         }
+
 
     </style>
 
