@@ -702,7 +702,12 @@
             100% { transform: translateX(0); opacity: 0.7; }
           }
         }
-
+        @media (max-width: 768px) {
+          section.customizable-section {
+            padding-top: 40px !important;
+            padding-bottom: 40px !important;
+          }
+        }
 
     </style>
 
@@ -855,7 +860,7 @@
         </div>
     </section>
     <!-- Customization Section -->
-    <section style="position: relative; background: transparent; padding: 100px 0; overflow: hidden; z-index: 0;">
+    <section class="customizable-section" style="position: relative; padding: 100px 0; background: linear-gradient(135deg, #1a1a1a, #2c2c2c); overflow: hidden;">
 
 
       <div class="color-pulse-bg"></div>
