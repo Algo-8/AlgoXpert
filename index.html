@@ -714,29 +714,16 @@
             padding-bottom: 40px !important;
           }
         }
-        .animated-image {
-          opacity: 0;
-          transform: scale(0.95);
-          animation: fadeZoomIn 1.4s ease-out forwards;
+        .interactive-image {
           border-radius: 12px;
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-          transition: transform 0.4s ease;
+          transition: transform 0.4s ease, box-shadow 0.4s ease;
+          will-change: transform;
         }
         
-        .animated-image:hover {
-          transform: scale(1.02);
-        }
-        
-        /* Animation at load */
-        @keyframes fadeZoomIn {
-          0% {
-            opacity: 0;
-            transform: scale(0.95);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1);
-          }
+        .interactive-image:hover {
+          transform: scale(1.03);
+          box-shadow: 0 12px 40px rgba(255, 126, 95, 0.4);
         }
 
 
