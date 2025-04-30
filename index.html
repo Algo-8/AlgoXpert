@@ -678,39 +678,39 @@
             </div>
         </div>
     </section>
-    <!-- Mobile Key Features Carousel -->
-        <div class="mobile-slider">
-            <div class="feature-box active">
-                <img src="Keyfeatures_signals_Image1.png" alt="Multi-Signal Detection">
-                <h3>Multi-Signal Detection</h3>
-                <p>Three types of powerful signals to guide your trades like a professional.</p>
-            </div>
-            <div class="feature-box">
-                <img src="Keyfeatures_sensibilité_Image2.png" alt="Adjustable Sensitivity">
-                <h3>Adjustable Sensitivity</h3>
-                <p>Fine-tune the sensitivity to match your trading style and market volatility.</p>
-            </div>
-            <div class="feature-box">
-                <img src="Keyfeatures_targets_Image3.png" alt="Targets & Take Profits">
-                <h3>Targets & Take Profits</h3>
-                <p>Clear target zones and automatic take-profit points for smarter exits.</p>
-            </div>
-            <div class="feature-box">
-                <img src="Keyfeatures_reversal_Image4.png" alt="Reversal Points Detection">
-                <h3>Reversal Points Detection</h3>
-                <p>Identify key reversal areas to optimize your entries and exits with precision.</p>
-            </div>
-            <div class="feature-box">
-                <img src="Keyfeatures_volumeprofile_Image5.png" alt="Integrated Volume Profile">
-                <h3>Integrated Volume Profile</h3>
-                <p>Spot high-activity zones with built-in volume profiling for deeper insights.</p>
-            </div>
-            <div class="feature-box">
-                <img src="Keyfeatures_pannel_Image6.png" alt="Built-in Dashboard">
-                <h3>Built-in Dashboard</h3>
-                <p>A powerful panel displaying MACD, RSI, Volume, and Volatility data to support your trading decisions.</p>
-            </div>
+    <!-- Mobile Slider (Only visible on mobile) -->
+    <div class="mobile-slider">
+        <div class="feature-box active">
+            <img src="Keyfeatures_signals_Image1.png" alt="Multi-Signal Detection">
+            <h3>Multi-Signal Detection</h3>
+            <p>Three types of powerful signals to guide your trades like a professional.</p>
         </div>
+        <div class="feature-box">
+            <img src="Keyfeatures_sensibilité_Image2.png" alt="Adjustable Sensitivity">
+            <h3>Adjustable Sensitivity</h3>
+            <p>Fine-tune the sensitivity to match your trading style and market volatility.</p>
+        </div>
+        <div class="feature-box">
+            <img src="Keyfeatures_targets_Image3.png" alt="Targets & Take Profits">
+            <h3>Targets & Take Profits</h3>
+            <p>Clear target zones and automatic take-profit points for smarter exits.</p>
+        </div>
+        <div class="feature-box">
+            <img src="Keyfeatures_reversal_Image4.png" alt="Reversal Points Detection">
+            <h3>Reversal Points Detection</h3>
+            <p>Identify key reversal areas to optimize your entries and exits with precision.</p>
+        </div>
+        <div class="feature-box">
+            <img src="Keyfeatures_volumeprofile_Image5.png" alt="Integrated Volume Profile">
+            <h3>Integrated Volume Profile</h3>
+            <p>Spot high-activity zones with built-in volume profiling for deeper insights.</p>
+        </div>
+        <div class="feature-box">
+            <img src="Keyfeatures_pannel_Image6.png" alt="Built-in Dashboard">
+            <h3>Built-in Dashboard</h3>
+            <p>A powerful panel displaying MACD, RSI, Volume & Volatility to support your trading decisions.</p>
+        </div>
+    </div>
 
 
 
@@ -854,26 +854,18 @@
       });
     </script>
     <script>
-        const mobileFeatures = document.querySelectorAll('.mobile-slider .feature-box');
-        let currentFeature = 0;
-    
-        setInterval(() => {
-            mobileFeatures[currentFeature].classList.remove('active');
-            currentFeature = (currentFeature + 1) % mobileFeatures.length;
-            mobileFeatures[currentFeature].classList.add('active');
-        }, 3000);
-    </script>
-    <script>
-        let currentSlide = 0;
         const slides = document.querySelectorAll('.mobile-slider .feature-box');
+        let index = 0;
     
         function showNextSlide() {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
+            slides.forEach(slide => slide.classList.remove('active'));
+            index = (index + 1) % slides.length;
+            slides[index].classList.add('active');
         }
     
-        setInterval(showNextSlide, 3000); // Change every 3s
+        if (window.innerWidth <= 768) {
+            setInterval(showNextSlide, 3000); // Change every 3s
+        }
     </script>
 
 
