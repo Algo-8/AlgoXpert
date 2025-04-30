@@ -524,6 +524,46 @@
         .feature-box:nth-child(4) .image-content img {
             object-position: center 40%;
         }
+        .mobile-slider {
+            display: none;
+            position: relative;
+            width: 90%;
+            max-width: 400px;
+            margin: 40px auto;
+        }
+        
+        .mobile-slider .feature-box {
+            display: none;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            animation: fadeSlide 0.5s ease;
+        }
+        
+        .mobile-slider .feature-box.active {
+            display: block;
+        }
+        
+        .mobile-slider img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
     </style>
 
 </head>
@@ -823,6 +863,19 @@
             mobileFeatures[currentFeature].classList.add('active');
         }, 3000);
     </script>
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.mobile-slider .feature-box');
+    
+        function showNextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+    
+        setInterval(showNextSlide, 3000); // Change every 3s
+    </script>
+
 
 </body>
 </html>
