@@ -419,8 +419,24 @@
                 font-size: 14px;
                 color: #ccc;
             }
-        }
         
+        }
+        @media (max-width: 768px) {
+            .mobile-slider {
+                display: block;
+            }
+    
+            .features {
+                display: none;
+            }
+    
+            /* 🔧 CORRECTION À AJOUTER ICI */
+            .mobile-slider .feature-box {
+                width: 100%;
+                flex: none;
+                margin-bottom: 20px;
+            }
+        }
         @keyframes slide {
             0% { transform: translateY(0); }
             14% { transform: translateY(0); }
