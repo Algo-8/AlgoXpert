@@ -659,6 +659,58 @@
             scroll-snap-align: center;
           }
         }
+        /* Par défaut desktop : grille */
+        .color-gallery {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 20px;
+          padding: 40px 0;
+        }
+        
+        .color-gallery img {
+          width: 100%;
+          max-width: 260px;
+          border-radius: 15px;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+          transition: transform 0.5s ease, box-shadow 0.3s ease;
+        }
+        
+        .color-gallery img:hover {
+          transform: scale(1.05);
+          box-shadow: 0 8px 24px rgba(255, 126, 95, 0.5);
+        }
+        
+        /* ✅ Wrapper mobile pour scroll */
+        .color-gallery-scroll-wrapper {
+          display: none;
+        }
+        
+        @media (max-width: 768px) {
+          .color-gallery-scroll-wrapper {
+            display: block;
+            width: 100vw;
+            overflow-x: auto;
+            padding: 0;
+            margin: 0;
+          }
+        
+          .color-gallery {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 16px;
+            padding: 20px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+          }
+        
+          .color-gallery img {
+            flex: 0 0 auto;
+            width: 240px;
+            max-width: none;
+            scroll-snap-align: center;
+          }
+        }
 
 
     </style>
@@ -818,22 +870,23 @@
       <div class="container">
         <h2 class="rainbow-text">Customizable to Match <span class="gradient-text">Your Style</span></h2>
         <p style="text-align: center; max-width: 700px; margin: 20px auto; font-size: 18px; color: #ccc;">
-          Because not all traders see red the same way 😉 — with <strong>AlgoXpert</strong>, you can fully customize your colors: 
+          Because not everyone trades in red and green 🎨 — with <strong>AlgoXpert</strong>, you can fully customize your colors: 
           one for <strong>buy</strong> signals, one for <strong>sell</strong> signals. <br>
-          These colors reflect directly on your <em>candles, targets, and even the volume profile</em>. <br>
+          These colors reflect directly on your <em>candles, targets, and volume profile</em>. <br>
           Let your charts speak your style!
         </p>
+      </div>
     
-        <!-- Image Gallery -->
+      <!-- ✅ Galerie en dehors du container -->
+      <div class="color-gallery-scroll-wrapper">
         <div class="color-gallery">
-          <img src="Customizablecolor_image1.png" alt="Custom Color 1">
-          <img src="Customizablecolor_image2.png" alt="Custom Color 2">
-          <img src="Customizablecolor_image3.png" alt="Custom Color 3">
-          <img src="Customizablecolor_image4.png" alt="Custom Color 4">
+          <img src="custom_color_1.png" alt="Custom 1">
+          <img src="custom_color_2.png" alt="Custom 2">
+          <img src="custom_color_3.png" alt="Custom 3">
+          <img src="custom_color_4.png" alt="Custom 4">
         </div>
       </div>
     </section>
-
 
 
 
