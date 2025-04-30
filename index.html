@@ -614,18 +614,16 @@
           100% { background-position: 100% 50%; }
         }
         
-        /* Gallery styling */
-        .color-gallery {
+        /* === DESKTOP GALLERY === */
+        .color-gallery-desktop {
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
           gap: 20px;
           margin-top: 40px;
-          position: relative;
-          z-index: 1;
         }
         
-        .color-gallery img {
+        .color-gallery-desktop img {
           width: 100%;
           max-width: 260px;
           border-radius: 15px;
@@ -633,61 +631,22 @@
           transition: transform 0.5s ease, box-shadow 0.3s ease;
         }
         
-        .color-gallery img:hover {
+        .color-gallery-desktop img:hover {
           transform: scale(1.05);
           box-shadow: 0 8px 24px rgba(255, 126, 95, 0.5);
         }
         
-        @media (max-width: 768px) {
-          .color-gallery {
-            display: flex;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            gap: 16px;
-        
-            padding: 20px 16px 20px 16px; /* marges à gauche/droite pour ne pas coller */
-            margin-left: -16px; /* 🔧 retire le padding du container qui peut décaler */
-            margin-right: -16px;
-          }
-        
-          .color-gallery img {
-            flex: 0 0 auto;
-            width: 240px;
-            max-width: none; /* important */
-            scroll-snap-align: center;
-          }
-        }
-        /* Par défaut desktop : grille */
-        .color-gallery {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
-          gap: 20px;
-          padding: 40px 0;
-        }
-        
-        .color-gallery img {
-          width: 100%;
-          max-width: 260px;
-          border-radius: 15px;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-          transition: transform 0.5s ease, box-shadow 0.3s ease;
-        }
-        
-        .color-gallery img:hover {
-          transform: scale(1.05);
-          box-shadow: 0 8px 24px rgba(255, 126, 95, 0.5);
-        }
-        
-        /* ✅ Wrapper mobile pour scroll */
-        .color-gallery-scroll-wrapper {
+        /* === MOBILE GALLERY (scrollable) === */
+        .color-gallery-mobile-wrapper {
           display: none;
         }
         
         @media (max-width: 768px) {
-          .color-gallery-scroll-wrapper {
+          .color-gallery-desktop {
+            display: none;
+          }
+        
+          .color-gallery-mobile-wrapper {
             display: block;
             width: 100vw;
             overflow-x: auto;
@@ -695,7 +654,7 @@
             margin: 0;
           }
         
-          .color-gallery {
+          .color-gallery-mobile {
             display: flex;
             flex-wrap: nowrap;
             gap: 16px;
@@ -704,11 +663,18 @@
             -webkit-overflow-scrolling: touch;
           }
         
-          .color-gallery img {
+          .color-gallery-mobile img {
             flex: 0 0 auto;
             width: 240px;
-            max-width: none;
+            border-radius: 15px;
             scroll-snap-align: center;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+          }
+        
+          .color-gallery-mobile img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(255, 126, 95, 0.5);
           }
         }
 
@@ -875,11 +841,19 @@
           These colors reflect directly on your <em>candles, targets, and volume profile</em>. <br>
           Let your charts speak your style!
         </p>
+    
+        <!-- Desktop gallery -->
+        <div class="color-gallery-desktop">
+          <img src="Customizablecolor_image1.png" alt="Custom 1">
+          <img src="Customizablecolor_image2.png" alt="Custom 2">
+          <img src="Customizablecolor_image3.png" alt="Custom 3">
+          <img src="Customizablecolor_image4.png" alt="Custom 4">
+        </div>
       </div>
     
-      <!-- ✅ Galerie en dehors du container -->
-      <div class="color-gallery-scroll-wrapper">
-        <div class="color-gallery">
+      <!-- Mobile gallery -->
+      <div class="color-gallery-mobile-wrapper">
+        <div class="color-gallery-mobile">
           <img src="Customizablecolor_image1.png" alt="Custom 1">
           <img src="Customizablecolor_image2.png" alt="Custom 2">
           <img src="Customizablecolor_image3.png" alt="Custom 3">
@@ -887,6 +861,7 @@
         </div>
       </div>
     </section>
+
 
 
 
