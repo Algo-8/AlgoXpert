@@ -583,7 +583,7 @@
           height: 200%;
           background: radial-gradient(circle at center, #ff7e5f33, #feb47b22, transparent);
           animation: pulseColors 10s infinite alternate;
-          z-index: -1;
+          z-index: 0;
         }
         
         @keyframes pulseColors {
@@ -855,7 +855,8 @@
         </div>
     </section>
     <!-- Customization Section -->
-    <section style="position: relative; background: linear-gradient(135deg, #1a1a1a, #2c2c2c); padding: 100px 0; overflow: hidden;">
+    <section style="position: relative; z-index: 1; background: linear-gradient(135deg, #1a1a1a, #2c2c2c); padding: 100px 0; overflow: hidden;">
+
       <div class="color-pulse-bg"></div>
     
       <div class="container">
