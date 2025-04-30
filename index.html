@@ -381,7 +381,65 @@
             height: 30px;
             animation: slide 14s infinite;
         }
+        @media (max-width: 768px) {
+            .features {
+                display: none;
+            }
         
+            .mobile-slider {
+                display: block;
+                position: relative;
+                width: 100%;
+                max-width: 360px;
+                margin: 0 auto;
+                height: 300px;
+                overflow: hidden;
+            }
+        
+            .mobile-slider .feature-box {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                transition: opacity 0.8s ease-in-out;
+                background-color: #1e1e1e;
+                border-radius: 12px;
+                padding: 20px;
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+        
+            .mobile-slider .feature-box.active {
+                opacity: 1;
+                z-index: 1;
+            }
+        
+            .mobile-slider .feature-box img {
+                width: 100%;
+                height: 160px;
+                object-fit: cover;
+                border-radius: 10px;
+                margin-bottom: 15px;
+            }
+        
+            .mobile-slider .feature-box h3 {
+                font-size: 18px;
+                margin-bottom: 5px;
+                color: #fff;
+            }
+        
+            .mobile-slider .feature-box p {
+                font-size: 14px;
+                color: #ccc;
+            }
+        }
+
         @keyframes slide {
             0% { transform: translateY(0); }
             14% { transform: translateY(0); }
@@ -566,6 +624,39 @@
             </div>
         </div>
     </section>
+    <!-- Mobile Key Features Carousel -->
+        <div class="mobile-slider">
+            <div class="feature-box active">
+                <img src="Keyfeatures_signals_Image1.png" alt="Multi-Signal Detection">
+                <h3>Multi-Signal Detection</h3>
+                <p>Three types of powerful signals to guide your trades like a professional.</p>
+            </div>
+            <div class="feature-box">
+                <img src="Keyfeatures_sensibilité_Image2.png" alt="Adjustable Sensitivity">
+                <h3>Adjustable Sensitivity</h3>
+                <p>Fine-tune the sensitivity to match your trading style and market volatility.</p>
+            </div>
+            <div class="feature-box">
+                <img src="Keyfeatures_targets_Image3.png" alt="Targets & Take Profits">
+                <h3>Targets & Take Profits</h3>
+                <p>Clear target zones and automatic take-profit points for smarter exits.</p>
+            </div>
+            <div class="feature-box">
+                <img src="Keyfeatures_reversal_Image4.png" alt="Reversal Points Detection">
+                <h3>Reversal Points Detection</h3>
+                <p>Identify key reversal areas to optimize your entries and exits with precision.</p>
+            </div>
+            <div class="feature-box">
+                <img src="Keyfeatures_volumeprofile_Image5.png" alt="Integrated Volume Profile">
+                <h3>Integrated Volume Profile</h3>
+                <p>Spot high-activity zones with built-in volume profiling for deeper insights.</p>
+            </div>
+            <div class="feature-box">
+                <img src="Keyfeatures_pannel_Image6.png" alt="Built-in Dashboard">
+                <h3>Built-in Dashboard</h3>
+                <p>A powerful panel displaying MACD, RSI, Volume, and Volatility data to support your trading decisions.</p>
+            </div>
+        </div>
 
 
 
@@ -707,6 +798,16 @@
         duration: 800, // Durée des animations (ms)
         offset: 120 // Distance avant que l’élément entre dans le viewport
       });
+    </script>
+    <script>
+        const mobileFeatures = document.querySelectorAll('.mobile-slider .feature-box');
+        let currentFeature = 0;
+    
+        setInterval(() => {
+            mobileFeatures[currentFeature].classList.remove('active');
+            currentFeature = (currentFeature + 1) % mobileFeatures.length;
+            mobileFeatures[currentFeature].classList.add('active');
+        }, 3000);
     </script>
 
 </body>
