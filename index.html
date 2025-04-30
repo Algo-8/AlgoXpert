@@ -415,16 +415,18 @@
                 font-size: 14px;
                 color: #ccc;
             }
-            .features {
-                display: none;
-            }
-        
         }
+
         @media (max-width: 768px) {
-            .mobile-slider {
-                display: block;
+            .features {
+                display: none !important;
             }
-    
+            
+            .mobile-slider {
+            display: block !important;
+            }
+            
+
             /* 🔧 CORRECTION À AJOUTER ICI */
             .mobile-slider .feature-box {
                 width: 100%;
