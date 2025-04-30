@@ -265,7 +265,18 @@
         footer p {
             margin-bottom: 0;
         }
+        @media (max-width: 768px) {
+            .feature-box .image-content img {
+                object-fit: cover;
+                width: 100%;
+                height: 100%;
+                object-position: center;
+            }
         
+            .feature-box {
+                min-height: 220px; /* s'assurer qu'on garde une bonne hauteur */
+            }
+        }
         @media (max-width: 480px) {
             header h1 {
                 font-size: 26px;
@@ -295,29 +306,7 @@
             }
         }
         /* Responsive Styles */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 36px;
-            }
-
-            header p {
-                font-size: 16px;
-            }
-
-            .feature-box, .pricing-box {
-                width: 100%; /* Chaque box occupera toute la largeur sur les petits écrans */
-                margin-bottom: 20px; /* Ajouté pour espacer les boxes */
-            }
-
-            .pricing-options {
-                flex-direction: column; /* Colonne sur les petits écrans */
-                align-items: center; /* Centrer les items */
-            }
-
-            section h2 {
-                font-size: 28px; /* Réduction de la taille du titre */
-            }
-        }
+        
         .best-seller-badge {
             position: absolute;
             top: -15px;
