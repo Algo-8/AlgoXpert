@@ -530,6 +530,9 @@
         @media (max-width: 768px) {
             .features {
                 display: none !important;
+                visibility: hidden;
+                height: 0;
+                overflow: hidden;
             }
             
             .mobile-slider {
@@ -544,6 +547,18 @@
                 margin-bottom: 20px;
             }
         }
+        @media (max-width: 768px) {
+            .mobile-slider {
+                display: block !important;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .mobile-slider {
+                display: none !important;
+            }
+        }
+
     </style>
 
 </head>
@@ -845,10 +860,6 @@
             slides.forEach(slide => slide.classList.remove('active'));
             index = (index + 1) % slides.length;
             slides[index].classList.add('active');
-        }
-    
-        if (window.innerWidth <= 768) {
-            setInterval(showNextSlide, 3000); // Change every 3s
         }
     </script>
 
