@@ -650,17 +650,19 @@
             display: block;
             width: 100vw;
             overflow-x: auto;
-            padding: 0;
-            margin: 0;
+            overflow-y: hidden;
+            margin-left: -5vw; /* sort du container si encadré */
+            padding-bottom: 10px;
           }
         
           .color-gallery-mobile {
             display: flex;
             flex-wrap: nowrap;
             gap: 16px;
-            padding: 20px;
+            padding: 20px 24px;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
+            min-width: max-content; /* ✅ clé pour permettre le scroll */
           }
         
           .color-gallery-mobile img {
