@@ -640,19 +640,24 @@
         /* Mobile scroll gallery */
         @media (max-width: 768px) {
           .color-gallery {
-            overflow-x: scroll;
+            display: flex;
             flex-wrap: nowrap;
+            overflow-x: auto;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
-            padding-bottom: 20px;
-            padding-left: 24px;
+            padding: 20px 24px 20px 24px; /* marge à gauche ET à droite */
+            gap: 16px; /* espace entre les images */
           }
         
           .color-gallery img {
             flex: 0 0 auto;
+            width: 240px; /* ✅ FIX: impose une largeur fixe pour chaque image */
+            max-width: unset; /* empêche max-width de 260px de s'appliquer ici */
             scroll-snap-align: center;
+            border-radius: 15px;
           }
-        }        
+        }
+
     </style>
 
 </head>
