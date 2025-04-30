@@ -417,23 +417,7 @@
             }
         }
 
-        @media (max-width: 768px) {
-            .features {
-                display: none !important;
-            }
-            
-            .mobile-slider {
-            display: block !important;
-            }
-            
-
-            /* 🔧 CORRECTION À AJOUTER ICI */
-            .mobile-slider .feature-box {
-                width: 100%;
-                flex: none;
-                margin-bottom: 20px;
-            }
-        }
+        
         @keyframes slide {
             0% { transform: translateY(0); }
             14% { transform: translateY(0); }
@@ -543,7 +527,23 @@
                 transform: translateY(0);
             }
         }
+        @media (max-width: 768px) {
+            .features {
+                display: none !important;
+            }
+            
+            .mobile-slider {
+            display: block !important;
+            }
+            
 
+            /* 🔧 CORRECTION À AJOUTER ICI */
+            .mobile-slider .feature-box {
+                width: 100%;
+                flex: none;
+                margin-bottom: 20px;
+            }
+        }
     </style>
 
 </head>
