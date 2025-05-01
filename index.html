@@ -778,10 +778,14 @@
           cursor: pointer;
         }
         
-        .pricing-box:hover {
-          transform: translateY(-8px) scale(1.03);
-          box-shadow: 0 12px 32px rgba(255, 126, 95, 0.3);
+        @media (min-width: 769px) {
+          .pricing-box:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 12px 32px rgba(255, 126, 95, 0.3);
+            cursor: pointer;
+          }
         }
+
 
 
 
