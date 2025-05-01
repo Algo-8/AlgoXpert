@@ -754,6 +754,20 @@
             line-height: 1.5;
           }
         }
+        .pricing-logo {
+          display: block;
+          margin: 0 auto 20px;
+          width: 120px;
+          max-width: 100%;
+          height: auto;
+        }
+        
+        @media (max-width: 768px) {
+          .pricing-logo {
+            width: 100px;
+            margin-bottom: 16px;
+          }
+        }
 
 
     </style>
@@ -960,7 +974,7 @@
     <!-- Pricing Section -->
     <section id="pricing" class="pricing">
         <div class="container">
-            <img src="AlgoXpert Logo.png" alt="AlgoXpert Logo.png" style="display: block; margin: 0 auto 20px; width: 120px;">
+            <img class="pricing-logo" src="AlgoXpert Logo.png" alt="AlgoXpert Logo">
             <h2>Choose Your Plan</h2>
             <div class="pricing-options">
                 <div class="pricing-box" style="position: relative; overflow: hidden;">
