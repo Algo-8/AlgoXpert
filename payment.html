@@ -60,13 +60,13 @@
     <p class="description">Choose your payment method to get access to AlgoXpert:</p>
     <div class="payment-options">
 
-      <!-- PayPal Subscription Button -->
-      <div id="paypal-button-container-P-2FF51416VK231872JNAGXFAI"></div>
+      <!-- Updated PayPal Monthly Subscription Button -->
+      <div id="paypal-button-container-P-3TB1621648593253ENAPAFZA"></div>
 
       <script src="https://www.paypal.com/sdk/js?client-id=AXkCEktwul232nh0rxhGPCvoyExZMmpwcYf7r7AzHaAc3V3k1qmRGCTCGMTELUGDcnXv98oz_kOz0Zo0&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
 
       <script>
-        const plan = "29.99_mois"; // Ajouté ici
+        const plan = "29.99_mois";
 
         paypal.Buttons({
           style: {
@@ -77,18 +77,19 @@
           },
           createSubscription: function(data, actions) {
             return actions.subscription.create({
-              plan_id: 'P-2FF51416VK231872JNAGXFAI'
+              plan_id: 'P-3TB1621648593253ENAPAFZA'
             });
           },
           onApprove: function(data, actions) {
             const subscriptionID = data.subscriptionID;
             window.location.href = `https://algo-8.github.io/AlgoXpert/confirmation.html?sub_id=${subscriptionID}&plan=${plan}`;
           }
-        }).render('#paypal-button-container-P-2FF51416VK231872JNAGXFAI');
+        }).render('#paypal-button-container-P-3TB1621648593253ENAPAFZA');
       </script>
-    <p style="font-size: 14px; color: #ffb347; margin-top: 10px;">
-      ⚠️ This is a monthly subscription. <strong>$29.99 will be automatically charged every month</strong> unless you cancel the subscription from your PayPal account.
-    </p>
+
+      <p style="font-size: 14px; color: #ffb347; margin-top: 10px;">
+        ⚠️ This is a monthly subscription. <strong>$29.99 will be automatically charged every month</strong> unless you cancel the subscription from your PayPal account.
+      </p>
 
     </div>
   </div>
