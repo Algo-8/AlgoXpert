@@ -833,6 +833,25 @@
           z-index: 2;
         }
 
+        .why-algoxpert-section {
+          position: relative;
+          background: linear-gradient(-45deg, #1e1e1e, #2c2c2c, #1e1e1e, #292929);
+          background-size: 400% 400%;
+          animation: backgroundShift 15s ease infinite;
+          z-index: 1;
+        }
+        
+        @keyframes backgroundShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
 
 
 
