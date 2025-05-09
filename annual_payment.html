@@ -60,13 +60,13 @@
     <p class="description">Choose a method to subscribe to the annual plan:</p>
     <div class="payment-options">
 
-      <!-- PayPal Subscription Button -->
-      <div id="paypal-button-container-P-6BH46178PG4193706NAGXLOI"></div>
+      <!-- Updated PayPal Subscription Button -->
+      <div id="paypal-button-container-P-56X26265DL3033532NAPACJI"></div>
 
       <script src="https://www.paypal.com/sdk/js?client-id=AXkCEktwul232nh0rxhGPCvoyExZMmpwcYf7r7AzHaAc3V3k1qmRGCTCGMTELUGDcnXv98oz_kOz0Zo0&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
 
       <script>
-        const plan = "299.99_an"; // Ajouté ici
+        const plan = "299.99_an";
 
         paypal.Buttons({
           style: {
@@ -77,18 +77,19 @@
           },
           createSubscription: function(data, actions) {
             return actions.subscription.create({
-              plan_id: 'P-6BH46178PG4193706NAGXLOI'
+              plan_id: 'P-56X26265DL3033532NAPACJI'
             });
           },
           onApprove: function(data, actions) {
             const subscriptionID = data.subscriptionID;
             window.location.href = `https://algo-8.github.io/AlgoXpert/confirmation.html?sub_id=${subscriptionID}&plan=${plan}`;
           }
-        }).render('#paypal-button-container-P-6BH46178PG4193706NAGXLOI');
+        }).render('#paypal-button-container-P-56X26265DL3033532NAPACJI');
       </script>
-    <p style="font-size: 14px; color: #ffb347; margin-top: 10px;">
-      ⚠️ This is an annual subscription. <strong>$299.99 will be automatically charged every year</strong> unless you cancel the subscription from your PayPal account.
-    </p>
+
+      <p style="font-size: 14px; color: #ffb347; margin-top: 10px;">
+        ⚠️ This is an annual subscription. <strong>$299.99 will be automatically charged every year</strong> unless you cancel the subscription from your PayPal account.
+      </p>
 
     </div>
   </div>
