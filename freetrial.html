@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="AlgoXpert Logo.png">
   <style>
-    /* Styles identiques */
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
@@ -62,12 +61,12 @@
 
     <div class="payment-options">
 
-      <!-- PayPal Button for Subscription -->
-      <div id="paypal-button-container-P-5JV802951F763663RNAGVWNQ"></div>
+      <!-- Updated PayPal Button for Free Trial Subscription -->
+      <div id="paypal-button-container-P-0VM31050NY428852DNAPAIDI"></div>
       <script src="https://www.paypal.com/sdk/js?client-id=AXkCEktwul232nh0rxhGPCvoyExZMmpwcYf7r7AzHaAc3V3k1qmRGCTCGMTELUGDcnXv98oz_kOz0Zo0&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
       <script>
-        const plan = "7jours_gratuit"; // Ajouté ici
-        
+        const plan = "7jours_gratuit";
+
         paypal.Buttons({
           style: {
             shape: 'rect',
@@ -77,19 +76,20 @@
           },
           createSubscription: function(data, actions) {
             return actions.subscription.create({
-              /* Creates the subscription */
-              plan_id: 'P-5JV802951F763663RNAGVWNQ'
+              plan_id: 'P-0VM31050NY428852DNAPAIDI'
             });
           },
           onApprove: function(data, actions) {
             const subscriptionID = data.subscriptionID;
             window.location.href = `https://algo-8.github.io/AlgoXpert/confirmation.html?sub_id=${subscriptionID}&plan=${plan}`;
           }
-        }).render('#paypal-button-container-P-5JV802951F763663RNAGVWNQ');
+        }).render('#paypal-button-container-P-0VM31050NY428852DNAPAIDI');
       </script>
-    <p style="font-size: 14px; color: #ffb347; margin-top: -20px; margin-bottom: 30px;">
-      ⚠️ 7-day free trial. Then $29.99/month will be charged unless cancelled before the end of the trial.
-    </p>
+
+      <p style="font-size: 14px; color: #ffb347; margin-top: -20px; margin-bottom: 30px;">
+        ⚠️ 7-day free trial. Then <strong>$29.99/month</strong> will be charged unless cancelled before the end of the trial.
+      </p>
+
     </div>
   </div>
 </body>
