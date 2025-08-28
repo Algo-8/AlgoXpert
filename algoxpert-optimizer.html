@@ -1269,7 +1269,7 @@
                         for (let trail = params.trailingDistance.min; trail <= params.trailingDistance.max; trail += params.trailingDistance.step) {
                             const result = simulateStrategy(csvData, sens, fact, sl, trail, signalType, tpLevel);
                             
-                            if (result && result.totalTrades > 5) {
+                            if (result && result.totalTrades > 0) {
                                 results.push(result);
                             }
                             
@@ -1312,40 +1312,49 @@
             document.getElementById('results').style.display = 'block';
         }
         
-        // Exemple de données de démonstration si pas de CSV
         function loadDemoData() {
-            console.log('Mode démo activé - génération de données simulées');
-            csvData = [];
-            const startPrice = 100;
-            let currentPrice = startPrice;
-            
-            for (let i = 0; i < 1000; i++) {
-                const volatility = 0.02;
-                const trend = Math.sin(i / 100) * 0.001;
-                const noise = (Math.random() - 0.5) * volatility;
-                
-                const change = trend + noise;
-                const open = currentPrice;
-                const close = currentPrice * (1 + change);
-                const high = Math.max(open, close) * (1 + Math.random() * 0.01);
-                const low = Math.min(open, close) * (1 - Math.random() * 0.01);
-                
-                csvData.push({
-                    date: new Date(Date.now() - (1000-i) * 86400000).toISOString(),
-                    open: open,
-                    high: high,
-                    low: low,
-                    close: close,
-                    volume: Math.random() * 1000000
-                });
-                
-                currentPrice = close;
-            }
-            
-            document.getElementById('optimize-btn').disabled = false;
-            console.log('Données de démo générées:', csvData.length, 'bougies');
-        }
-        
+		    console.log('Mode démo activé - génération de données simulées');
+		    csvData = [];
+		    const startPrice = 100;
+		    let currentPrice = startPrice;
+		    
+		    // Créer des données plus réalistes avec une tendance
+		    for (let i = 0; i < 500; i++) { // Réduire à 500 points pour plus de rapidité
+		        // Volatilité avec tendance haussière
+		        const trend = 0.0002; // Légère tendance haussière
+		        const volatility = 0.015;
+		        const noise = (Math.random() - 0.5) * volatility;
+		        
+		        const change = trend + noise;
+		        const open = currentPrice;
+		        const close = Math.max(0.01, currentPrice * (1 + change));
+		        const high = Math.max(open, close) * (1 + Math.random() * 0.02);
+		        const low = Math.min(open, close) * (1 - Math.random() * 0.02);
+		        
+		        // S'assurer que high >= low et high >= open, high >= close, etc.
+		        const validatedHigh = Math.max(open, close, high);
+		        const validatedLow = Math.min(open, close, low);
+		        
+		        csvData.push({
+		            date: new Date(Date.now() - (500-i) * 86400000).toISOString().split('T')[0],
+		            open: open,
+		            high: validatedHigh,
+		            low: Math.max(0.01, validatedLow),
+		            close: close,
+		            volume: 1000000 + Math.random() * 500000
+		        });
+		        
+		        currentPrice = close;
+		    }
+		    
+		    console.log('Données de démo générées:', csvData.length, 'bougies');
+		    console.log('Première bougie:', csvData[0]);
+		    console.log('Dernière bougie:', csvData[csvData.length-1]);
+		    
+		    document.getElementById('optimize-btn').disabled = false;
+		    document.getElementById('data-status').innerHTML = 
+		        '📊 Données de démonstration chargées - Prêt à optimiser !';
+		}
         // Event listener pour le bouton d'optimisation
 		document.getElementById('optimize-btn').addEventListener('click', function() {
 		    if (!csvData || isOptimizing) return;
@@ -1406,13 +1415,17 @@
 		    
 		    // Fonction d'optimisation asynchrone
 		    async function runOptimization() {
+				console.log('Début de l\'optimisation avec', csvData.length, 'points de données');
+				console.log('Paramètres:', params);
+				console.log('Premier point de données:', csvData[0]);
+				console.log('Dernier point de données:', csvData[csvData.length-1]);
 		        for (let sens = params.sensitivity.min; sens <= params.sensitivity.max; sens += params.sensitivity.step) {
 		            for (let fact = params.factor.min; fact <= params.factor.max; fact += params.factor.step) {
 		                for (let sl = params.stopLoss.min; sl <= params.stopLoss.max; sl += params.stopLoss.step) {
 		                    for (let trail = params.trailingDistance.min; trail <= params.trailingDistance.max; trail += params.trailingDistance.step) {
 		                        const result = simulateStrategy(csvData, sens, fact, sl, trail, signalType, tpLevel);
 		                        
-		                        if (result && result.totalTrades > 5) {
+		                        if (result && result.totalTrades > 0) {
 		                            results.push(result);
 		                        }
 		                        
@@ -1477,11 +1490,12 @@
 		// Initialiser le compteur
 		updateComboCount();
 		
-		// Charger des données de démo au démarrage pour les tests
+		// Au lieu de setTimeout avec 1000ms, utilisez :
 		setTimeout(() => {
 		    loadDemoData();
 		    updateComboCount();
-		}, 1000);
+		    console.log('Données chargées, prêt pour optimisation');
+		}, 2000); // 2 secondes pour être sûr
     </script>
 </body>
 </html>
