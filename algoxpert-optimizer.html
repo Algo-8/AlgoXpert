@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlgoXpert Optimizer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #67f508, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .panel {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .panel h3 {
+            color: #67f508;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .param-group {
+            display: grid;
+            grid-template-columns: 1fr 100px 100px 60px;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .param-group label {
+            font-weight: 500;
+            color: #e2e8f0;
+        }
+        
+        input[type="number"] {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: #ffffff;
+            font-size: 14px;
+        }
+        
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #67f508;
+            box-shadow: 0 0 0 2px rgba(103, 245, 8, 0.2);
+        }
+        
+        select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: #ffffff;
+            font-size: 14px;
+        }
+        
+        .button {
+            background: linear-gradient(45deg, #67f508, #00ff88);
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin: 20px 0;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(103, 245, 8, 0.3);
+        }
+        
+        .button:disabled {
+            background: #666;
+            color: #999;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .progress-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            display: none;
+        }
+        
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            height: 8px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #67f508, #00ff88);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .results {
+            display: none;
+        }
+        
+        .results-table {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        .results-table th,
+        .results-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .results-table th {
+            background: rgba(103, 245, 8, 0.2);
+            color: #67f508;
+            font-weight: 600;
+        }
+        
+        .results-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .metric-positive {
+            color: #67f508;
+            font-weight: 600;
+        }
+        
+        .metric-negative {
+            color: #ff4757;
+            font-weight: 600;
+        }
+        
+        .rank {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        .settings-info {
+            background: rgba(103, 245, 8, 0.1);
+            border: 1px solid rgba(103, 245, 8, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .warning {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+
+        .status {
+            background: rgba(0, 123, 255, 0.1);
+            border: 1px solid rgba(0, 123, 255, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 AlgoXpert Optimizer</h1>
+            <p>Optimisation automatique des paramètres de votre indicateur TradingView</p>
+        </div>
+        
+        <div class="grid">
+            <!-- Configuration des paramètres -->
+            <div class="panel">
+                <h3>⚙️ Configuration des Paramètres</h3>
+                
+                <div class="param-group">
+                    <label>Sensitivity</label>
+                    <input type="number" id="sens-min" value="3.0" step="0.5" min="0.5" max="100">
+                    <input type="number" id="sens-max" value="12.0" step="0.5" min="0.5" max="100">
+                    <input type="number" id="sens-step" value="1.0" step="0.1" min="0.1" max="5">
+                </div>
+                
+                <div class="param-group">
+                    <label>Factor (Bar Color)</label>
+                    <input type="number" id="factor-min" value="1.5" step="0.5" min="0.5" max="10">
+                    <input type="number" id="factor-max" value="6.0" step="0.5" min="0.5" max="10">
+                    <input type="number" id="factor-step" value="0.5" step="0.1" min="0.1" max="2">
+                </div>
+                
+                <div class="param-group">
+                    <label>Stop Loss %</label>
+                    <input type="number" id="sl-min" value="0.8" step="0.1" min="0.1" max="10">
+                    <input type="number" id="sl-max" value="3.0" step="0.1" min="0.1" max="10">
+                    <input type="number" id="sl-step" value="0.2" step="0.05" min="0.05" max="1">
+                </div>
+                
+                <div class="param-group">
+                    <label>Trailing Distance</label>
+                    <input type="number" id="trail-min" value="1.0" step="0.1" min="0.5" max="5">
+                    <input type="number" id="trail-max" value="2.5" step="0.1" min="0.5" max="5">
+                    <input type="number" id="trail-step" value="0.2" step="0.05" min="0.05" max="1">
+                </div>
+                
+                <div class="warning">
+                    ⚠️ Attention : Plus les steps sont petits, plus l'optimisation sera longue
+                </div>
+            </div>
+            
+            <!-- Configuration de l'optimisation -->
+            <div class="panel">
+                <h3>🎯 Configuration Optimisation</h3>
+                
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px;">Métrique d'optimisation :</label>
+                    <select id="optimization-metric" style="width: 100%;">
+                        <option value="totalReturn">Rendement Total (%)</option>
+                        <option value="profitFactor">Profit Factor</option>
+                        <option value="winRate">Taux de Réussite (%)</option>
+                        <option value="sharpeRatio">Ratio de Sharpe</option>
+                        <option value="expectancy">Espérance de Gain</option>
+                        <option value="composite">Score Composite</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px;">Signal Type à tester :</label>
+                    <select id="signal-type" style="width: 100%;">
+                        <option value="Signals">Signals</option>
+                        <option value="Smart Signals">Smart Signals</option>
+                        <option value="Smart Signals+">Smart Signals+</option>
+                        <option value="Mixte">Mixte</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px;">Take Profit Level :</label>
+                    <select id="tp-level" style="width: 100%;">
+                        <option value="TP1">TP1</option>
+                        <option value="TP2" selected>TP2</option>
+                        <option value="TP3">TP3</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px;">Capital initial ($) :</label>
+                    <input type="number" id="initial-capital" value="10000" min="100" style="width: 100%;">
+                </div>
+                
+                <div class="settings-info">
+                    <strong>Combinaisons estimées :</strong> <span id="combo-count">0</span><br>
+                    <strong>Temps estimé :</strong> <span id="time-estimate">0s</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Upload des données -->
+        <div class="panel">
+            <h3>📊 Données de Trading</h3>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 10px;">Uploadez vos données OHLCV (CSV) :</label>
+                <input type="file" id="csv-file" accept=".csv" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 6px; border: 1px solid rgba(255,255,255,0.2);">
+            </div>
+            <div style="font-size: 0.9rem; color: #94a3b8;">
+                Format attendu : Date, Open, High, Low, Close, Volume<br>
+                Ou exportez directement depuis TradingView (Download CSV)
+            </div>
+            <div class="status" id="data-status">
+                📊 Données de démonstration chargées automatiquement - Prêt à optimiser !
+            </div>
+        </div>
+        
+        <!-- Bouton d'optimisation -->
+        <button class="button" id="optimize-btn">
+            🚀 Lancer l'Optimisation
+        </button>
+        
+        <!-- Barre de progression -->
+        <div class="progress-container" id="progress-container">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <span>Progression :</span>
+                <span id="progress-text">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div style="text-align: center; margin-top: 10px; font-size: 0.9rem; color: #94a3b8;" id="current-test">
+                Préparation...
+            </div>
+        </div>
+        
+        <!-- Résultats -->
+        <div class="results" id="results">
+            <div class="panel">
+                <h3>🏆 Résultats d'Optimisation - Top 10</h3>
+                <table class="results-table" id="results-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Sensitivity</th>
+                            <th>Factor</th>
+                            <th>Stop Loss %</th>
+                            <th>Trailing</th>
+                            <th>Score</th>
+                            <th>Win Rate</th>
+                            <th>P&L Total</th>
+                            <th>Trades</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-body">
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="panel">
+                <h3>📋 Meilleure Configuration</h3>
+                <div id="best-config" style="font-family: 'Courier New', monospace; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; margin-top: 15px;">
+                    <!-- Les résultats apparaîtront ici -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let csvData = null;
+        let isOptimizing = false;
+        
+        // Calcul du nombre de combinaisons
+        function updateComboCount() {
+            const sensMin = parseFloat(document.getElementById('sens-min').value);
+            const sensMax = parseFloat(document.getElementById('sens-max').value);
+            const sensStep = parseFloat(document.getElementById('sens-step').value);
+            
+            const factorMin = parseFloat(document.getElementById('factor-min').value);
+            const factorMax = parseFloat(document.getElementById('factor-max').value);
+            const factorStep = parseFloat(document.getElementById('factor-step').value);
+            
+            const slMin = parseFloat(document.getElementById('sl-min').value);
+            const slMax = parseFloat(document.getElementById('sl-max').value);
+            const slStep = parseFloat(document.getElementById('sl-step').value);
+            
+            const trailMin = parseFloat(document.getElementById('trail-min').value);
+            const trailMax = parseFloat(document.getElementById('trail-max').value);
+            const trailStep = parseFloat(document.getElementById('trail-step').value);
+            
+            const sensCount = Math.floor((sensMax - sensMin) / sensStep) + 1;
+            const factorCount = Math.floor((factorMax - factorMin) / factorStep) + 1;
+            const slCount = Math.floor((slMax - slMin) / slStep) + 1;
+            const trailCount = Math.floor((trailMax - trailMin) / trailStep) + 1;
+            
+            const totalCombos = sensCount * factorCount * slCount * trailCount;
+            const timeEstimate = Math.round(totalCombos * 0.002); // ~2ms par test
+            
+            document.getElementById('combo-count').textContent = totalCombos.toLocaleString();
+            document.getElementById('time-estimate').textContent = timeEstimate < 60 ? 
+                timeEstimate + 's' : Math.round(timeEstimate/60) + 'min';
+        }
+        
+        // Event listeners pour mise à jour en temps réel
+        ['sens-min', 'sens-max', 'sens-step', 'factor-min', 'factor-max', 'factor-step', 
+         'sl-min', 'sl-max', 'sl-step', 'trail-min', 'trail-max', 'trail-step'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updateComboCount);
+        });
+        
+        // Upload CSV
+        document.getElementById('csv-file').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const csv = e.target.result;
+                    csvData = parseCSV(csv);
+                    document.getElementById('optimize-btn').disabled = false;
+                    document.getElementById('data-status').innerHTML = '✅ Données CSV personnalisées chargées - Prêt à optimiser !';
+                    console.log('Données CSV chargées:', csvData.length, 'lignes');
+                };
+                reader.readAsText(file);
+            }
+        });
+        // Parser CSV adapté au format TradingView
+        function parseCSV(csv) {
+            const lines = csv.trim().split('\n');
+            const data = [];
+            
+            console.log('Première ligne CSV:', lines[0]);
+            
+            // Détecter le format et les colonnes
+            const firstLine = lines[0].toLowerCase();
+            let startIndex = 0;
+            let format = 'unknown';
+            
+            // Format TradingView: Date,"Price","Open","High","Low","Vol.","Change %"
+            if (firstLine.includes('date') && (firstLine.includes('price') || firstLine.includes('open'))) {
+                format = 'tradingview';
+                startIndex = 1;
+                console.log('Format TradingView détecté');
+            }
+            // Format standard: Date,Open,High,Low,Close,Volume
+            else if (firstLine.includes('date') && firstLine.includes('open') && firstLine.includes('high')) {
+                format = 'standard';
+                startIndex = 1;
+                console.log('Format standard détecté');
+            }
+            // Pas de header, essayer de détecter automatiquement
+            else {
+                console.log('Pas de header détecté, tentative de parsing direct');
+                startIndex = 0;
+                // Analyser la première ligne de données pour détecter le format
+                const testValues = parseCSVLine(lines[0]);
+                if (testValues.length >= 6) {
+                    format = 'tradingview';
+                } else if (testValues.length >= 5) {
+                    format = 'standard';
+                }
+            }
+            
+            console.log(`Format détecté: ${format}, début à la ligne: ${startIndex}`);
+            
+            for (let i = startIndex; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line) continue;
+                
+                const values = parseCSVLine(line);
+                
+                if (values.length >= 5) {
+                    let candle;
+                    
+                    if (format === 'tradingview') {
+                        // Format TradingView: Date,"Price","Open","High","Low","Vol.","Change %"
+                        // Certains fichiers TradingView ont "Price" comme close price
+                        candle = {
+                            date: cleanString(values[0]),
+                            close: cleanValue(values[1]),  // "Price" = Close
+                            open: cleanValue(values[2]),   // "Open"
+                            high: cleanValue(values[3]),   // "High"
+                            low: cleanValue(values[4]),    // "Low"
+                            volume: values[5] ? cleanValue(values[5]) : 0
+                        };
+                        
+                        // Si le premier champ après date est "Open" au lieu de "Price"
+                        if (isNaN(candle.close) && !isNaN(cleanValue(values[2]))) {
+                            candle = {
+                                date: cleanString(values[0]),
+                                open: cleanValue(values[1]),
+                                high: cleanValue(values[2]),
+                                low: cleanValue(values[3]),
+                                close: cleanValue(values[4]),
+                                volume: values[5] ? cleanValue(values[5]) : 0
+                            };
+                        }
+                    } else {
+                        // Format standard: Date,Open,High,Low,Close,Volume
+                        candle = {
+                            date: cleanString(values[0]),
+                            open: cleanValue(values[1]),
+                            high: cleanValue(values[2]),
+                            low: cleanValue(values[3]),
+                            close: cleanValue(values[4]),
+                            volume: values[5] ? cleanValue(values[5]) : 0
+                        };
+                    }
+                    
+                    // Validation des données
+                    if (isValidCandle(candle)) {
+                        data.push(candle);
+                    } else {
+                        console.log(`Ligne ${i} ignorée - données invalides:`, candle, values);
+                    }
+                } else {
+                    console.log(`Ligne ${i} ignorée - pas assez de colonnes (${values.length}):`, values);
+                }
+            }
+            
+            console.log(`CSV parsé: ${data.length} bougies valides sur ${lines.length - startIndex} lignes de données`);
+            
+            // Inverser l'ordre si les données sont du plus récent au plus ancien
+            if (data.length > 1 && new Date(data[0].date) > new Date(data[data.length - 1].date)) {
+                data.reverse();
+                console.log('Données inversées (ordre chronologique)');
+            }
+            
+            return data;
+        }
+        
+        // Fonction pour parser une ligne CSV avec gestion des guillemets
+        function parseCSVLine(line) {
+            const values = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let j = 0; j < line.length; j++) {
+                const char = line[j];
+                
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    values.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            values.push(current.trim());
+            return values;
+        }
+        
+        // Fonction pour nettoyer les chaînes
+        function cleanString(val) {
+            if (!val) return '';
+            return val.replace(/['"]/g, '').trim();
+        }
+        
+        // Fonction pour nettoyer et parser les valeurs numériques
+        function cleanValue(val) {
+            if (!val) return 0;
+            let cleaned = val.replace(/['"]/g, '').trim();
+            // Supprimer les virgules des séparateurs de milliers
+            if (cleaned.includes(',') && cleaned.split(',').length <= 3) {
+                cleaned = cleaned.replace(/,/g, '');
+            }
+            return parseFloat(cleaned);
+        }
+        
+        // Fonction pour valider une bougie
+        function isValidCandle(candle) {
+            return !isNaN(candle.open) && !isNaN(candle.high) && !isNaN(candle.low) && !isNaN(candle.close) &&
+                   candle.open > 0 && candle.high > 0 && candle.low > 0 && candle.close > 0 &&
+                   candle.high >= Math.max(candle.open, candle.close) &&
+                   candle.low <= Math.min(candle.open, candle.close);
+        }
+        // Calcul ATR simplifié
+        function calculateATR(data, index, period) {
+            let atrSum = 0;
+            const start = Math.max(1, index - period + 1);
+            
+            for (let i = start; i <= index; i++) {
+                const current = data[i];
+                const prev = data[i-1];
+                const tr = Math.max(
+                    current.high - current.low,
+                    Math.abs(current.high - prev.close),
+                    Math.abs(current.low - prev.close)
+                );
+                atrSum += tr;
+            }
+            return atrSum / Math.min(period, index);
+        }
+		    // Fonctions techniques manquantes
+        function calculateEMA(data, index, period) {
+            if (index < period) return data[index].close;
+            const k = 2 / (period + 1);
+            let ema = data[index - period].close;
+            for (let i = index - period + 1; i <= index; i++) {
+                ema = data[i].close * k + ema * (1 - k);
+            }
+            return ema;
+        }
+        
+        function calculateKeltnerChannel(data, index, period) {
+            const atr = calculateATR(data, index, period);
+            const ema = calculateEMA(data, index, period);
+            const upper = ema + atr;
+            const lower = ema - atr;
+            return [upper, lower];
+        }
+        
+        function calculateKeltnerRange(data, index, period) {
+            const [upper, lower] = calculateKeltnerChannel(data, index, period);
+            return upper - lower;
+        }
+        
+        function calculateADX(data, index, period) {
+            // Simplified ADX calculation
+            if (index < period * 2) return 0;
+            let diPlusSum = 0;
+            let diMinusSum = 0;
+            
+            for (let i = index - period + 1; i <= index; i++) {
+                const trueRange = Math.max(
+                    data[i].high - data[i].low,
+                    Math.abs(data[i].high - data[i-1].close),
+                    Math.abs(data[i].low - data[i-1].close)
+                );
+                
+                const upMove = data[i].high - data[i-1].high;
+                const downMove = data[i-1].low - data[i].low;
+                
+                const diPlus = upMove > downMove && upMove > 0 ? upMove / trueRange : 0;
+                const diMinus = downMove > upMove && downMove > 0 ? downMove / trueRange : 0;
+                
+                diPlusSum += diPlus;
+                diMinusSum += diMinus;
+            }
+            
+            const dx = Math.abs(diPlusSum - diMinusSum) / (diPlusSum + diMinusSum) * 100;
+            return dx;
+        }
+        
+        function calculateDIPlus(data, index, period) {
+            // Simplified DI+ calculation
+            if (index < period) return 0;
+            let diPlusSum = 0;
+            
+            for (let i = index - period + 1; i <= index; i++) {
+                const trueRange = Math.max(
+                    data[i].high - data[i].low,
+                    Math.abs(data[i].high - data[i-1].close),
+                    Math.abs(data[i].low - data[i-1].close)
+                );
+                
+                const upMove = data[i].high - data[i-1].high;
+                const diPlus = upMove > 0 ? upMove / trueRange : 0;
+                diPlusSum += diPlus;
+            }
+            
+            return diPlusSum / period * 100;
+        }
+        
+        function calculateDIMinus(data, index, period) {
+            // Simplified DI- calculation
+            if (index < period) return 0;
+            let diMinusSum = 0;
+            
+            for (let i = index - period + 1; i <= index; i++) {
+                const trueRange = Math.max(
+                    data[i].high - data[i].low,
+                    Math.abs(data[i].high - data[i-1].close),
+                    Math.abs(data[i].low - data[i-1].close)
+                );
+                
+                const downMove = data[i-1].low - data[i].low;
+                const diMinus = downMove > 0 ? downMove / trueRange : 0;
+                diMinusSum += diMinus;
+            }
+            
+            return diMinusSum / period * 100;
+        }
+        
+        function calculateRSI(data, index, period) {
+            if (index < period) return 50;
+            
+            let gains = 0;
+            let losses = 0;
+            
+            for (let i = index - period + 1; i <= index; i++) {
+                const change = data[i].close - data[i-1].close;
+                if (change > 0) {
+                    gains += change;
+                } else {
+                    losses -= change;
+                }
+            }
+            
+            const avgGain = gains / period;
+            const avgLoss = losses / period;
+            
+            if (avgLoss === 0) return 100;
+            const rs = avgGain / avgLoss;
+            return 100 - (100 / (1 + rs));
+        }
+        
+        function calculateAvgVolume(data, index, period) {
+            if (index < period) return data[index].volume;
+            let sum = 0;
+            for (let i = index - period + 1; i <= index; i++) {
+                sum += data[i].volume;
+            }
+            return sum / period;
+        }
+        // Simulation précise de l'indicateur AlgoXpert
+        function simulateStrategy(data, sensitivity, factor, stopLoss, trailingDistance, signalType, tpLevel) {
+            if (!data || data.length < 50) return null;
+            
+            let trades = [];
+            let currentPosition = null;
+            let totalPnL = 0;
+            let winCount = 0;
+            let lossCount = 0;
+            let pos = 0; // Position tracking comme dans Pine Script
+            
+            // Calculs techniques précis
+            for (let i = 20; i < data.length - 1; i++) {
+                const current = data[i];
+                const prev = data[i-1];
+                
+                // EMA multiples comme dans le code Pine Script
+                let ema1 = calculateEMA(data, i, 9);
+                let ema2 = calculateEMA(data, i, 12);
+                let ema3 = calculateEMA(data, i, 15);
+                
+                // Keltner Channel (comme dans Pine Script)
+                const [upperKeltner, lowerKeltner] = calculateKeltnerChannel(data, i, 10);
+                const rangec = upperKeltner - lowerKeltner;
+                let upperBand = current.close + factor * rangec;
+                let lowerBand = current.close - factor * rangec;
+                
+                // Logique Supertrend adaptée
+                const prevUpperBand = i > 20 ? (data[i-1].close + factor * calculateKeltnerRange(data, i-1, 10)) : upperBand;
+                const prevLowerBand = i > 20 ? (data[i-1].close - factor * calculateKeltnerRange(data, i-1, 10)) : lowerBand;
+                
+                lowerBand = lowerBand > prevLowerBand || prev.close < prevLowerBand ? lowerBand : prevLowerBand;
+                upperBand = upperBand < prevUpperBand || prev.close > prevUpperBand ? upperBand : prevUpperBand;
+                
+                // Direction Supertrend (CORRIGÉ selon Pine Script)
+                let direction;
+                let supertrend;
+                
+                if (i === 20) {
+                    direction = 1;
+                } else {
+                    // Utiliser la direction précédente pour déterminer le supertrend précédent
+                    const prevDirection = direction;
+                    const prevSupertrend = prevDirection === -1 ? prevLowerBand : prevUpperBand;
+                    
+                    if (prevSupertrend === prevUpperBand) {
+                        direction = current.close > upperBand ? -1 : 1;
+                    } else {
+                        direction = current.close < lowerBand ? 1 : -1;
+                    }
+                }
+                
+                supertrend = direction === -1 ? lowerBand : upperBand;
+                
+                // ADX Filter (simulation)
+                const adx = calculateADX(data, i, 14);
+                const diPlus = calculateDIPlus(data, i, 14);
+                const diMinus = calculateDIMinus(data, i, 14);
+                const prevAdx = i > 20 ? calculateADX(data, i-1, 14) : adx;
+                
+                const trendBullish = (diPlus > diMinus) && (adx > 20 && adx > prevAdx);
+                const trendBearish = (diMinus > diPlus) && (adx > 20 && adx > prevAdx);
+                
+                // EMA Agreement (EXACT comme Pine Script)
+                const emaOkBull = current.close > ema1 && current.close > ema2 && current.close > ema3;
+                const emaOkBear = current.close < ema1 && current.close < ema2 && current.close < ema3;
+                
+                // Signaux de base (CROSSOVER/CROSSUNDER EXACT)
+                const bullCross = current.close > supertrend && prev.close <= supertrend;
+                const bearCross = current.close < supertrend && prev.close >= supertrend;
+                
+                const bull = bullCross && trendBullish && emaOkBull;
+                const bear = bearCross && trendBearish && emaOkBear;
+                
+                // Smart Signals logic (EXACT comme Pine Script)
+                const rsi = calculateRSI(data, i, 14);
+                const volume = current.volume || 1;
+                const avgVolume = calculateAvgVolume(data, i, 25);
+                
+                const isStrongUptrend = rsi > 70 && volume > avgVolume;
+                const isStrongDowntrend = rsi < 30 && volume > avgVolume;
+                
+                // Support/Resistance for Smart Signals+ (EXACT comme Pine Script)
+                const support = i >= 3 && data[i-1].low > data[i-2].low && data[i-1].low > data[i-3].low ? data[i-1].low : null;
+                const resistance = i >= 3 && data[i-1].high < data[i-2].high && data[i-1].high < data[i-3].high ? data[i-1].high : null;
+                const buy_signal = support && current.close > support && rsi > 70 && volume > avgVolume;
+                const sell_signal = resistance && current.close < resistance && rsi < 30 && volume > avgVolume;
+                
+                // Signal conditions based on type (EXACT LOGIC comme Pine Script)
+                let longCond = false;
+                let shortCond = false;
+                
+                switch(signalType) {
+                    case "Signals":
+                        longCond = bull && pos !== 1;
+                        shortCond = bear && pos !== -1;
+                        break;
+                    case "Smart Signals":
+                        longCond = bull && isStrongUptrend && pos !== 1;
+                        shortCond = bear && isStrongDowntrend && pos !== -1;
+                        break;
+                    case "Smart Signals+":
+                        longCond = bull && buy_signal && pos !== 1;
+                        shortCond = bear && sell_signal && pos !== -1;
+                        break;
+                    case "Mixte":
+                        // CORRECTION: Logique EXACTE du Pine Script pour Mixte
+                        if (bull && buy_signal) {
+                            longCond = pos !== 1;
+                        } else if (bull && isStrongUptrend) {
+                            longCond = pos !== 1;
+                        } else if (bull) {
+                            longCond = pos !== 1;
+                        }
+                        
+                        if (bear && sell_signal) {
+                            shortCond = pos !== -1;
+                        } else if (bear && isStrongDowntrend) {
+                            shortCond = pos !== -1;
+                        } else if (bear) {
+                            shortCond = pos !== -1;
+                        }
+                        break;
+                }
+                
+                // Gestion des entrées de position
+                if (longCond) {
+                    // Ouvrir une position longue
+                    if (currentPosition) {
+                        // Fermer la position précédente si elle existe
+                        const exitPrice = data[i].close;
+                        let pnl;
+                        
+                        if (currentPosition.type === "LONG") {
+                            pnl = (exitPrice - currentPosition.entryPrice) * currentPosition.size;
+                        } else {
+                            pnl = (currentPosition.entryPrice - exitPrice) * currentPosition.size;
+                        }
+                        
+                        totalPnL += pnl;
+                        
+                        if (pnl > 0) winCount++;
+                        else lossCount++;
+                        
+                        trades.push({
+                            entry: currentPosition.entryPrice,
+                            exit: exitPrice,
+                            type: currentPosition.type + " CLOSE",
+                            pnl: pnl,
+                            size: currentPosition.size
+                        });
+                    }
+                    
+                    // Ouvrir nouvelle position
+                    currentPosition = {
+                        entryPrice: data[i].close,
+                        type: "LONG",
+                        size: 100, // Taille par défaut
+                        stopLoss: null,
+                        takeProfit: null,
+                        entryIndex: i
+                    };
+                    pos = 1;
+                }
+                
+                if (shortCond) {
+                    // Ouvrir une position courte
+                    if (currentPosition) {
+                        // Fermer la position précédente si elle existe
+                        const exitPrice = data[i].close;
+                        let pnl;
+                        
+                        if (currentPosition.type === "LONG") {
+                            pnl = (exitPrice - currentPosition.entryPrice) * currentPosition.size;
+                        } else {
+                            pnl = (currentPosition.entryPrice - exitPrice) * currentPosition.size;
+                        }
+                        
+                        totalPnL += pnl;
+                        
+                        if (pnl > 0) winCount++;
+                        else lossCount++;
+                        
+                        trades.push({
+                            entry: currentPosition.entryPrice,
+                            exit: exitPrice,
+                            type: currentPosition.type + " CLOSE",
+                            pnl: pnl,
+                            size: currentPosition.size
+                        });
+                    }
+                    
+                    // Ouvrir nouvelle position
+                    currentPosition = {
+                        entryPrice: data[i].close,
+                        type: "SHORT",
+                        size: 100, // Taille par défaut
+                        stopLoss: null,
+                        takeProfit: null,
+                        entryIndex: i
+                    };
+                    pos = -1;
+                }
+                
+                // Gestion des sorties de position (SL, TP)
+                if (currentPosition) {
+                    // Calcul des niveaux de SL et TP
+                    const slDistance = stopLoss / 100;
+                    const tpMultiplier = tpLevel === "TP1" ? 1 : tpLevel === "TP2" ? 2 : 3;
+                    const tpDistance = slDistance * tpMultiplier;
+                    
+                    if (currentPosition.type === "LONG") {
+                        const currentLow = data[i].low;
+                        const currentHigh = data[i].high;
+                        
+                        // Vérifier SL
+                        const stopLossPrice = currentPosition.entryPrice * (1 - slDistance);
+                        if (currentLow <= stopLossPrice) {
+                            const exitPrice = stopLossPrice;
+                            const pnl = (exitPrice - currentPosition.entryPrice) * currentPosition.size;
+                            totalPnL += pnl;
+                            
+                            if (pnl > 0) winCount++;
+                            else lossCount++;
+                            
+                            trades.push({
+                                entry: currentPosition.entryPrice,
+                                exit: exitPrice,
+                                type: currentPosition.type + " SL",
+                                pnl: pnl,
+                                size: currentPosition.size
+                            });
+                            
+                            currentPosition = null;
+                            pos = 0;
+                            continue;
+                        }
+                        
+                        // Vérifier TP
+                        const takeProfitPrice = currentPosition.entryPrice * (1 + tpDistance);
+                        if (currentHigh >= takeProfitPrice) {
+                            const exitPrice = takeProfitPrice;
+                            const pnl = (exitPrice - currentPosition.entryPrice) * currentPosition.size;
+                            totalPnL += pnl;
+                            winCount++;
+                            
+                            trades.push({
+                                entry: currentPosition.entryPrice,
+                                exit: exitPrice,
+                                type: currentPosition.type + " TP",
+                                pnl: pnl,
+                                size: currentPosition.size
+                            });
+                            
+                            currentPosition = null;
+                            pos = 0;
+                        }
+                    } 
+                    else if (currentPosition.type === "SHORT") {
+                        const currentLow = data[i].low;
+                        const currentHigh = data[i].high;
+                        
+                        // Vérifier SL
+                        const stopLossPrice = currentPosition.entryPrice * (1 + slDistance);
+                        if (currentHigh >= stopLossPrice) {
+                            const exitPrice = stopLossPrice;
+                            const pnl = (currentPosition.entryPrice - exitPrice) * currentPosition.size;
+                            totalPnL += pnl;
+                            
+                            if (pnl > 0) winCount++;
+                            else lossCount++;
+                            
+                            trades.push({
+                                entry: currentPosition.entryPrice,
+                                exit: exitPrice,
+                                type: currentPosition.type + " SL",
+                                pnl: pnl,
+                                size: currentPosition.size
+                            });
+                            
+                            currentPosition = null;
+                            pos = 0;
+                            continue;
+                        }
+                        
+                        // Vérifier TP
+                        const takeProfitPrice = currentPosition.entryPrice * (1 - tpDistance);
+                        if (currentLow <= takeProfitPrice) {
+                            const exitPrice = takeProfitPrice;
+                            const pnl = (currentPosition.entryPrice - exitPrice) * currentPosition.size;
+                            totalPnL += pnl;
+                            winCount++;
+                            
+                            trades.push({
+                                entry: currentPosition.entryPrice,
+                                exit: exitPrice,
+                                type: currentPosition.type + " TP",
+                                pnl: pnl,
+                                size: currentPosition.size
+                            });
+                            
+                            currentPosition = null;
+                            pos = 0;
+                        }
+                    }
+                }
+            }
+            
+            // Fermer la position ouverte à la fin des données si elle existe
+            if (currentPosition) {
+                const exitPrice = data[data.length - 1].close;
+                let pnl;
+                
+                if (currentPosition.type === "LONG") {
+                    pnl = (exitPrice - currentPosition.entryPrice) * currentPosition.size;
+                } else {
+                    pnl = (currentPosition.entryPrice - exitPrice) * currentPosition.size;
+                }
+                
+                totalPnL += pnl;
+                
+                if (pnl > 0) winCount++;
+                else lossCount++;
+                
+                trades.push({
+                    entry: currentPosition.entryPrice,
+                    exit: exitPrice,
+                    type: currentPosition.type + " CLOSE",
+                    pnl: pnl,
+                    size: currentPosition.size
+                });
+            }
+            
+            // Calcul des métriques
+            const totalTrades = trades.length;
+            if (totalTrades === 0) return null;
+            
+            const winRate = (winCount / totalTrades) * 100;
+            const totalReturnPercent = (totalPnL / 10000) * 100; // Basé sur un capital de 10k
+            
+            const winningTrades = trades.filter(t => t.pnl > 0);
+            const losingTrades = trades.filter(t => t.pnl < 0);
+            
+            const avgWin = winningTrades.length > 0 ? 
+                winningTrades.reduce((sum, t) => sum + t.pnl, 0) / winningTrades.length : 0;
+            const avgLoss = losingTrades.length > 0 ? 
+                Math.abs(losingTrades.reduce((sum, t) => sum + t.pnl, 0)) / losingTrades.length : 0;
+            
+            const profitFactor = avgLoss > 0 ? (avgWin * winCount) / (avgLoss * lossCount) : winCount > 0 ? 999 : 0;
+            
+            // Ratio de Sharpe simplifié
+            const returns = trades.map(t => t.pnl / 10000 * 100); // Returns en %
+            const avgReturn = returns.reduce((sum, r) => sum + r, 0) / returns.length;
+            const variance = returns.reduce((sum, r) => sum + Math.pow(r - avgReturn, 2), 0) / returns.length;
+            const sharpeRatio = Math.sqrt(variance) > 0 ? avgReturn / Math.sqrt(variance) : 0;
+            
+            const expectancy = totalPnL / totalTrades;
+            
+            // Score composite
+            const normalizedWinRate = Math.min(100, winRate) / 100;
+            const normalizedPF = Math.min(10, profitFactor) / 10;
+            const normalizedReturn = Math.max(-100, Math.min(500, totalReturnPercent)) / 500 + 1;
+            const normalizedSharpe = Math.max(-5, Math.min(5, sharpeRatio)) / 5 + 1;
+            const compositeScore = (normalizedWinRate * 0.25 + normalizedPF * 0.35 + normalizedReturn * 0.25 + normalizedSharpe * 0.15) * 100;
+            
+            return {
+                sensitivity,
+                factor,
+                stopLoss,
+                trailingDistance,
+                totalTrades,
+                winRate,
+                totalReturn: totalReturnPercent,
+                profitFactor,
+                sharpeRatio,
+                expectancy,
+                compositeScore,
+                trades
+            };
+        }
+        
+        // Affichage des résultats
+        function displayResults(results, metric) {
+            const tbody = document.getElementById('results-body');
+            tbody.innerHTML = '';
+            
+            if (!results || results.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="9" style="text-align: center; padding: 20px;">
+                            Aucun résultat valide trouvé. Essayez d'élargir les paramètres.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            results.forEach((result, index) => {
+                const row = tbody.insertRow();
+                
+                // Rank
+                const rankCell = row.insertCell();
+                rankCell.innerHTML = `<span class="rank">#${index + 1}</span>`;
+                
+                // Paramètres
+                row.insertCell().textContent = result.sensitivity.toFixed(1);
+                row.insertCell().textContent = result.factor.toFixed(1);
+                row.insertCell().textContent = result.stopLoss.toFixed(1) + '%';
+                row.insertCell().textContent = result.trailingDistance.toFixed(1);
+                
+                // Score selon métrique
+                const scoreCell = row.insertCell();
+                let scoreValue, scoreClass;
+                
+                switch(metric) {
+                    case 'totalReturn':
+                        scoreValue = result.totalReturn.toFixed(2) + '%';
+                        scoreClass = result.totalReturn > 0 ? 'metric-positive' : 'metric-negative';
+                        break;
+                    case 'profitFactor':
+                        scoreValue = result.profitFactor > 99 ? '∞' : result.profitFactor.toFixed(2);
+                        scoreClass = result.profitFactor > 1 ? 'metric-positive' : 'metric-negative';
+                        break;
+                    case 'winRate':
+                        scoreValue = result.winRate.toFixed(1) + '%';
+                        scoreClass = result.winRate >= 50 ? 'metric-positive' : 'metric-negative';
+                        break;
+                    case 'sharpeRatio':
+                        scoreValue = result.sharpeRatio.toFixed(2);
+                        scoreClass = result.sharpeRatio > 0 ? 'metric-positive' : 'metric-negative';
+                        break;
+                    case 'expectancy':
+                        scoreValue = result.expectancy.toFixed(2);
+                        scoreClass = result.expectancy > 0 ? 'metric-positive' : 'metric-negative';
+                        break;
+                    case 'composite':
+                        scoreValue = result.compositeScore.toFixed(1);
+                        scoreClass = result.compositeScore > 60 ? 'metric-positive' : 'metric-negative';
+                        break;
+                }
+                
+                scoreCell.innerHTML = `<span class="${scoreClass}">${scoreValue}</span>`;
+                
+                // Autres métriques
+                const winRateClass = result.winRate >= 50 ? 'metric-positive' : 'metric-negative';
+                row.insertCell().innerHTML = `<span class="${winRateClass}">${result.winRate.toFixed(1)}%</span>`;
+                
+                const returnClass = result.totalReturn > 0 ? 'metric-positive' : 'metric-negative';
+                row.insertCell().innerHTML = `<span class="${returnClass}">${result.totalReturn.toFixed(2)}%</span>`;
+                
+                row.insertCell().textContent = result.totalTrades;
+            });
+            
+            // Afficher la meilleure configuration
+            if (results.length > 0) {
+                const best = results[0];
+                const configText = `
+        // Configuration optimale pour ${document.getElementById('signal-type').value}
+        sensitivity = ${best.sensitivity.toFixed(1)}
+        factor = ${best.factor.toFixed(1)} 
+        stopLossVal = ${best.stopLoss.toFixed(1)}
+        trailingDistance = ${best.trailingDistance.toFixed(1)}
+        
+        // Résultats :
+        // Trades: ${best.totalTrades}
+        // Win Rate: ${best.winRate.toFixed(1)}%
+        // Total Return: ${best.totalReturn.toFixed(2)}%
+        // Profit Factor: ${best.profitFactor > 99 ? '∞' : best.profitFactor.toFixed(2)}
+        // Sharpe Ratio: ${best.sharpeRatio.toFixed(2)}
+        // Score Composite: ${best.compositeScore.toFixed(1)}/100
+                `.trim();
+                
+                document.getElementById('best-config').textContent = configText;
+            }
+        }
+        // Fonction d'optimisation principale
+        async function optimize() {
+            if (!csvData || isOptimizing) return;
+            
+            isOptimizing = true;
+            document.getElementById('optimize-btn').disabled = true;
+            document.getElementById('progress-container').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+            
+            const params = {
+                sensitivity: {
+                    min: parseFloat(document.getElementById('sens-min').value),
+                    max: parseFloat(document.getElementById('sens-max').value),
+                    step: parseFloat(document.getElementById('sens-step').value)
+                },
+                factor: {
+                    min: parseFloat(document.getElementById('factor-min').value),
+                    max: parseFloat(document.getElementById('factor-max').value),
+                    step: parseFloat(document.getElementById('factor-step').value)
+                },
+                stopLoss: {
+                    min: parseFloat(document.getElementById('sl-min').value),
+                    max: parseFloat(document.getElementById('sl-max').value),
+                    step: parseFloat(document.getElementById('sl-step').value)
+                },
+                trailingDistance: {
+                    min: parseFloat(document.getElementById('trail-min').value),
+                    max: parseFloat(document.getElementById('trail-max').value),
+                    step: parseFloat(document.getElementById('trail-step').value)
+                }
+            };
+            
+            const metric = document.getElementById('optimization-metric').value;
+            const signalType = document.getElementById('signal-type').value;
+            const tpLevel = document.getElementById('tp-level').value;
+            
+            let results = [];
+            let totalTests = 0;
+            let completedTests = 0;
+            
+            // Calculer le nombre total de tests
+            for (let sens = params.sensitivity.min; sens <= params.sensitivity.max; sens += params.sensitivity.step) {
+                for (let fact = params.factor.min; fact <= params.factor.max; fact += params.factor.step) {
+                    for (let sl = params.stopLoss.min; sl <= params.stopLoss.max; sl += params.stopLoss.step) {
+                        for (let trail = params.trailingDistance.min; trail <= params.trailingDistance.max; trail += params.trailingDistance.step) {
+                            totalTests++;
+                        }
+                    }
+                }
+            }
+            
+            // Boucle d'optimisation
+            for (let sens = params.sensitivity.min; sens <= params.sensitivity.max; sens += params.sensitivity.step) {
+                for (let fact = params.factor.min; fact <= params.factor.max; fact += params.factor.step) {
+                    for (let sl = params.stopLoss.min; sl <= params.stopLoss.max; sl += params.stopLoss.step) {
+                        for (let trail = params.trailingDistance.min; trail <= params.trailingDistance.max; trail += params.trailingDistance.step) {
+                            const result = simulateStrategy(csvData, sens, fact, sl, trail, signalType, tpLevel);
+                            
+                            if (result && result.totalTrades > 5) {
+                                results.push(result);
+                            }
+                            
+                            completedTests++;
+                            const progress = (completedTests / totalTests) * 100;
+                            document.getElementById('progress-fill').style.width = progress + '%';
+                            document.getElementById('progress-text').textContent = Math.round(progress) + '%';
+                            document.getElementById('current-test').textContent = 
+                                `Test ${completedTests}/${totalTests} - S:${sens.toFixed(1)} F:${fact.toFixed(1)} SL:${sl.toFixed(1)} T:${trail.toFixed(1)}`;
+                            
+                            // Pause pour ne pas bloquer le navigateur
+                            if (completedTests % 50 === 0) {
+                                await new Promise(resolve => setTimeout(resolve, 1));
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Trier les résultats selon la métrique choisie
+            results.sort((a, b) => {
+                switch(metric) {
+                    case 'totalReturn': return b.totalReturn - a.totalReturn;
+                    case 'profitFactor': return b.profitFactor - a.profitFactor;
+                    case 'winRate': return b.winRate - a.winRate;
+                    case 'sharpeRatio': return b.sharpeRatio - a.sharpeRatio;
+                    case 'expectancy': return b.expectancy - a.expectancy;
+                    case 'composite': return b.compositeScore - a.compositeScore;
+                    default: return b.totalReturn - a.totalReturn;
+                }
+            });
+            
+            // Afficher les résultats
+            displayResults(results.slice(0, 10), metric);
+            
+            isOptimizing = false;
+            document.getElementById('optimize-btn').disabled = false;
+            document.getElementById('optimize-btn').textContent = '🚀 Lancer l\'Optimisation';
+            document.getElementById('progress-container').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+        }
+        
+        // Exemple de données de démonstration si pas de CSV
+        function loadDemoData() {
+            console.log('Mode démo activé - génération de données simulées');
+            csvData = [];
+            const startPrice = 100;
+            let currentPrice = startPrice;
+            
+            for (let i = 0; i < 1000; i++) {
+                const volatility = 0.02;
+                const trend = Math.sin(i / 100) * 0.001;
+                const noise = (Math.random() - 0.5) * volatility;
+                
+                const change = trend + noise;
+                const open = currentPrice;
+                const close = currentPrice * (1 + change);
+                const high = Math.max(open, close) * (1 + Math.random() * 0.01);
+                const low = Math.min(open, close) * (1 - Math.random() * 0.01);
+                
+                csvData.push({
+                    date: new Date(Date.now() - (1000-i) * 86400000).toISOString(),
+                    open: open,
+                    high: high,
+                    low: low,
+                    close: close,
+                    volume: Math.random() * 1000000
+                });
+                
+                currentPrice = close;
+            }
+            
+            document.getElementById('optimize-btn').disabled = false;
+            console.log('Données de démo générées:', csvData.length, 'bougies');
+        }
+        
+        // Event listener pour le bouton d'optimisation
+        document.getElementById('optimize-btn').addEventListener('click', optimize);
+        
+        // Initialiser le compteur
+        updateComboCount();
+        
+        // Charger des données de démo au démarrage pour les tests
+        setTimeout(() => {
+            loadDemoData();
+            updateComboCount();
+        }, 1000);
+        // Fonction pour formater les nombres avec séparateurs de milliers
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        }
+        
+        // Event listener pour le bouton d'optimisation
+        document.getElementById('optimize-btn').addEventListener('click', function() {
+            if (!csvData || isOptimizing) return;
+            
+            isOptimizing = true;
+            const btn = document.getElementById('optimize-btn');
+            btn.disabled = true;
+            btn.textContent = '⏳ Optimisation en cours...';
+            
+            document.getElementById('progress-container').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+            
+            // Réinitialiser le tableau de résultats
+            document.getElementById('results-body').innerHTML = '';
+            document.getElementById('best-config').textContent = '';
+            
+            const params = {
+                sensitivity: {
+                    min: parseFloat(document.getElementById('sens-min').value),
+                    max: parseFloat(document.getElementById('sens-max').value),
+                    step: parseFloat(document.getElementById('sens-step').value)
+                },
+                factor: {
+                    min: parseFloat(document.getElementById('factor-min').value),
+                    max: parseFloat(document.getElementById('factor-max').value),
+                    step: parseFloat(document.getElementById('factor-step').value)
+                },
+                stopLoss: {
+                    min: parseFloat(document.getElementById('sl-min').value),
+                    max: parseFloat(document.getElementById('sl-max').value),
+                    step: parseFloat(document.getElementById('sl-step').value)
+                },
+                trailingDistance: {
+                    min: parseFloat(document.getElementById('trail-min').value),
+                    max: parseFloat(document.getElementById('trail-max').value),
+                    step: parseFloat(document.getElementById('trail-step').value)
+                }
+            };
+            
+            const metric = document.getElementById('optimization-metric').value;
+            const signalType = document.getElementById('signal-type').value;
+            const tpLevel = document.getElementById('tp-level').value;
+            const initialCapital = parseFloat(document.getElementById('initial-capital').value);
+            
+            let results = [];
+            let totalTests = 0;
+            let completedTests = 0;
+            
+            // Calculer le nombre total de tests
+            for (let sens = params.sensitivity.min; sens <= params.sensitivity.max; sens += params.sensitivity.step) {
+                for (let fact = params.factor.min; fact <= params.factor.max; fact += params.factor.step) {
+                    for (let sl = params.stopLoss.min; sl <= params.stopLoss.max; sl += params.stopLoss.step) {
+                        for (let trail = params.trailingDistance.min; trail <= params.trailingDistance.max; trail += params.trailingDistance.step) {
+                            totalTests++;
+                        }
+                    }
+                }
+            }
+            
+            // Fonction d'optimisation asynchrone
+            async function runOptimization() {
+                for (let sens = params.sensitivity.min; sens <= params.sensitivity.max; sens += params.sensitivity.step) {
+                    for (let fact = params.factor.min; fact <= params.factor.max; fact += params.factor.step) {
+                        for (let sl = params.stopLoss.min; sl <= params.stopLoss.max; sl += params.stopLoss.step) {
+                            for (let trail = params.trailingDistance.min; trail <= params.trailingDistance.max; trail += params.trailingDistance.step) {
+                                const result = simulateStrategy(csvData, sens, fact, sl, trail, signalType, tpLevel);
+                                
+                                if (result && result.totalTrades > 5) {
+                                    results.push(result);
+                                }
+                                
+                                completedTests++;
+                                const progress = (completedTests / totalTests) * 100;
+                                document.getElementById('progress-fill').style.width = progress + '%';
+                                document.getElementById('progress-text').textContent = Math.round(progress) + '%';
+                                document.getElementById('current-test').textContent = 
+                                    `Test ${completedTests}/${totalTests} - S:${sens.toFixed(1)} F:${fact.toFixed(1)} SL:${sl.toFixed(1)} T:${trail.toFixed(1)}`;
+                                
+                                // Pause pour ne pas bloquer le navigateur
+                                if (completedTests % 10 === 0) {
+                                    await new Promise(resolve => setTimeout(resolve, 10));
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                // Trier les résultats selon la métrique choisie
+                if (results.length > 0) {
+                    results.sort((a, b) => {
+                        switch(metric) {
+                            case 'totalReturn': return b.totalReturn - a.totalReturn;
+                            case 'profitFactor': return b.profitFactor - a.profitFactor;
+                            case 'winRate': return b.winRate - a.winRate;
+                            case 'sharpeRatio': return b.sharpeRatio - a.sharpeRatio;
+                            case 'expectancy': return b.expectancy - a.expectancy;
+                            case 'composite': return b.compositeScore - a.compositeScore;
+                            default: return b.totalReturn - a.totalReturn;
+                        }
+                    });
+                    
+                    // Afficher les résultats
+                    displayResults(results.slice(0, 10), metric);
+                    
+                    // Afficher le panel de résultats
+                    document.getElementById('results').style.display = 'block';
+                } else {
+                    // Aucun résultat valide
+                    document.getElementById('results-body').innerHTML = `
+                        <tr>
+                            <td colspan="9" style="text-align: center; padding: 20px;">
+                                Aucun résultat valide trouvé. Essayez d'élargir les paramètres.
+                            </td>
+                        </tr>
+                    `;
+                    document.getElementById('results').style.display = 'block';
+                }
+                
+                // Réinitialiser le bouton
+                isOptimizing = false;
+                btn.disabled = false;
+                btn.textContent = '🚀 Lancer l\'Optimisation';
+                document.getElementById('progress-container').style.display = 'none';
+            }
+            
+            // Démarrer l'optimisation
+            runOptimization();
+        });
+        
+        // Initialiser le compteur
+        updateComboCount();
+        
+        // Charger des données de démo au démarrage pour les tests
+        setTimeout(() => {
+            loadDemoData();
+            updateComboCount();
+        }, 1000);
+    </script>
+</body>
+</html>
