@@ -1347,158 +1347,141 @@
         }
         
         // Event listener pour le bouton d'optimisation
-        document.getElementById('optimize-btn').addEventListener('click', optimize);
-        
-        // Initialiser le compteur
-        updateComboCount();
-        
-        // Charger des données de démo au démarrage pour les tests
-        setTimeout(() => {
-            loadDemoData();
-            updateComboCount();
-        }, 1000);
-        // Fonction pour formater les nombres avec séparateurs de milliers
-        function formatNumber(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-        }
-        
-        // Event listener pour le bouton d'optimisation
-        document.getElementById('optimize-btn').addEventListener('click', function() {
-            if (!csvData || isOptimizing) return;
-            
-            isOptimizing = true;
-            const btn = document.getElementById('optimize-btn');
-            btn.disabled = true;
-            btn.textContent = '⏳ Optimisation en cours...';
-            
-            document.getElementById('progress-container').style.display = 'block';
-            document.getElementById('results').style.display = 'none';
-            
-            // Réinitialiser le tableau de résultats
-            document.getElementById('results-body').innerHTML = '';
-            document.getElementById('best-config').textContent = '';
-            
-            const params = {
-                sensitivity: {
-                    min: parseFloat(document.getElementById('sens-min').value),
-                    max: parseFloat(document.getElementById('sens-max').value),
-                    step: parseFloat(document.getElementById('sens-step').value)
-                },
-                factor: {
-                    min: parseFloat(document.getElementById('factor-min').value),
-                    max: parseFloat(document.getElementById('factor-max').value),
-                    step: parseFloat(document.getElementById('factor-step').value)
-                },
-                stopLoss: {
-                    min: parseFloat(document.getElementById('sl-min').value),
-                    max: parseFloat(document.getElementById('sl-max').value),
-                    step: parseFloat(document.getElementById('sl-step').value)
-                },
-                trailingDistance: {
-                    min: parseFloat(document.getElementById('trail-min').value),
-                    max: parseFloat(document.getElementById('trail-max').value),
-                    step: parseFloat(document.getElementById('trail-step').value)
-                }
-            };
-            
-            const metric = document.getElementById('optimization-metric').value;
-            const signalType = document.getElementById('signal-type').value;
-            const tpLevel = document.getElementById('tp-level').value;
-            const initialCapital = parseFloat(document.getElementById('initial-capital').value);
-            
-            let results = [];
-            let totalTests = 0;
-            let completedTests = 0;
-            
-            // Calculer le nombre total de tests
-            for (let sens = params.sensitivity.min; sens <= params.sensitivity.max; sens += params.sensitivity.step) {
-                for (let fact = params.factor.min; fact <= params.factor.max; fact += params.factor.step) {
-                    for (let sl = params.stopLoss.min; sl <= params.stopLoss.max; sl += params.stopLoss.step) {
-                        for (let trail = params.trailingDistance.min; trail <= params.trailingDistance.max; trail += params.trailingDistance.step) {
-                            totalTests++;
-                        }
-                    }
-                }
-            }
-            
-            // Fonction d'optimisation asynchrone
-            async function runOptimization() {
-                for (let sens = params.sensitivity.min; sens <= params.sensitivity.max; sens += params.sensitivity.step) {
-                    for (let fact = params.factor.min; fact <= params.factor.max; fact += params.factor.step) {
-                        for (let sl = params.stopLoss.min; sl <= params.stopLoss.max; sl += params.stopLoss.step) {
-                            for (let trail = params.trailingDistance.min; trail <= params.trailingDistance.max; trail += params.trailingDistance.step) {
-                                const result = simulateStrategy(csvData, sens, fact, sl, trail, signalType, tpLevel);
-                                
-                                if (result && result.totalTrades > 5) {
-                                    results.push(result);
-                                }
-                                
-                                completedTests++;
-                                const progress = (completedTests / totalTests) * 100;
-                                document.getElementById('progress-fill').style.width = progress + '%';
-                                document.getElementById('progress-text').textContent = Math.round(progress) + '%';
-                                document.getElementById('current-test').textContent = 
-                                    `Test ${completedTests}/${totalTests} - S:${sens.toFixed(1)} F:${fact.toFixed(1)} SL:${sl.toFixed(1)} T:${trail.toFixed(1)}`;
-                                
-                                // Pause pour ne pas bloquer le navigateur
-                                if (completedTests % 10 === 0) {
-                                    await new Promise(resolve => setTimeout(resolve, 10));
-                                }
-                            }
-                        }
-                    }
-                }
-                
-                // Trier les résultats selon la métrique choisie
-                if (results.length > 0) {
-                    results.sort((a, b) => {
-                        switch(metric) {
-                            case 'totalReturn': return b.totalReturn - a.totalReturn;
-                            case 'profitFactor': return b.profitFactor - a.profitFactor;
-                            case 'winRate': return b.winRate - a.winRate;
-                            case 'sharpeRatio': return b.sharpeRatio - a.sharpeRatio;
-                            case 'expectancy': return b.expectancy - a.expectancy;
-                            case 'composite': return b.compositeScore - a.compositeScore;
-                            default: return b.totalReturn - a.totalReturn;
-                        }
-                    });
-                    
-                    // Afficher les résultats
-                    displayResults(results.slice(0, 10), metric);
-                    
-                    // Afficher le panel de résultats
-                    document.getElementById('results').style.display = 'block';
-                } else {
-                    // Aucun résultat valide
-                    document.getElementById('results-body').innerHTML = `
-                        <tr>
-                            <td colspan="9" style="text-align: center; padding: 20px;">
-                                Aucun résultat valide trouvé. Essayez d'élargir les paramètres.
-                            </td>
-                        </tr>
-                    `;
-                    document.getElementById('results').style.display = 'block';
-                }
-                
-                // Réinitialiser le bouton
-                isOptimizing = false;
-                btn.disabled = false;
-                btn.textContent = '🚀 Lancer l\'Optimisation';
-                document.getElementById('progress-container').style.display = 'none';
-            }
-            
-            // Démarrer l'optimisation
-            runOptimization();
-        });
-        
-        // Initialiser le compteur
-        updateComboCount();
-        
-        // Charger des données de démo au démarrage pour les tests
-        setTimeout(() => {
-            loadDemoData();
-            updateComboCount();
-        }, 1000);
+		document.getElementById('optimize-btn').addEventListener('click', function() {
+		    if (!csvData || isOptimizing) return;
+		    
+		    isOptimizing = true;
+		    const btn = document.getElementById('optimize-btn');
+		    btn.disabled = true;
+		    btn.textContent = '⏳ Optimisation en cours...';
+		    
+		    document.getElementById('progress-container').style.display = 'block';
+		    document.getElementById('results').style.display = 'none';
+		    
+		    // Réinitialiser le tableau de résultats
+		    document.getElementById('results-body').innerHTML = '';
+		    document.getElementById('best-config').textContent = '';
+		    
+		    const params = {
+		        sensitivity: {
+		            min: parseFloat(document.getElementById('sens-min').value),
+		            max: parseFloat(document.getElementById('sens-max').value),
+		            step: parseFloat(document.getElementById('sens-step').value)
+		        },
+		        factor: {
+		            min: parseFloat(document.getElementById('factor-min').value),
+		            max: parseFloat(document.getElementById('factor-max').value),
+		            step: parseFloat(document.getElementById('factor-step').value)
+		        },
+		        stopLoss: {
+		            min: parseFloat(document.getElementById('sl-min').value),
+		            max: parseFloat(document.getElementById('sl-max').value),
+		            step: parseFloat(document.getElementById('sl-step').value)
+		        },
+		        trailingDistance: {
+		            min: parseFloat(document.getElementById('trail-min').value),
+		            max: parseFloat(document.getElementById('trail-max').value),
+		            step: parseFloat(document.getElementById('trail-step').value)
+		        }
+		    };
+		    
+		    const metric = document.getElementById('optimization-metric').value;
+		    const signalType = document.getElementById('signal-type').value;
+		    const tpLevel = document.getElementById('tp-level').value;
+		    
+		    let results = [];
+		    let totalTests = 0;
+		    let completedTests = 0;
+		    
+		    // Calculer le nombre total de tests
+		    for (let sens = params.sensitivity.min; sens <= params.sensitivity.max; sens += params.sensitivity.step) {
+		        for (let fact = params.factor.min; fact <= params.factor.max; fact += params.factor.step) {
+		            for (let sl = params.stopLoss.min; sl <= params.stopLoss.max; sl += params.stopLoss.step) {
+		                for (let trail = params.trailingDistance.min; trail <= params.trailingDistance.max; trail += params.trailingDistance.step) {
+		                    totalTests++;
+		                }
+		            }
+		        }
+		    }
+		    
+		    // Fonction d'optimisation asynchrone
+		    async function runOptimization() {
+		        for (let sens = params.sensitivity.min; sens <= params.sensitivity.max; sens += params.sensitivity.step) {
+		            for (let fact = params.factor.min; fact <= params.factor.max; fact += params.factor.step) {
+		                for (let sl = params.stopLoss.min; sl <= params.stopLoss.max; sl += params.stopLoss.step) {
+		                    for (let trail = params.trailingDistance.min; trail <= params.trailingDistance.max; trail += params.trailingDistance.step) {
+		                        const result = simulateStrategy(csvData, sens, fact, sl, trail, signalType, tpLevel);
+		                        
+		                        if (result && result.totalTrades > 5) {
+		                            results.push(result);
+		                        }
+		                        
+		                        completedTests++;
+		                        const progress = (completedTests / totalTests) * 100;
+		                        document.getElementById('progress-fill').style.width = progress + '%';
+		                        document.getElementById('progress-text').textContent = Math.round(progress) + '%';
+		                        document.getElementById('current-test').textContent = 
+		                            `Test ${completedTests}/${totalTests} - S:${sens.toFixed(1)} F:${fact.toFixed(1)} SL:${sl.toFixed(1)} T:${trail.toFixed(1)}`;
+		                        
+		                        // Pause pour ne pas bloquer le navigateur
+		                        if (completedTests % 10 === 0) {
+		                            await new Promise(resolve => setTimeout(resolve, 10));
+		                        }
+		                    }
+		                }
+		            }
+		        }
+		        
+		        // Trier les résultats selon la métrique choisie
+		        if (results.length > 0) {
+		            results.sort((a, b) => {
+		                switch(metric) {
+		                    case 'totalReturn': return b.totalReturn - a.totalReturn;
+		                    case 'profitFactor': return b.profitFactor - a.profitFactor;
+		                    case 'winRate': return b.winRate - a.winRate;
+		                    case 'sharpeRatio': return b.sharpeRatio - a.sharpeRatio;
+		                    case 'expectancy': return b.expectancy - a.expectancy;
+		                    case 'composite': return b.compositeScore - a.compositeScore;
+		                    default: return b.totalReturn - a.totalReturn;
+		                }
+		            });
+		            
+		            // Afficher les résultats
+		            displayResults(results.slice(0, 10), metric);
+		            
+		            // Afficher le panel de résultats
+		            document.getElementById('results').style.display = 'block';
+		        } else {
+		            // Aucun résultat valide
+		            document.getElementById('results-body').innerHTML = `
+		                <tr>
+		                    <td colspan="9" style="text-align: center; padding: 20px;">
+		                        Aucun résultat valide trouvé. Essayez d'élargir les paramètres.
+		                    </td>
+		                </tr>
+		            `;
+		            document.getElementById('results').style.display = 'block';
+		        }
+		        
+		        // Réinitialiser le bouton
+		        isOptimizing = false;
+		        btn.disabled = false;
+		        btn.textContent = '🚀 Lancer l\'Optimisation';
+		        document.getElementById('progress-container').style.display = 'none';
+		    }
+		    
+		    // Démarrer l'optimisation
+		    runOptimization();
+		});
+		
+		// Initialiser le compteur
+		updateComboCount();
+		
+		// Charger des données de démo au démarrage pour les tests
+		setTimeout(() => {
+		    loadDemoData();
+		    updateComboCount();
+		}, 1000);
     </script>
 </body>
 </html>
