@@ -461,7 +461,7 @@
 
         /* Mobile gallery - Swipe fonctionnel */
         .color-gallery-mobile-wrapper {
-            display: none;
+            display: block;
             position: relative;
             width: 100%;
             overflow: hidden;
@@ -825,42 +825,6 @@
                 margin-bottom: 20px;
             }
 
-            .color-gallery-desktop {
-                display: none;
-            }
-
-            .color-gallery-mobile-wrapper {
-                display: block;
-                width: 100vw;
-                overflow-x: auto;
-                margin-left: -5vw;
-                padding-bottom: 15px;
-            }
-
-            .color-gallery-mobile {
-                display: flex;
-                gap: 20px;
-                padding: 25px;
-                scroll-snap-type: x mandatory;
-                -webkit-overflow-scrolling: touch;
-            }
-
-            .color-gallery-mobile img {
-                flex: 0 0 250px;
-                border-radius: 15px;
-                scroll-snap-align: center;
-                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-            }
-
-            .swipe-indicator-mobile {
-                display: flex;
-                justify-content: center;
-                margin-top: 20px;
-                color: #ff7e5f;
-                font-weight: 600;
-                animation: bounceSwipe 1.5s infinite;
-            }
-
             @keyframes bounceSwipe {
                 0%, 100% { transform: translateX(0); opacity: 0.7; }
                 50% { transform: translateX(-6px); opacity: 1; }
@@ -1197,13 +1161,6 @@
                 Let your charts speak your style!
             </p>
 
-            <!-- Desktop gallery -->
-            <div class="color-gallery-desktop">
-                <img src="Customizablecolor_image1.png" alt="Custom 1" data-aos="zoom-in" data-aos-delay="0">
-                <img src="Customizablecolor_image2.png" alt="Custom 2" data-aos="zoom-in" data-aos-delay="100">
-                <img src="Customizablecolor_image3.png" alt="Custom 3" data-aos="zoom-in" data-aos-delay="200">
-                <img src="Customizablecolor_image4.png" alt="Custom 4" data-aos="zoom-in" data-aos-delay="300">
-            </div>
         </div>
 
         <div class="swipe-indicator-mobile">
