@@ -1235,13 +1235,13 @@
         <!-- Mobile gallery -->
         <!-- Mobile gallery -->
         <div class="color-gallery-mobile-wrapper">
-            <div class="color-gallery-mobile" id="mobileGallery">
+            <div class="color-gallery-mobile" id="customGallery">
                 <img src="Customizablecolor_image1.png" alt="Custom 1">
                 <img src="Customizablecolor_image2.png" alt="Custom 2">
                 <img src="Customizablecolor_image3.png" alt="Custom 3">
                 <img src="Customizablecolor_image4.png" alt="Custom 4">
             </div>
-            <div class="gallery-dots" id="galleryDots">
+            <div class="gallery-dots" id="customDots">
                 <span class="dot active" data-index="0"></span>
                 <span class="dot" data-index="1"></span>
                 <span class="dot" data-index="2"></span>
@@ -1540,7 +1540,69 @@
                 });
             });
         }
-
+        // Nouvelle fonction pour la galerie customizable
+        function initializeCustomGallery() {
+            const gallery = document.getElementById('customGallery');
+            const dots = document.querySelectorAll('#customDots .dot');
+            
+            if (!gallery || dots.length === 0) return;
+            
+            let currentIndex = 0;
+            let startX = 0;
+            let isDragging = false;
+            
+            function updateGallery() {
+                const translateX = -currentIndex * 270; // 250px image + 20px gap
+                gallery.style.transform = `translateX(${translateX}px)`;
+                
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+            }
+            
+            gallery.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                isDragging = true;
+                gallery.style.transition = 'none';
+            });
+            
+            gallery.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+                
+                const currentX = e.touches[0].clientX;
+                const diffX = currentX - startX;
+                const currentTranslateX = -currentIndex * 270;
+                
+                gallery.style.transform = `translateX(${currentTranslateX + diffX}px)`;
+            });
+            
+            gallery.addEventListener('touchend', (e) => {
+                if (!isDragging) return;
+                
+                isDragging = false;
+                gallery.style.transition = 'transform 0.3s ease';
+                
+                const diffX = e.changedTouches[0].clientX - startX;
+                
+                if (diffX > 50 && currentIndex > 0) {
+                    currentIndex--;
+                } else if (diffX < -50 && currentIndex < gallery.children.length - 1) {
+                    currentIndex++;
+                }
+                
+                updateGallery();
+            });
+            
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateGallery();
+                });
+            });
+            
+            updateGallery();
+        }
         // Assistance form toggle
         function initializeAssistance() {
             const assistanceButton = document.getElementById("assistance");
@@ -1566,7 +1628,8 @@
         document.addEventListener("DOMContentLoaded", function() {
             createParticles();
             initializeMobileSliders();
-            initializeMobileGallery(); // Ajouter cette ligne
+            initializeMobileGallery(); // Pour Key Features
+            initializeCustomGallery(); // AJOUTER CETTE LIGNE pour Customizable
             initializeFAQ();
             initializeNavbar();
             initializeAssistance();
