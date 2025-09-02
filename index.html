@@ -459,6 +459,7 @@
             z-index: 2;
         }
 
+        /* Desktop gallery - visible par défaut */
         .color-gallery-desktop {
             display: flex;
             flex-wrap: wrap;
@@ -482,6 +483,46 @@
             transform: scale(1.08) rotate(2deg);
             box-shadow: 0 20px 50px rgba(255, 126, 95, 0.4);
             border-color: rgba(255, 126, 95, 0.5);
+        }
+
+        /* Mobile gallery - masquée par défaut */
+        .color-gallery-mobile-wrapper {
+            display: none;
+        }
+
+        .color-gallery-mobile {
+            display: flex;
+            gap: 20px;
+            padding: 25px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .color-gallery-mobile img {
+            flex: 0 0 250px;
+            border-radius: 15px;
+            scroll-snap-align: center;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .color-gallery-mobile img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(255, 126, 95, 0.3);
+        }
+
+        .swipe-indicator-mobile {
+            display: none;
+            justify-content: center;
+            margin-top: 20px;
+            color: #ff7e5f;
+            font-weight: 600;
+            animation: bounceSwipe 1.5s infinite;
+        }
+
+        @keyframes bounceSwipe {
+            0%, 100% { transform: translateX(0); opacity: 0.7; }
+            50% { transform: translateX(-6px); opacity: 1; }
         }
 
         /* Image section avec effet 3D */
