@@ -1033,13 +1033,15 @@
         <div class="container header-content">
             <h1>Discover <span class="gradient-text">AlgoXpert</span>: The Revolutionary Indicator for Traders</h1>
             <div class="animated-text">
-                <span>3 Types of Signals</span>
-                <span>Adjustable Sensitivity</span>
-                <span>Take Profits & Targets</span>
-                <span>Reversal Points Detection</span>
-                <span>Built-in Volume Profile</span>
-                <span>Customizable Bar Colors</span>
-                <span>Smart Trading Panel</span>
+                <span>
+                    3 Types of Signals<br>
+                    Adjustable Sensitivity<br>
+                    Take Profits & Targets<br>
+                    Reversal Points Detection<br>
+                    Built-in Volume Profile<br>
+                    Customizable Bar Colors<br>
+                    Smart Trading Panel
+                </span>
             </div>
             <p>AlgoXpert is the tool you need for informed decisions, thanks to advanced real-time market analysis. Maximize gains with clear and precise signals.</p>
             <a href="#pricing" class="cta-button">Buy Now</a>
@@ -1659,11 +1661,10 @@
         function disableMobileAnimations() {
             if (isMobile) {
                 const animatedText = document.querySelector('.animated-text span');
-                    if (animatedText) {
-                        // Corriger juste le timing sur mobile
-                        animatedText.style.animationDuration = '21s';
-                        animatedText.style.animationTimingFunction = 'ease-in-out';
-                    }
+                if (animatedText) {
+                    animatedText.style.animationDuration = '21s';
+                    animatedText.style.animationTimingFunction = 'ease-in-out';
+                }
 
                 // Désactiver l'animation de fond
                 const pulseBg = document.querySelector('.color-pulse-bg');
