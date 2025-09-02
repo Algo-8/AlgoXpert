@@ -860,7 +860,14 @@
                 opacity: 0.3;
                 transform: scale(1);
             }
-
+            .key-features-section .feature-box:hover .text-content {
+                opacity: 1 !important;
+            }
+            
+            .key-features-section .feature-box:hover .image-content {
+                opacity: 0 !important;
+                pointer-events: none !important;
+            }
             .rainbow-text {
                 animation: none;
                 background: linear-gradient(135deg, #ff7e5f, #feb47b);
@@ -1657,8 +1664,7 @@
                 // Désactiver l'animation du texte
                 const animatedText = document.querySelector('.animated-text span');
                 if (animatedText) {
-                    animatedText.style.animation = 'none';
-                    animatedText.style.transform = 'translateY(0)';
+                    animatedText.style.animationPlayState = 'paused';
                 }
 
                 // Désactiver l'animation de fond
