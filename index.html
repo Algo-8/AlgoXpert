@@ -1378,6 +1378,7 @@
     <!-- JavaScript -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        let slidersInitialized = false;
         // Détection mobile
         const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         
@@ -1413,66 +1414,57 @@
         }
 
         // Mobile slider corrigé
+        // Mobile slider corrigé - version unique
         function initializeMobileSliders() {
-            // Slider 1: Why Choose AlgoXpert
-            const whySlider = document.getElementById("why-slider");
-            if (whySlider) {
-                const boxes1 = whySlider.querySelectorAll(".feature-box");
-                let currentIndex1 = 0;
-                let intervalId1;
+            const sliders = [
+                { element: document.getElementById("why-slider"), interval: null, currentIndex: 0, speed: 5000 },
+                { element: document.getElementById("features-slider"), interval: null, currentIndex: 0, speed: 6000 }
+            ];
         
-                function showSlide1(index) {
-                    boxes1.forEach(box => box.classList.remove("active"));
-                    boxes1[index].classList.add("active");
+            sliders.forEach((slider, sliderIndex) => {
+                if (!slider.element) return;
+                
+                const boxes = slider.element.querySelectorAll(".feature-box");
+                if (boxes.length === 0) return;
+        
+                function showSlide(index) {
+                    boxes.forEach(box => box.classList.remove("active"));
+                    if (boxes[index]) {
+                        boxes[index].classList.add("active");
+                    }
                 }
         
-                function startSlider1() {
-                    intervalId1 = setInterval(() => {
-                        currentIndex1 = (currentIndex1 + 1) % boxes1.length;
-                        showSlide1(currentIndex1);
-                    }, 4000);
+                function startSlider() {
+                    // Nettoyer l'ancien interval
+                    if (slider.interval) {
+                        clearInterval(slider.interval);
+                        slider.interval = null;
+                    }
+                    
+                    slider.interval = setInterval(() => {
+                        slider.currentIndex = (slider.currentIndex + 1) % boxes.length;
+                        showSlide(slider.currentIndex);
+                    }, slider.speed);
                 }
         
-                whySlider.addEventListener('touchstart', () => {
-                    if (intervalId1) clearInterval(intervalId1);
-                });
-        
-                whySlider.addEventListener('touchend', () => {
-                    setTimeout(startSlider1, 3000);
-                });
-        
-                startSlider1();
-            }
-        
-            // Slider 2: Key Features
-            const featuresSlider = document.getElementById("features-slider");
-            if (featuresSlider) {
-                const boxes2 = featuresSlider.querySelectorAll(".feature-box");
-                let currentIndex2 = 0;
-                let intervalId2;
-        
-                function showSlide2(index) {
-                    boxes2.forEach(box => box.classList.remove("active"));
-                    boxes2[index].classList.add("active");
+                function stopSlider() {
+                    if (slider.interval) {
+                        clearInterval(slider.interval);
+                        slider.interval = null;
+                    }
                 }
         
-                function startSlider2() {
-                    intervalId2 = setInterval(() => {
-                        currentIndex2 = (currentIndex2 + 1) % boxes2.length;
-                        showSlide2(currentIndex2);
-                    }, 4500); // Timing légèrement différent
-                }
+                // Events pour arrêter/redémarrer
+                slider.element.addEventListener('touchstart', stopSlider, { passive: true });
+                slider.element.addEventListener('touchend', () => {
+                    setTimeout(startSlider, 2000);
+                }, { passive: true });
         
-                featuresSlider.addEventListener('touchstart', () => {
-                    if (intervalId2) clearInterval(intervalId2);
-                });
-        
-                featuresSlider.addEventListener('touchend', () => {
-                    setTimeout(startSlider2, 3000);
-                });
-        
-                startSlider2();
-            }
+                // Démarrage avec délai pour éviter les conflits
+                setTimeout(() => {
+                    startSlider();
+                }, sliderIndex * 1000); // Délai de 1s entre chaque slider
+            });
         }
         // Gallery mobile CORRIGÉE - sans blocage du scroll
         function initializeCustomGallery() {
@@ -1739,15 +1731,17 @@
             createParticles();
             
             // FIXÉ: Délai entre l'initialisation des sliders pour éviter les conflits
-            if (isMobile) {
-                initializeMobileSliders();
+            if (isMobile && !slidersInitialized) {
+                slidersInitialized = true;
+                setTimeout(() => {
+                    initializeMobileSliders();
+                }, 500);
+                
                 setTimeout(() => {
                     initializeCustomGallery();
-                }, 1000); // Délai de 1 seconde entre les initialisations
-            } else {
-                initializeCustomGallery();
+                }, 2000);
             }
-            
+                        
             initializeFAQ();
             initializeNavbar();
             initializeAssistance();
