@@ -9,7 +9,7 @@
     <link rel="icon" type="image/png" href="AlgoXpert Logo.png">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <!-- AOS Animation CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
@@ -23,9 +23,10 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #121212;
+            background-color: #0a0a0a;
             color: #f5f5f5;
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
         .container {
@@ -35,421 +36,346 @@
             overflow-x: visible;
         }
 
-        /* Header */
-        header {
-            background: linear-gradient(45deg, #000000, #434343);
-            color: white;
-            padding: 70px 0;
-            text-align: center;
-            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        /* Navigation fixe */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 126, 95, 0.1);
         }
-        /* Animation du titre */
-        @keyframes fadeIn {
+
+        .navbar.scrolled {
+            background: rgba(10, 10, 10, 0.98);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        .nav-logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ff7e5f, #feb47b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #f5f5f5;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff7e5f, #feb47b);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 126, 95, 0.3);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 126, 95, 0.4);
+        }
+
+        /* Header avec padding-top pour compenser la navbar fixe */
+        header {
+            background: linear-gradient(135deg, #000000, #1a1a1a, #434343);
+            color: white;
+            padding: 150px 0 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Particules animées en arrière-plan */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 126, 95, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Animation du titre améliorée */
+        @keyframes slideInUp {
             0% {
                 opacity: 0;
-                transform: translateY(-30px);
+                transform: translateY(50px);
             }
             100% {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
         header h1 {
-            font-size: 48px;
-            font-weight: 600;
-            animation: fadeIn 1.5s ease-out; /* Durée et effet */
-        }
-
-        header p {
-            font-size: 18px;
-            margin-top: 20px;
-            line-height: 1.8;
-            max-width: 700px;
-            margin: 20px auto;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background-color: #ffffff;
-            color: #333;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-weight: 600;
-            margin-top: 20px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .cta-button:hover {
-            background-color: #e0e0e0;
-        }
-
-        /* Section Styles */
-        section {
-            padding: 80px 0;
-        }
-
-        section h2 {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 50px;
-            color: #e0e0e0;
-        }
-
-        .features {
-            display: flex;
-            justify-content: space-around;
-            text-align: center;
-            flex-wrap: wrap; /* Ajouté pour la responsivité */
-        }
-
-        .feature-box {
-            background-color: #1e1e1e;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease;
-            flex: 1 1 30%; /* Ajouté pour la responsivité */
-            margin: 10px; /* Ajouté pour l'espacement */
-        }
-
-        .feature-box:hover {
-            transform: translateY(-10px);
-        }
-
-        .feature-box h3 {
-            font-size: 24px;
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 700;
+            animation: slideInUp 1s ease-out;
             margin-bottom: 20px;
-            color: #ffffff;
+            letter-spacing: -0.5px;
         }
 
-        .feature-box p {
-            font-size: 18px;
-            line-height: 1.6;
+        .gradient-text {
+            background: linear-gradient(135deg, #ff7e5f, #feb47b, #86e3ce);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 4s ease infinite;
         }
 
-        /* Image Section */
-        .image-section img {
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-            display: block;
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
-        .image-section img:hover {
-            transform: scale(1.05);
-        }
-
-        /* Pricing Section */
-        .pricing {
-            background-color: #0d0d0d;
-            color: white;
-            padding: 50px 0;
-            clip-path: polygon(0 0, 100% 15%, 100% 100%, 0 100%);
-        }
-
-        .pricing h2 {
-            background: linear-gradient(90deg, #ff7e5f, #feb47b, #86e3ce, #6a5acd); /* Dégradé de couleurs de gauche à droite */
-            -webkit-background-clip: text; /* Appliquer le dégradé au texte */
-            -webkit-text-fill-color: transparent; /* Rendre le remplissage du texte transparent */
-            font-size: 36px; /* Ajustez la taille de la police selon vos besoins */
-            margin-bottom: 30px; /* Pour donner un peu d'espace en bas */
-            margin-top: 100px; /* Ajuster l'espace selon tes préférences */
-            text-align: center; /* Centrer le texte */
-        }
-
-        .pricing-options {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 50px;
-            flex-wrap: wrap; /* Ajouté pour la responsivité */
-        }
-
-        .pricing-box {
-            background-color: #292929;
-            padding: 40px;
-            border-radius: 15px;
-            text-align: center;
-            width: 30%;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-            margin: 10px; /* Ajouté pour l'espacement */
-        }
-
-        .pricing-box h3 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        .pricing-box p {
-            font-size: 18px;
-            margin-bottom: 30px;
-        }
-
-        .buy-now {
-            background-color: #ffffff;
-            color: #333;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-            transition: background-color 0.3s ease;
-        }
-
-        .buy-now:hover {
-            background-color: #e0e0e0;
-        }
-
-        /* FAQ */
-        .faq-container {
-          max-width: 800px;
-          margin: 0 auto;
-        }
-    
-        .faq-item {
-          margin-bottom: 0;
-          border-bottom: 1px solid #666;
-        }
-    
-        .faq-question {
-          width: 100%;
-          background-color: #1e1e1e;
-          color: white;
-          padding: 15px;
-          padding-right: 40px;
-          text-align: left;
-          font-size: 18px;
-          border: none;
-          position: relative;
-          cursor: pointer;
-        }
-    
-        .faq-question:after {
-          content: '\002B'; /* Plus (+) */
-          position: absolute;
-          right: 20px;
-          top: 50%;
-          transform: translateY(-50%);
-          font-size: 20px;
-        }
-    
-        .faq-item.active .faq-question:after {
-          content: '\2212'; /* Moins (−) */
-        }
-    
-        .faq-answer {
-          display: none;
-          padding: 15px 20px; /* Padding plus important + decalage interne */
-          margin-left: 10px; /* Décalage de toute la réponse vers la droite */
-          background-color: #2c2c2c;
-          border-radius: 8px;
-          font-size: 16px;
-        }
-    
-        .faq-item.active .faq-answer {
-          display: block;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #333333;
-            color: #e0e0e0;
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 50px;
-        }
-
-        footer p {
-            margin-bottom: 0;
-        }
-        @media (max-width: 768px) {
-            .feature-box .image-content img {
-                object-fit: cover;
-                width: 100%;
-                height: 100%;
-                object-position: center;
-            }
-        
-            .feature-box {
-                min-height: 220px; /* s'assurer qu'on garde une bonne hauteur */
-            }
-        }
-        @media (max-width: 480px) {
-            header h1 {
-                font-size: 26px;
-                line-height: 1.4;
-            }
-        
-            .animated-text {
-                font-size: 16px;
-            }
-        
-            .feature-box h3 {
-                font-size: 20px;
-            }
-        
-            .feature-box p {
-                font-size: 16px;
-            }
-        
-            .pricing-box p,
-            .pricing-box h3 {
-                font-size: 18px;
-            }
-        
-            .cta-button {
-                padding: 10px 20px;
-                font-size: 14px;
-            }
-        }
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 36px;
-            }
-
-            header p {
-                font-size: 16px;
-            }
-
-            .feature-box, .pricing-box {
-                width: 100%; /* Chaque box occupera toute la largeur sur les petits écrans */
-                margin-bottom: 20px; /* Ajouté pour espacer les boxes */
-            }
-
-            .pricing-options {
-                flex-direction: column; /* Colonne sur les petits écrans */
-                align-items: center; /* Centrer les items */
-            }
-
-            section h2 {
-                font-size: 28px; /* Réduction de la taille du titre */
-            }
-        }
-        .best-seller-badge {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(90deg, #ff7e5f, #feb47b);
-            color: white;
-            padding: 5px 15px;
-            font-size: 14px;
-            font-weight: bold;
-            border-radius: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-    
-        .pricing-box-wrapper {
-            position: relative;
-            margin-top: 20px;
-        }
         .animated-text {
-            margin-top: 20px;
-            height: 30px;
+            margin-top: 30px;
+            height: 35px;
             overflow: hidden;
             position: relative;
-            font-size: 20px;
+            font-size: clamp(16px, 2.5vw, 22px);
             font-weight: 500;
             color: #ff7e5f;
         }
         
         .animated-text span {
             display: block;
-            height: 30px;
+            height: 35px;
             animation: slide 14s infinite;
-        }
-        @media (max-width: 768px) { 
-            .mobile-slider {
-                display: block;
-                position: relative;
-                width: 100%;
-                max-width: 360px;
-                margin: 0 auto;
-                height: 400px;
-                overflow: hidden;
-            }
-        
-            .mobile-slider .feature-box {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                opacity: 0;
-                transition: opacity 0.8s ease-in-out;
-                background-color: #1e1e1e;
-                border-radius: 12px;
-                padding: 20px;
-                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-            }
-        
-            .mobile-slider .feature-box.active {
-                opacity: 1;
-                z-index: 1;
-            }
-        
-            .mobile-slider .feature-box img {
-                width: 100%;
-                height: 220px;
-                object-fit: cover;
-                border-radius: 10px;
-                margin-bottom: 15px;
-            }
-        
-            .mobile-slider .feature-box h3 {
-                font-size: 18px;
-                margin-bottom: 5px;
-                color: #fff;
-            }
-        
-            .mobile-slider .feature-box p {
-                font-size: 14px;
-                color: #ccc;
-            }
+            line-height: 35px;
         }
 
-        
         @keyframes slide {
             0% { transform: translateY(0); }
             14% { transform: translateY(0); }
-            28% { transform: translateY(-30px); }
-            42% { transform: translateY(-60px); }
-            56% { transform: translateY(-90px); }
-            70% { transform: translateY(-120px); }
-            84% { transform: translateY(-150px); }
-            98% { transform: translateY(-180px); }
+            28% { transform: translateY(-35px); }
+            42% { transform: translateY(-70px); }
+            56% { transform: translateY(-105px); }
+            70% { transform: translateY(-140px); }
+            84% { transform: translateY(-175px); }
+            98% { transform: translateY(-210px); }
             100% { transform: translateY(0); }
         }
-        .feature-box {
-            background-color: #1e1e1e;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease;
-            flex: 1 1 30%;
-            margin: 10px;
-            min-height: 250px; /* Hauteur minimale pour garder un bon espace */
-            position: relative;
-            overflow: hidden; /* Masque le contenu qui dépasse */
+
+        header p {
+            font-size: clamp(16px, 2vw, 20px);
+            margin: 30px auto;
+            line-height: 1.8;
+            max-width: 700px;
+            opacity: 0.9;
         }
-        
-        /* Contenu texte */
-        .feature-box .text-content {
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-top: 30px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(255, 126, 95, 0.3);
+            font-size: 18px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 126, 95, 0.4);
+        }
+
+        /* Améliorations des sections */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        section h2 {
+            text-align: center;
+            font-size: clamp(28px, 4vw, 42px);
+            margin-bottom: 60px;
+            color: #e0e0e0;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        /* Stats section nouvelle */
+        .stats-section {
+            background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+            padding: 80px 0;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(255, 126, 95, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 126, 95, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 126, 95, 0.3);
+            background: rgba(255, 126, 95, 0.1);
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #ff7e5f;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: #ccc;
+            font-weight: 500;
+        }
+
+        /* Améliorations des feature boxes */
+        .features {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .feature-box {
+            background: linear-gradient(145deg, #1e1e1e, #2c2c2c);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            flex: 1 1 300px;
+            min-height: 280px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 126, 95, 0.1);
+        }
+
+        .feature-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff7e5f, #feb47b);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-box:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 
+                0 20px 60px rgba(255, 126, 95, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 126, 95, 0.3);
+        }
+
+        .feature-box h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .feature-box p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #ccc;
+        }
+
+        /* Key Features avec hover images conservé */
+        .key-features-section {
+            background: linear-gradient(45deg, #0a0a0a, #1e1e1e, #2c2c2c);
+            padding: 120px 0;
+        }
+
+        .key-features-section .feature-box {
+            background: linear-gradient(145deg, #2c2c2c, #1e1e1e);
+        }
+
+        .key-features-section .feature-box .text-content {
             transition: opacity 0.3s ease;
         }
         
-        /* Contenu image masqué par défaut */
-        .feature-box .image-content {
+        .key-features-section .feature-box .image-content {
             position: absolute;
             top: 0;
             left: 0;
@@ -463,354 +389,586 @@
             justify-content: center;
         }
         
-        .feature-box .image-content img {
+        .key-features-section .feature-box .image-content img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Remplit tout le conteneur, quitte à rogner */
+            object-fit: cover;
             object-position: center;
-            border-radius: 10px;
+            border-radius: 15px;
         }
 
-        /* Effet au survol : texte invisible, image visible */
-        .feature-box:hover .text-content {
+        .key-features-section .feature-box:hover .text-content {
             opacity: 0;
         }
         
-        .feature-box:hover .image-content {
+        .key-features-section .feature-box:hover .image-content {
             opacity: 1;
             pointer-events: auto;
         }
-        .feature-box:nth-child(1) .image-content img {
-            object-position: center 40%;
-        }
-        .feature-box:nth-child(2) .image-content img {
-            object-position: center 0%;
-        }
-        .feature-box:nth-child(4) .image-content img {
-            object-position: center 40%;
-        }
-        .mobile-slider {
-            display: none;
+
+        /* Customization section améliorée */
+        .customizable-section {
             position: relative;
-            width: 90%;
-            max-width: 400px;
-            margin: 40px auto;
+            padding: 120px 0;
+            background: radial-gradient(ellipse at center, #1a1a1a, #0a0a0a);
+            overflow: hidden;
         }
-        
-        .mobile-slider .feature-box {
-            display: none;
-            background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+
+        .color-pulse-bg {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255, 126, 95, 0.05), rgba(254, 180, 123, 0.03), transparent);
+            animation: pulseColors 12s infinite alternate;
+            z-index: 1;
+        }
+
+        @keyframes pulseColors {
+            0% {
+                transform: scale(1) rotate(0deg);
+                opacity: 0.4;
+            }
+            100% {
+                transform: scale(1.3) rotate(45deg);
+                opacity: 0.7;
+            }
+        }
+
+        .rainbow-text {
             text-align: center;
-            animation: fadeSlide 0.5s ease;
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 700;
+            background: linear-gradient(270deg, #ff7e5f, #feb47b, #86e3ce, #6a5acd, #ff7e5f);
+            background-size: 400% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbowShift 6s linear infinite;
+            position: relative;
+            z-index: 2;
         }
-        
-        .mobile-slider .feature-box.active {
+
+        @keyframes rainbowShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        .customizable-section p {
+            position: relative;
+            z-index: 2;
+        }
+
+        .color-gallery-desktop {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .color-gallery-desktop img {
+            width: 100%;
+            max-width: 280px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            transition: all 0.5s ease;
+            border: 2px solid transparent;
+        }
+
+        .color-gallery-desktop img:hover {
+            transform: scale(1.08) rotate(2deg);
+            box-shadow: 0 20px 50px rgba(255, 126, 95, 0.4);
+            border-color: rgba(255, 126, 95, 0.5);
+        }
+
+        /* Image section avec effet 3D */
+        .image-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+        }
+
+        .interactive-image {
+            border-radius: 25px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 126, 95, 0.1);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: block;
-        }
-        
-        .mobile-slider img {
             max-width: 100%;
             height: auto;
-            border-radius: 10px;
-            margin-bottom: 15px;
         }
-        
-        @keyframes fadeSlide {
+
+        .interactive-image:hover {
+            transform: scale(1.02) rotateY(5deg) rotateX(2deg);
+            box-shadow: 
+                0 30px 80px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(255, 126, 95, 0.3),
+                0 0 50px rgba(255, 126, 95, 0.2);
+        }
+
+        /* Pricing amélioré */
+        .pricing {
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .pricing-options {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 60px;
+            flex-wrap: wrap;
+        }
+
+        .pricing-box {
+            background: linear-gradient(145deg, #1e1e1e, #2c2c2c);
+            padding: 50px 40px;
+            border-radius: 25px;
+            text-align: center;
+            width: 320px;
+            box-shadow: 
+                0 15px 50px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            border: 2px solid rgba(255, 126, 95, 0.1);
+            overflow: hidden;
+        }
+
+        .pricing-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff7e5f, #feb47b);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .pricing-box:hover::before {
+            transform: scaleX(1);
+        }
+
+        .pricing-box:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 
+                0 25px 70px rgba(255, 126, 95, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 126, 95, 0.3);
+        }
+
+        .pricing-box h3 {
+            font-size: 28px;
+            margin-bottom: 25px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .pricing-box p {
+            font-size: 18px;
+            margin-bottom: 35px;
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        .buy-now {
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: white;
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(255, 126, 95, 0.3);
+            font-size: 16px;
+        }
+
+        .buy-now:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(255, 126, 95, 0.4);
+        }
+
+        .best-seller-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: white;
+            padding: 8px 20px;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(255, 126, 95, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* FAQ amélioré */
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+            border-radius: 15px;
+            overflow: hidden;
+            background: linear-gradient(145deg, #1e1e1e, #2c2c2c);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 126, 95, 0.1);
+        }
+
+        .faq-question {
+            width: 100%;
+            background: transparent;
+            color: white;
+            padding: 25px 30px;
+            text-align: left;
+            font-size: 18px;
+            border: none;
+            position: relative;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(255, 126, 95, 0.05);
+        }
+
+        .faq-question::after {
+            content: '+';
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            font-weight: 300;
+            color: #ff7e5f;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question::after {
+            content: '−';
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 0 30px 25px 30px;
+            background: rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            line-height: 1.7;
+            color: #ccc;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(-10px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
+        /* Footer amélioré */
+        footer {
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            color: #ccc;
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 126, 95, 0.1);
+        }
+
+        footer p {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        footer a {
+            color: #ff7e5f;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #feb47b;
+        }
+
+        /* Assistant button amélioré */
+        #assistance {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 8px 25px rgba(255, 126, 95, 0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        #assistance:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 126, 95, 0.5);
+        }
+
+        /* Responsive amélioré */
         @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            header {
+                padding: 120px 0 80px 0;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .key-features-section,
+            .customizable-section,
+            .pricing {
+                padding: 80px 0;
+            }
+
             .features {
                 display: none !important;
-                visibility: hidden;
-                height: 0;
-                overflow: hidden;
             }
-            
-            .mobile-slider {
-            display: block !important;
-            }
-            
 
-            /* 🔧 CORRECTION À AJOUTER ICI */
+            .mobile-slider {
+                display: block !important;
+                position: relative;
+                width: 90%;
+                max-width: 400px;
+                margin: 40px auto;
+            }
+
             .mobile-slider .feature-box {
-                width: 100%;
-                flex: none;
+                display: none;
+                background: linear-gradient(145deg, #1e1e1e, #2c2c2c);
+                padding: 25px;
+                border-radius: 20px;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+                text-align: center;
+                animation: fadeSlide 0.5s ease;
+                border: 1px solid rgba(255, 126, 95, 0.1);
+            }
+
+            .mobile-slider .feature-box.active {
+                display: block;
+            }
+
+            .mobile-slider img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 15px;
+                margin-bottom: 20px;
+            }
+
+            .color-gallery-desktop {
+                display: none;
+            }
+
+            .color-gallery-mobile-wrapper {
+                display: block;
+                width: 100vw;
+                overflow-x: auto;
+                margin-left: -5vw;
+                padding-bottom: 15px;
+            }
+
+            .color-gallery-mobile {
+                display: flex;
+                gap: 20px;
+                padding: 25px;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .color-gallery-mobile img {
+                flex: 0 0 250px;
+                border-radius: 15px;
+                scroll-snap-align: center;
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            }
+
+            .swipe-indicator-mobile {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+                color: #ff7e5f;
+                font-weight: 600;
+                animation: bounceSwipe 1.5s infinite;
+            }
+
+            @keyframes bounceSwipe {
+                0%, 100% { transform: translateX(0); opacity: 0.7; }
+                50% { transform: translateX(-6px); opacity: 1; }
+            }
+
+            .pricing-options {
+                flex-direction: column;
+                align-items: center;
+                gap: 25px;
+            }
+
+            .pricing-box {
+                width: 90%;
+                max-width: 350px;
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            #assistance {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+        }
+
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Ajout du mobile slider conservé */
+        .mobile-slider {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-slider {
+                display: block !important;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-slider {
+                display: none !important;
+            }
+        }
+
+        /* Pricing logo */
+        .pricing-logo {
+            display: block;
+            margin: 0 auto 30px;
+            width: 120px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        @media (max-width: 768px) {
+            .pricing-logo {
+                width: 100px;
                 margin-bottom: 20px;
             }
         }
-        @media (max-width: 768px) {
-            .mobile-slider {
-                display: block !important;
-            }
-        }
-        
-        @media (min-width: 769px) {
-            .mobile-slider {
-                display: none !important;
-            }
-        }
-        @media (max-width: 768px) {
-            .features {
-                display: none !important;
-                max-height: 0 !important;
-                padding: 0 !important;
-                margin: 0 !important;
-            }
-        
-            .mobile-slider {
-                display: block !important;
-            }
-        }
-        .mobile-slider .feature-box:nth-child(3) img {object-fit: contain;}
-        .mobile-slider .feature-box:nth-child(5) img {object-fit: cover; object-position: 65% center; /* un peu à gauche */}
 
-        /* Animated background pulse */
-        .color-pulse-bg {
-          position: absolute;
-          top: -50%;
-          left: -50%;
-          width: 200%;
-          height: 200%;
-          background: radial-gradient(circle at center, #ff7e5f33, #feb47b22, transparent);
-          animation: pulseColors 10s infinite alternate;
-          z-index: -1;
-        }
-        
-        @keyframes pulseColors {
-          0% {
-            transform: scale(1) rotate(0deg);
-            opacity: 0.4;
-          }
-          100% {
-            transform: scale(1.5) rotate(90deg);
-            opacity: 0.6;
-          }
-        }
-        
-        /* Rainbow gradient title */
-        .rainbow-text {
-          text-align: center;
-          font-size: 36px;
-          font-weight: bold;
-          background: linear-gradient(270deg, #ff7e5f, #feb47b, #86e3ce, #6a5acd, #ff7e5f);
-          background-size: 1000% 100%;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          animation: rainbowShift 8s linear infinite;
-        }
-        
-        @keyframes rainbowShift {
-          0% { background-position: 0% 50%; }
-          100% { background-position: 100% 50%; }
-        }
-        
-        /* === DESKTOP GALLERY === */
-        .color-gallery-desktop {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
-          gap: 20px;
-          margin-top: 40px;
-        }
-        
-        .color-gallery-desktop img {
-          width: 100%;
-          max-width: 260px;
-          border-radius: 15px;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-          transition: transform 0.5s ease, box-shadow 0.3s ease;
-        }
-        
-        .color-gallery-desktop img:hover {
-          transform: scale(1.05);
-          box-shadow: 0 8px 24px rgba(255, 126, 95, 0.5);
-        }
-        
-        /* === MOBILE GALLERY (scrollable) === */
-        .color-gallery-mobile-wrapper {
-          display: none;
-        }
-        
-        @media (max-width: 768px) {
-          .color-gallery-desktop {
+        /* Scroll to top button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
             display: none;
-          }
-        
-          .color-gallery-mobile-wrapper {
-            display: block;
-            width: 100vw;
-            overflow-x: auto;
-            overflow-y: hidden;
-            margin-left: -5vw; /* sort du container si encadré */
-            padding-bottom: 10px;
-          }
-        
-          .color-gallery-mobile {
-            display: flex;
-            flex-wrap: nowrap;
-            gap: 16px;
-            padding: 20px 24px;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            min-width: max-content; /* ✅ clé pour permettre le scroll */
-          }
-        
-          .color-gallery-mobile img {
-            flex: 0 0 auto;
-            width: 240px;
-            border-radius: 15px;
-            scroll-snap-align: center;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-          }
-        
-          .color-gallery-mobile img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 24px rgba(255, 126, 95, 0.5);
-          }
-        }
-        /* Indicateur "Swipe" pour mobile uniquement */
-        .swipe-indicator-mobile {
-          display: none;
-        }
-        
-        @media (max-width: 768px) {
-          .swipe-indicator-mobile {
-            display: flex;
-            justify-content: center;
             align-items: center;
-            margin-top: 20px;
-            font-size: 16px;
-            color: #ff7e5f;
-            animation: bounceSwipe 1.5s infinite;
-            font-weight: 600;
-          }
-        
-          @keyframes bounceSwipe {
-            0%   { transform: translateX(0); opacity: 0.7; }
-            50%  { transform: translateX(-6px); opacity: 1; }
-            100% { transform: translateX(0); opacity: 0.7; }
-          }
-        }
-        @media (max-width: 768px) {
-          section.customizable-section {
-            padding-top: 40px !important;
-            padding-bottom: 40px !important;
-          }
-        }
-        @media (max-width: 768px) {
-          .key-features-section {
-            padding-top: 40px !important;
-            padding-bottom: 40px !important;
-          }
-        }
-        .interactive-image {
-          border-radius: 12px;
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-          transition: transform 0.5s ease, box-shadow 0.5s ease;
-          display: block;
-          max-width: 100%;
-          height: auto;
-        }
-        
-        .interactive-image:hover {
-          transform: scale(1.03) rotate(0.5deg);
-          box-shadow: 0 12px 40px rgba(255, 126, 95, 0.4);
-        }
-        @media (max-width: 768px) {
-          .why-algoxpert-section {
-            padding-top: 40px;
-            padding-bottom: 40px;
-          }
-        
-          .why-algoxpert-section h2 {
-            font-size: 24px;
-            line-height: 1.3;
-            text-align: center;
-          }
-        
-          .why-algoxpert-section .feature-box {
-            padding: 19px;
-            margin-bottom: 20px;
-          }
-        
-          .why-algoxpert-section .feature-box h3 {
-            font-size: 15px;
-            margin-bottom: 8px;
-          }
-        
-          .why-algoxpert-section .feature-box p {
-            font-size: 14px;
-            line-height: 1.5;
-          }
-        }
-        .pricing-logo {
-          display: block;
-          margin: 0 auto 20px;
-          width: 120px;
-          max-width: 100%;
-          height: auto;
-        }
-        
-        @media (max-width: 768px) {
-          .pricing-logo {
-            margin-top: 30px; /* ✅ décale le logo vers le bas */
-            width: 100px;
-            margin-bottom: 16px;
-          }
-        }
-        .pricing-box {
-          background: #2c2c2c;
-          padding: 24px;
-          border-radius: 12px;
-          transition: transform 0.4s ease, box-shadow 0.4s ease;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-          cursor: pointer;
-        }
-        
-        @media (min-width: 769px) {
-          .pricing-box:hover {
-            transform: translateY(-8px) scale(1.03);
-            box-shadow: 0 12px 32px rgba(255, 126, 95, 0.3);
+            justify-content: center;
             cursor: pointer;
-          }
+            z-index: 999;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 126, 95, 0.3);
         }
-        @media (max-width: 768px) {
-          .pricing-options {
+
+        .scroll-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 126, 95, 0.4);
+        }
+
+        .scroll-to-top.show {
             display: flex;
-            flex-direction: column;
-            align-items: center; /* ✅ centre toutes les boxes */
-            gap: 20px;
-          }
-        
-          .pricing-box {
-            width: 90%; /* ✅ pour que ça ne dépasse pas l’écran */
-            max-width: 400px;
-          }
         }
-        
-
-
-
     </style>
 
 </head>
 
 <body>
+    <!-- Navigation fixe -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">AlgoXpert</div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#customization">Customization</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+            <a href="#pricing" class="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Scroll to top button -->
+    <div class="scroll-to-top" id="scrollToTop">
+        ↑
+    </div>
+
+    <!-- Particules pour l'animation -->
+    <script>
+        function createParticles() {
+            const particles = document.querySelector('.particles');
+            if (!particles) return;
+            
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                particles.appendChild(particle);
+            }
+        }
+    </script>
 
     <!-- Header Section -->
     <header>
-        <div class="container">
+        <div class="particles"></div>
+        <div class="container header-content">
             <h1>Discover <span class="gradient-text">AlgoXpert</span>: The Revolutionary Indicator for Traders</h1>
             <div class="animated-text">
                 <span>3 Types of Signals</span>
@@ -825,44 +983,77 @@
             <a href="#pricing" class="cta-button">Buy Now</a>
         </div>
     </header>
-    <style>
-        /* Ajoute ceci à la section <style> existante */
-        .gradient-text {
-            background: linear-gradient(90deg, #ff7e5f, #feb47b, #86e3ce); /* Dégradé de couleurs */
-            -webkit-background-clip: text; /* Appliquer le dégradé au texte */
-            -webkit-text-fill-color: transparent; /* Rendre le remplissage du texte transparent */
-        }
-    </style>
-    <!-- Features Section -->
-    <section class="why-algoxpert-section">
-      <div class="container">
-        <h2>Why Choose <span class="gradient-text">AlgoXpert</span>?</h2>
-        <div class="features">
-          <div class="feature-box">
-            <h3>Trade Smarter, Not Harder</h3>
-            <p>AlgoXpert highlights high-probability trade setups in real-time — so you can focus on execution, not guesswork.</p>
-          </div>
-          <div class="feature-box">
-            <h3>Precision Without Complexity</h3>
-            <p>Forget noisy indicators. Get clean and confident entries and exits without overwhelming your charts.</p>
-          </div>
-          <div class="feature-box">
-            <h3>Works on Any Market</h3>
-            <p>Crypto, Forex, Indices, or Stocks — AlgoXpert adapts to your favorite asset and trading style.</p>
-          </div>
+
+    <!-- Stats Section (Nouvelle) -->
+    <section class="stats-section" data-aos="fade-up">
+        <div class="container">
+            <h2>Trusted by <span class="gradient-text">Thousands</span> of Traders</h2>
+            <div class="stats-container">
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="0">
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Markets Supported</div>
+                </div>
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Support</div>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
-    
+    <!-- Features Section -->
+    <section class="why-algoxpert-section" id="features">
+        <div class="container">
+            <h2>Why Choose <span class="gradient-text">AlgoXpert</span>?</h2>
+            <div class="features">
+                <div class="feature-box" data-aos="fade-up" data-aos-delay="0">
+                    <h3>Trade Smarter, Not Harder</h3>
+                    <p>AlgoXpert highlights high-probability trade setups in real-time — so you can focus on execution, not guesswork.</p>
+                </div>
+                <div class="feature-box" data-aos="fade-up" data-aos-delay="100">
+                    <h3>Precision Without Complexity</h3>
+                    <p>Forget noisy indicators. Get clean and confident entries and exits without overwhelming your charts.</p>
+                </div>
+                <div class="feature-box" data-aos="fade-up" data-aos-delay="200">
+                    <h3>Works on Any Market</h3>
+                    <p>Crypto, Forex, Indices, or Stocks — AlgoXpert adapts to your favorite asset and trading style.</p>
+                </div>
+            </div>
+
+            <!-- Mobile version conservée -->
+            <div class="mobile-slider">
+                <div class="feature-box active">
+                    <h3>Trade Smarter, Not Harder</h3>
+                    <p>AlgoXpert highlights high-probability trade setups in real-time — so you can focus on execution, not guesswork.</p>
+                </div>
+                <div class="feature-box">
+                    <h3>Precision Without Complexity</h3>
+                    <p>Forget noisy indicators. Get clean and confident entries and exits without overwhelming your charts.</p>
+                </div>
+                <div class="feature-box">
+                    <h3>Works on Any Market</h3>
+                    <p>Crypto, Forex, Indices, or Stocks — AlgoXpert adapts to your favorite asset and trading style.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Key Features Section -->
-    <section class="key-features-section" style="background: linear-gradient(45deg, #1e1e1e, #2c2c2c); padding: 100px 0;" data-aos="fade-up">
+    <section class="key-features-section" data-aos="fade-up">
         <div class="container">
             <h2>Key Features of <span class="gradient-text">AlgoXpert</span></h2>
-    
+
             <!-- Desktop version -->
-            <div class="features" style="margin-top: 40px;">
-                <div class="feature-box" style="background-color: #2c2c2c;" data-aos="zoom-in" data-aos-delay="0">
+            <div class="features">
+                <div class="feature-box" data-aos="zoom-in" data-aos-delay="0">
                     <div class="text-content">
                         <h3>Multi-Signal Detection</h3>
                         <p>Three types of powerful signals to guide your trades like a professional.</p>
@@ -871,7 +1062,7 @@
                         <img src="Keyfeatures_signals_Image1.png" alt="Multi-Signal Detection">
                     </div>
                 </div>
-                <div class="feature-box" style="background-color: #2c2c2c;" data-aos="zoom-in" data-aos-delay="100">
+                <div class="feature-box" data-aos="zoom-in" data-aos-delay="100">
                     <div class="text-content">
                         <h3>Adjustable Sensitivity</h3>
                         <p>Fine-tune the sensitivity to match your trading style and market volatility.</p>
@@ -880,7 +1071,7 @@
                         <img src="Keyfeatures_sensibilité_Image2.png" alt="Adjustable Sensitivity">
                     </div>
                 </div>
-                <div class="feature-box" style="background-color: #2c2c2c;" data-aos="zoom-in" data-aos-delay="200">
+                <div class="feature-box" data-aos="zoom-in" data-aos-delay="200">
                     <div class="text-content">
                         <h3>Targets & Take Profits</h3>
                         <p>Clear target zones and automatic take-profit points for smarter exits.</p>
@@ -889,7 +1080,7 @@
                         <img src="Keyfeatures_targets_Image3.png" alt="Targets & Take Profits">
                     </div>
                 </div>
-                <div class="feature-box" style="background-color: #2c2c2c;" data-aos="zoom-in" data-aos-delay="300">
+                <div class="feature-box" data-aos="zoom-in" data-aos-delay="300">
                     <div class="text-content">
                         <h3>Reversal Points Detection</h3>
                         <p>Identify key reversal areas to optimize your entries and exits with precision.</p>
@@ -898,7 +1089,7 @@
                         <img src="Keyfeatures_reversal_Image4.png" alt="Reversal Points Detection">
                     </div>
                 </div>
-                <div class="feature-box" style="background-color: #2c2c2c;" data-aos="zoom-in" data-aos-delay="400">
+                <div class="feature-box" data-aos="zoom-in" data-aos-delay="400">
                     <div class="text-content">
                         <h3>Integrated Volume Profile</h3>
                         <p>Spot high-activity zones with built-in volume profiling for deeper insights.</p>
@@ -907,7 +1098,7 @@
                         <img src="Keyfeatures_volumeprofile_Image5.png" alt="Integrated Volume Profile">
                     </div>
                 </div>
-                <div class="feature-box" style="background-color: #2c2c2c;" data-aos="zoom-in" data-aos-delay="500">
+                <div class="feature-box" data-aos="zoom-in" data-aos-delay="500">
                     <div class="text-content">
                         <h3>Built-in Dashboard</h3>
                         <p>A powerful panel displaying key market data such as MACD, RSI, Volume, and Volatility to support your trading decisions.</p>
@@ -917,7 +1108,7 @@
                     </div>
                 </div>
             </div>
-    
+
             <!-- Mobile version -->
             <div class="mobile-slider">
                 <div class="feature-box active">
@@ -953,226 +1144,316 @@
             </div>
         </div>
     </section>
+
     <!-- Customization Section -->
-    <section class="customizable-section" style="position: relative; padding: 100px 0; background: linear-gradient(135deg, #1a1a1a, #2c2c2c); overflow: hidden;">
+    <section class="customizable-section" id="customization">
+        <div class="color-pulse-bg"></div>
+        <div class="container">
+            <h2 class="rainbow-text">Customizable to Match <span class="gradient-text">Your Style</span></h2>
+            <p style="text-align: center; max-width: 700px; margin: 20px auto; font-size: 18px; color: #ccc;">
+                Because not all traders see red the same way 😉 — with <strong>AlgoXpert</strong>, you can fully customize your colors: 
+                one for <strong>buy</strong> signals, one for <strong>sell</strong> signals. <br>
+                These colors reflect directly on your <em>candles, targets, and even the volume profile</em>. <br>
+                Let your charts speak your style!
+            </p>
 
-
-      <div class="color-pulse-bg"></div>
-    
-      <div class="container">
-        <h2 class="rainbow-text">Customizable to Match <span class="gradient-text">Your Style</span></h2>
-        <p style="text-align: center; max-width: 700px; margin: 20px auto; font-size: 18px; color: #ccc;">
-          Because not all traders see red the same way 😉 — with <strong>AlgoXpert</strong>, you can fully customize your colors: 
-          one for <strong>buy</strong> signals, one for <strong>sell</strong> signals. <br>
-          These colors reflect directly on your <em>candles, targets, and even the volume profile</em>. <br>
-          Let your charts speak your style!
-        </p>
-    
-        <!-- Desktop gallery -->
-        <div class="color-gallery-desktop">
-          <img src="Customizablecolor_image1.png" alt="Custom 1">
-          <img src="Customizablecolor_image2.png" alt="Custom 2">
-          <img src="Customizablecolor_image3.png" alt="Custom 3">
-          <img src="Customizablecolor_image4.png" alt="Custom 4">
+            <!-- Desktop gallery -->
+            <div class="color-gallery-desktop">
+                <img src="Customizablecolor_image1.png" alt="Custom 1" data-aos="zoom-in" data-aos-delay="0">
+                <img src="Customizablecolor_image2.png" alt="Custom 2" data-aos="zoom-in" data-aos-delay="100">
+                <img src="Customizablecolor_image3.png" alt="Custom 3" data-aos="zoom-in" data-aos-delay="200">
+                <img src="Customizablecolor_image4.png" alt="Custom 4" data-aos="zoom-in" data-aos-delay="300">
+            </div>
         </div>
-      </div>
 
-
-      <div class="swipe-indicator-mobile">
-        <span>  Swipe</span>
-      </div>
-
-      <!-- Mobile gallery -->
-      <div class="color-gallery-mobile-wrapper">
-        <div class="color-gallery-mobile">
-          <img src="Customizablecolor_image1.png" alt="Custom 1">
-          <img src="Customizablecolor_image2.png" alt="Custom 2">
-          <img src="Customizablecolor_image3.png" alt="Custom 3">
-          <img src="Customizablecolor_image4.png" alt="Custom 4">
+        <div class="swipe-indicator-mobile">
+            <span>← Swipe →</span>
         </div>
-      </div>
+
+        <!-- Mobile gallery -->
+        <div class="color-gallery-mobile-wrapper">
+            <div class="color-gallery-mobile">
+                <img src="Customizablecolor_image1.png" alt="Custom 1">
+                <img src="Customizablecolor_image2.png" alt="Custom 2">
+                <img src="Customizablecolor_image3.png" alt="Custom 3">
+                <img src="Customizablecolor_image4.png" alt="Custom 4">
+            </div>
+        </div>
     </section>
 
-
-
-
-
+    <!-- Main Image Section -->
     <section class="image-section" data-aos="zoom-in">
-      <div class="container">
-        <img class="interactive-image" src="ᴀʟɢᴏxᴘᴇʀᴛ Image" alt="AlgoXpert Image">
-      </div>
+        <div class="container">
+            <img class="interactive-image" src="ᴀʟɢᴏxᴘᴇʀᴛ Image" alt="AlgoXpert Dashboard Overview">
+        </div>
     </section>
-
 
     <!-- Pricing Section -->
     <section id="pricing" class="pricing">
         <div class="container">
             <img class="pricing-logo" src="AlgoXpert Logo.png" alt="AlgoXpert Logo">
-            <h2>Choose Your Plan</h2>
+            <h2>Choose Your <span class="gradient-text">Plan</span></h2>
             <div class="pricing-options">
-                <div class="pricing-box" style="position: relative; overflow: hidden;">
-                    <!-- Badge Best Seller -->
-                    <div style="position: absolute; top: 0px; right: -50px; background: linear-gradient(90deg, #ff7e5f, #feb47b); color: white; padding: 5px 70px 5px 130px; transform: rotate(45deg); font-weight: bold; font-size: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-                        BEST SELLER
-                    </div>
+                <div class="pricing-box" data-aos="fade-up" data-aos-delay="0">
+                    <div class="best-seller-badge">BEST SELLER</div>
                     <h3>Free Trial</h3>
                     <p>Try <span class="gradient-text">AlgoXpert</span> for free for 7 days</p>
-                    <!-- <a href="freetrial.html" class="buy-now">Try for Free</a> -->
                     <a href="#" class="buy-now" onclick="window.location.href='https://tally.so/r/mKg9yz'; return false;">
-                      Buy Now
+                        Try for Free
                     </a>
-
                 </div>
-                <div class="pricing-box">
-                    <h3>Monthly Subscription</h3>
-                    <p>Only $29.99 per month</p>
-                    <!-- <a href="payment.html" class="buy-now">Buy Now</a> -->
+                <div class="pricing-box" data-aos="fade-up" data-aos-delay="100">
+                    <h3>Monthly Plan</h3>
+                    <p>Full access for <strong>$29.99</strong> per month<br><small>Perfect for getting started</small></p>
                     <a href="#" class="buy-now" onclick="window.location.href='https://tally.so/r/mKg9yz'; return false;">
-                      Buy Now
+                        Buy Now
                     </a>
-
                 </div>
-                <div class="pricing-box">
-                    <h3>Annual Subscription</h3>
-                    <p>Only $299.99 per year</p>
-                    <!-- <a href="annual_payment.html" class="buy-now">Buy Now</a> -->
+                <div class="pricing-box" data-aos="fade-up" data-aos-delay="200">
+                    <h3>Annual Plan</h3>
+                    <p>Best value at <strong>$299.99</strong> per year<br><small>Save 17% compared to monthly</small></p>
                     <a href="#" class="buy-now" onclick="window.location.href='https://tally.so/r/mKg9yz'; return false;">
-                      Buy Now
+                        Buy Now
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
-
-
     <!-- FAQ Section -->
-    <section>
+    <section id="faq">
         <div class="container">
-            <h2>Frequently Asked Questions</h2>
+            <h2>Frequently Asked <span class="gradient-text">Questions</span></h2>
             <div class="faq-container">
                 <div class="faq-item">
                     <button class="faq-question">What is <span class="gradient-text">AlgoXpert</span>?</button>
                     <div class="faq-answer">
-                        <p><span class="gradient-text">AlgoXpert</span> is an advanced trading indicator designed to provide reliable and accurate market signals.</p>
+                        <p><span class="gradient-text">AlgoXpert</span> is an advanced trading indicator designed to provide reliable and accurate market signals for TradingView users across multiple markets.</p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">How does the free trial work?</button>
                     <div class="faq-answer">
-                        <p>The free trial allows you to access all <span class="gradient-text">AlgoXpert</span> features for 7 days at no cost.</p>
+                        <p>The free trial gives you complete access to all <span class="gradient-text">AlgoXpert</span> features for 7 days at no cost. No credit card required to start.</p>
                     </div>
                 </div>
                 <div class="faq-item">
-                  <button class="faq-question">How do I cancel my subscription?</button>
-                  <div class="faq-answer">
-                    <p>You can cancel your subscription directly from your PayPal account at any time.  
-                    <br/>Once canceled, access to the indicator will be revoked immediately.  
-                    <br/><strong>No refunds</strong> are issued for the remaining period.</p>
-                  </div>
+                    <button class="faq-question">How do I cancel my subscription?</button>
+                    <div class="faq-answer">
+                        <p>You can cancel your subscription directly from your PayPal account at any time. Once canceled, access to the indicator will be revoked immediately. <strong>No refunds</strong> are issued for the remaining period.</p>
+                    </div>
                 </div>
                 <div class="faq-item">
-                  <button class="faq-question">What happens if a payment fails?</button>
-                  <div class="faq-answer">
-                    <p>If a payment fails (e.g. insufficient funds or expired card), PayPal will retry.  
-                    <br/>If the payment still fails, your subscription will be automatically suspended and access to the indicator will be revoked.</p>
-                  </div>
+                    <button class="faq-question">What happens if a payment fails?</button>
+                    <div class="faq-answer">
+                        <p>If a payment fails (e.g. insufficient funds or expired card), PayPal will retry automatically. If the payment still fails, your subscription will be suspended and access to the indicator will be revoked.</p>
+                    </div>
                 </div>
-
                 <div class="faq-item">
                     <button class="faq-question">Which markets does <span class="gradient-text">AlgoXpert</span> support?</button>
                     <div class="faq-answer">
-                        <p><span class="gradient-text">AlgoXpert</span> supports stock, cryptocurrency, Forex, and commodity markets.</p>
+                        <p><span class="gradient-text">AlgoXpert</span> works seamlessly across stock markets, cryptocurrencies, Forex, commodities, and indices. It adapts to any market conditions.</p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">Can I use <span class="gradient-text">AlgoXpert</span> on multiple devices?</button>
                     <div class="faq-answer">
-                        <p>Yes, you can use <span class="gradient-text">AlgoXpert</span> on multiple devices as long as you use the same account.</p>
+                        <p>Yes, you can use <span class="gradient-text">AlgoXpert</span> on multiple devices as long as you use the same TradingView account. The indicator syncs across all your devices.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <script>
-        // Fonction pour faire apparaître ou disparaître les réponses des questions
-        const faqItems = document.querySelectorAll('.faq-item');
-
-        faqItems.forEach(item => {
-            const questionButton = item.querySelector('.faq-question');
-            questionButton.addEventListener('click', () => {
-                item.classList.toggle('active');
-            });
-        });
-    </script>
-
-       
 
     <!-- Footer -->
     <footer>
-        <p> 2024 <span class="gradient-text">AlgoXpert</span>.</p>
-        <p><a href="terms.html" style="color: #ff7e5f; text-decoration: none;">Terms and Conditions</a> | <a href="privacy-policy.html" style="color: #ff7e5f; text-decoration: none;">Privacy Policy</a></p>
+        <div class="container">
+            <p>&copy; 2024 <span class="gradient-text">AlgoXpert</span>. All rights reserved.</p>
+            <p>
+                <a href="terms.html">Terms and Conditions</a> | 
+                <a href="privacy-policy.html">Privacy Policy</a>
+            </p>
+        </div>
     </footer>
-    
-    <!-- Section d'assistance (chat) à insérer ici juste avant la balise de fermeture </body> -->
-    <div id="assistance" style="position: fixed; bottom: 20px; right: 20px; background-color: #ff7e5f; color: white; padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+
+    <!-- Assistance Button -->
+    <div id="assistance">
         Need Assistance?
     </div>
 
-    <!-- Form for Assistance (Popup) -->
-    <div id="assistance-form" style="display: none; position: fixed; bottom: 80px; right: 20px; background-color: #333; color: white; padding: 20px; border-radius: 10px; width: 300px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-        <h3>Contact Us</h3>
+    <!-- Assistance Form (Popup) -->
+    <div id="assistance-form" style="display: none; position: fixed; bottom: 100px; right: 30px; background: linear-gradient(145deg, #1e1e1e, #2c2c2c); color: white; padding: 30px; border-radius: 20px; width: 350px; box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 126, 95, 0.2); z-index: 1001;">
+        <h3 style="margin-bottom: 20px; color: #ff7e5f;">Contact Us</h3>
         <form action="https://formspree.io/f/yourformid" method="POST">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px;">
+            <label for="name" style="display: block; margin-bottom: 5px; font-weight: 600;">Name</label>
+            <input type="text" id="name" name="name" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 8px; background: #333; color: white; border: 1px solid rgba(255, 126, 95, 0.2);">
         
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px;">
+            <label for="email" style="display: block; margin-bottom: 5px; font-weight: 600;">Email</label>
+            <input type="email" id="email" name="email" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 8px; background: #333; color: white; border: 1px solid rgba(255, 126, 95, 0.2);">
         
-            <label for="message">Message</label>
-            <textarea id="message" name="message" required style="width: 100%; padding: 10px; height: 100px; border: none; border-radius: 5px;"></textarea>
+            <label for="message" style="display: block; margin-bottom: 5px; font-weight: 600;">Message</label>
+            <textarea id="message" name="message" required style="width: 100%; padding: 12px; height: 100px; border: none; border-radius: 8px; background: #333; color: white; border: 1px solid rgba(255, 126, 95, 0.2); resize: vertical;"></textarea>
         
-            <button type="submit" style="background-color: #ff7e5f; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin-top: 10px; cursor: pointer;">Send</button>
+            <button type="submit" style="background: linear-gradient(135deg, #ff7e5f, #feb47b); color: white; padding: 12px 24px; border: none; border-radius: 25px; margin-top: 15px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">Send Message</button>
         </form>
     </div>
 
-    <script>
-        // Toggle the assistance form visibility when clicking on the "Need Assistance?" button
-        document.getElementById("assistance").addEventListener("click", function() {
-            const assistanceForm = document.getElementById("assistance-form");
-            // Si le formulaire est visible, on le cache. Sinon, on l'affiche.
-            if (assistanceForm.style.display === "block") {
-                assistanceForm.style.display = "none";
-            } else {
-                assistanceForm.style.display = "block";
-            }
-        });
-    </script>   
-        <!-- AOS Animation JS -->
+    <!-- JavaScript -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-      AOS.init({
-        once: true, // Ne rejoue pas l’animation quand on remonte
-        duration: 800, // Durée des animations (ms)
-        offset: 120 // Distance avant que l’élément entre dans le viewport
-      });
-    </script>
-    <script>
-    // Slider automatique pour la version mobile
-        document.addEventListener("DOMContentLoaded", function () {
-            const boxes = document.querySelectorAll(".mobile-slider .feature-box");
-            let currentIndex = 0;
-    
-            setInterval(() => {
-                boxes[currentIndex].classList.remove("active");
-                currentIndex = (currentIndex + 1) % boxes.length;
-                boxes[currentIndex].classList.add("active");
-            }, 3000); // 3000 ms = 3 secondes
+        // Initialize AOS
+        AOS.init({
+            once: true,
+            duration: 800,
+            offset: 120,
+            easing: 'ease-out-cubic'
         });
+
+        // Create particles
+        function createParticles() {
+            const particles = document.querySelector('.particles');
+            if (!particles) return;
+            
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                particles.appendChild(particle);
+            }
+        }
+
+        // Mobile slider for features
+        function initializeMobileSliders() {
+            const sliders = document.querySelectorAll(".mobile-slider");
+            
+            sliders.forEach(slider => {
+                const boxes = slider.querySelectorAll(".feature-box");
+                let currentIndex = 0;
+
+                setInterval(() => {
+                    boxes[currentIndex].classList.remove("active");
+                    currentIndex = (currentIndex + 1) % boxes.length;
+                    boxes[currentIndex].classList.add("active");
+                }, 3500);
+            });
+        }
+
+        // FAQ functionality
+        function initializeFAQ() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const questionButton = item.querySelector('.faq-question');
+                questionButton.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    
+                    // Close all FAQ items
+                    faqItems.forEach(faqItem => {
+                        faqItem.classList.remove('active');
+                    });
+                    
+                    // Open clicked item if it wasn't active
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+        }
+
+        // Navbar scroll effect
+        function initializeNavbar() {
+            const navbar = document.getElementById('navbar');
+            const scrollToTop = document.getElementById('scrollToTop');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    navbar.classList.add('scrolled');
+                    scrollToTop.classList.add('show');
+                } else {
+                    navbar.classList.remove('scrolled');
+                    scrollToTop.classList.remove('show');
+                }
+            });
+
+            // Scroll to top functionality
+            scrollToTop.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Smooth scroll for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const headerOffset = 80;
+                        const elementPosition = target.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Assistance form toggle
+        function initializeAssistance() {
+            const assistanceButton = document.getElementById("assistance");
+            const assistanceForm = document.getElementById("assistance-form");
+            
+            assistanceButton.addEventListener("click", function() {
+                if (assistanceForm.style.display === "block") {
+                    assistanceForm.style.display = "none";
+                } else {
+                    assistanceForm.style.display = "block";
+                }
+            });
+
+            // Close form when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!assistanceButton.contains(event.target) && !assistanceForm.contains(event.target)) {
+                    assistanceForm.style.display = "none";
+                }
+            });
+        }
+
+        // Initialize all functionality when DOM is loaded
+        document.addEventListener("DOMContentLoaded", function() {
+            createParticles();
+            initializeMobileSliders();
+            initializeFAQ();
+            initializeNavbar();
+            initializeAssistance();
+        });
+
+        // Performance optimization: Lazy load images
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src || img.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
     </script>
-
-
 
 </body>
 </html>
-
