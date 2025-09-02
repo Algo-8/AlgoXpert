@@ -1661,11 +1661,11 @@
         // Désactivation des animations sur mobile
         function disableMobileAnimations() {
             if (isMobile) {
-                // Désactiver l'animation du texte
                 const animatedText = document.querySelector('.animated-text span');
-                if (animatedText) {
-                    animatedText.style.animationPlayState = 'paused';
-                }
+                    if (animatedText) {
+                        // Garder l'animation mais plus lente sur mobile
+                        animatedText.style.animationDuration = '20s';
+                    }
 
                 // Désactiver l'animation de fond
                 const pulseBg = document.querySelector('.color-pulse-bg');
