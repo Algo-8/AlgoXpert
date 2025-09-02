@@ -27,9 +27,6 @@
             color: #f5f5f5;
             overflow-x: hidden;
             line-height: 1.6;
-            /* FIX: Empêcher le scroll automatique */
-            overscroll-behavior: none;
-            -webkit-overflow-scrolling: touch;
         }
 
         .container {
@@ -120,7 +117,7 @@
             box-shadow: 0 8px 25px rgba(255, 126, 95, 0.4);
         }
 
-        /* Header avec padding-top pour compenser la navbar fixe */
+        /* Header */
         header {
             background: linear-gradient(135deg, #000000, #1a1a1a, #434343);
             color: white;
@@ -128,7 +125,6 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            /* FIX: Éviter les problèmes de hauteur */
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -163,7 +159,7 @@
             width: 100%;
         }
 
-        /* Animation du titre améliorée */
+        /* Animation du titre */
         @keyframes slideInUp {
             0% {
                 opacity: 0;
@@ -196,7 +192,6 @@
             50% { background-position: 100% 50%; }
         }
 
-        /* FIX: Animation texte corrigée pour éviter les sauts */
         .animated-text {
             margin-top: 30px;
             height: 35px;
@@ -205,7 +200,6 @@
             font-size: clamp(16px, 2.5vw, 22px);
             font-weight: 500;
             color: #ff7e5f;
-            /* FIX: Stabiliser l'élément */
             contain: layout;
         }
         
@@ -213,14 +207,11 @@
             display: block;
             height: 35px;
             line-height: 35px;
-            /* FIX: Animation plus fluide et stable */
             animation: slideText 14s ease-in-out infinite;
-            /* FIX: Éviter les repaints */
             will-change: transform;
             backface-visibility: hidden;
         }
 
-        /* FIX: Animation corrigée pour éviter les rebonds */
         @keyframes slideText {
             0%, 12% { transform: translateY(0); }
             14%, 26% { transform: translateY(-35px); }
@@ -259,11 +250,9 @@
             box-shadow: 0 15px 40px rgba(255, 126, 95, 0.4);
         }
 
-        /* Améliorations des sections */
         section {
             padding: 100px 0;
             position: relative;
-            /* FIX: Stabiliser les sections */
             contain: layout;
         }
 
@@ -451,11 +440,9 @@
             padding: 120px 0;
             background: radial-gradient(ellipse at center, #1a1a1a, #0a0a0a);
             overflow: hidden;
-            /* FIX: Éviter les conflits de transformation */
             contain: layout;
         }
 
-        /* FIX: Animation de fond corrigée */
         .color-pulse-bg {
             position: absolute;
             top: -50%;
@@ -465,7 +452,6 @@
             background: radial-gradient(circle at center, rgba(255, 126, 95, 0.05), rgba(254, 180, 123, 0.03), transparent);
             animation: pulseColors 12s infinite alternate;
             z-index: 1;
-            /* FIX: Éviter les repaints sur mobile */
             will-change: transform;
             backface-visibility: hidden;
         }
@@ -476,7 +462,7 @@
                 opacity: 0.4;
             }
             100% {
-                transform: scale(1.1) rotate(30deg); /* FIX: Réduction de l'effet */
+                transform: scale(1.1) rotate(30deg);
                 opacity: 0.6;
             }
         }
@@ -492,7 +478,6 @@
             animation: rainbowShift 6s linear infinite;
             position: relative;
             z-index: 2;
-            /* FIX: Optimisation performance */
             will-change: background-position;
         }
 
@@ -506,7 +491,7 @@
             z-index: 2;
         }
 
-        /* FIX: Mobile gallery avec swipe amélioré */
+        /* Mobile gallery améliorée */
         .color-gallery-mobile-wrapper {
             display: none;
             position: relative;
@@ -514,8 +499,6 @@
             max-width: 350px;
             margin: 40px auto 0;
             z-index: 3;
-            /* FIX: Éviter les problèmes de touch */
-            touch-action: pan-x;
         }
         
         .color-gallery-mobile {
@@ -523,9 +506,6 @@
             transition: transform 0.3s ease;
             will-change: transform;
             width: 100%;
-            /* FIX: Touch action spécifique */
-            touch-action: pan-x;
-            /* FIX: Éviter les rebonds */
             -webkit-user-select: none;
             user-select: none;
         }
@@ -539,7 +519,6 @@
             transition: all 0.3s ease;
             display: block;
             object-fit: cover;
-            /* FIX: Empêcher la sélection */
             -webkit-user-select: none;
             user-select: none;
             pointer-events: none;
@@ -553,7 +532,6 @@
             font-weight: 600;
             z-index: 3;
             position: relative;
-            /* FIX: Animation moins agressive */
             animation: gentleBounce 2s infinite;
         }
         
@@ -581,7 +559,6 @@
             transform: scale(1.2);
         }
 
-        /* FIX: Animation plus douce */
         @keyframes gentleBounce {
             0%, 100% { transform: translateX(0); opacity: 0.7; }
             50% { transform: translateX(-3px); opacity: 1; }
@@ -875,9 +852,9 @@
             height: auto;
         }
 
-        /* FIX: Responsive amélioré pour mobile */
+        /* Responsive pour mobile */
         @media (max-width: 768px) {
-            /* FIX: Désactiver les animations problématiques sur mobile */
+            /* Désactiver les animations problématiques sur mobile */
             .color-pulse-bg {
                 animation: none;
                 opacity: 0.3;
@@ -891,7 +868,6 @@
                 -webkit-text-fill-color: transparent;
             }
 
-            /* FIX: Stabiliser l'animation du texte */
             .animated-text span {
                 animation-play-state: paused;
                 transform: translateY(0);
@@ -903,7 +879,7 @@
 
             header {
                 padding: 120px 0 80px 0;
-                min-height: 80vh; /* FIX: Hauteur réduite */
+                min-height: 80vh;
             }
 
             section {
@@ -973,7 +949,6 @@
                 font-size: 14px;
             }
 
-            /* FIX: Affichage mobile pour customizable section */
             .color-gallery-desktop {
                 display: none !important;
             }
@@ -991,7 +966,7 @@
                 margin-bottom: 20px;
             }
 
-            /* FIX: Désactiver les hover effects sur mobile */
+            /* Désactiver les hover effects sur mobile */
             .feature-box:hover,
             .stat-item:hover,
             .pricing-box:hover,
@@ -1390,24 +1365,23 @@
     <!-- JavaScript -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // FIX: Détection mobile améliorée
+        // Détection mobile
         const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         
-        // Initialize AOS avec options mobiles
+        // Initialize AOS
         AOS.init({
             once: true,
-            duration: isMobile ? 400 : 800, // FIX: Animations plus courtes sur mobile
+            duration: isMobile ? 400 : 800,
             offset: isMobile ? 50 : 120,
             easing: 'ease-out-cubic',
             disable: function() {
-                // FIX: Désactiver AOS sur mobile si nécessaire
                 return isMobile;
             }
         });
 
         // Create particles (désactivé sur mobile)
         function createParticles() {
-            if (isMobile) return; // FIX: Pas de particules sur mobile
+            if (isMobile) return;
             
             const particles = document.querySelector('.particles');
             if (!particles) return;
@@ -1425,7 +1399,7 @@
             }
         }
 
-        // FIX: Mobile slider corrigé
+        // Mobile slider corrigé
         function initializeMobileSliders() {
             const sliders = document.querySelectorAll(".mobile-slider");
             
@@ -1443,23 +1417,22 @@
                     intervalId = setInterval(() => {
                         currentIndex = (currentIndex + 1) % boxes.length;
                         showSlide(currentIndex);
-                    }, 4000); // FIX: Intervalle plus long
+                    }, 4000);
                 }
 
-                // FIX: Arrêter le slider si l'utilisateur interagit
                 slider.addEventListener('touchstart', () => {
                     if (intervalId) clearInterval(intervalId);
                 });
 
                 slider.addEventListener('touchend', () => {
-                    setTimeout(startSlider, 3000); // Redémarrer après 3s
+                    setTimeout(startSlider, 3000);
                 });
 
                 startSlider();
             });
         }
 
-        // FIX: Gallery mobile complètement corrigée
+        // Gallery mobile CORRIGÉE - sans blocage du scroll
         function initializeCustomGallery() {
             const gallery = document.getElementById('customGallery');
             const dots = document.querySelectorAll('#customDots .dot');
@@ -1470,11 +1443,10 @@
             let startX = 0;
             let startY = 0;
             let isDragging = false;
-            let isSwipeDetected = false;
+            let isHorizontalSwipe = false;
             const images = gallery.querySelectorAll('img');
-            let swipeThreshold = 50;
+            const swipeThreshold = 50;
             
-            // FIX: Fonction de mise à jour sans rebond
             function updateGallery(smooth = true) {
                 const translateX = -currentIndex * 100;
                 
@@ -1492,14 +1464,12 @@
                 });
             }
             
-            // FIX: Touch events améliorés
+            // FIXÉ: Touch events qui ne bloquent plus le scroll
             gallery.addEventListener('touchstart', (e) => {
                 startX = e.touches[0].clientX;
                 startY = e.touches[0].clientY;
                 isDragging = true;
-                isSwipeDetected = false;
-                
-                // Arrêter la transition pendant le swipe
+                isHorizontalSwipe = false;
                 gallery.style.transition = 'none';
             }, { passive: true });
             
@@ -1509,12 +1479,16 @@
                 const currentX = e.touches[0].clientX;
                 const currentY = e.touches[0].clientY;
                 const diffX = currentX - startX;
-                const diffY = Math.abs(currentY - startY);
+                const diffY = currentY - startY;
                 
-                // FIX: Vérifier si c'est un swipe horizontal
-                if (Math.abs(diffX) > 10 && Math.abs(diffX) > diffY) {
-                    e.preventDefault(); // Empêcher le scroll vertical
-                    isSwipeDetected = true;
+                // FIXÉ: Déterminer la direction du swipe
+                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 15) {
+                    // C'est un swipe horizontal
+                    if (!isHorizontalSwipe) {
+                        isHorizontalSwipe = true;
+                    }
+                    // SEULEMENT empêcher le scroll si c'est clairement horizontal
+                    e.preventDefault();
                     
                     // Affichage en temps réel du swipe
                     const currentTranslateX = -currentIndex * 100;
@@ -1522,6 +1496,9 @@
                     const newTranslateX = Math.max(-300, Math.min(0, currentTranslateX + movePercent));
                     
                     gallery.style.transform = `translateX(${newTranslateX}%)`;
+                } else if (Math.abs(diffY) > Math.abs(diffX)) {
+                    // C'est un scroll vertical - ne pas empêcher
+                    isHorizontalSwipe = false;
                 }
             }, { passive: false });
             
@@ -1530,10 +1507,9 @@
                 
                 isDragging = false;
                 
-                if (isSwipeDetected) {
+                if (isHorizontalSwipe) {
                     const diffX = e.changedTouches[0].clientX - startX;
                     
-                    // FIX: Seuil de swipe ajusté
                     if (Math.abs(diffX) > swipeThreshold) {
                         if (diffX > 0 && currentIndex > 0) {
                             currentIndex--;
@@ -1544,7 +1520,7 @@
                 }
                 
                 updateGallery(true);
-                isSwipeDetected = false;
+                isHorizontalSwipe = false;
             }, { passive: true });
             
             // Dot navigation
@@ -1555,7 +1531,7 @@
                 });
             });
             
-            // FIX: Auto-slide avec pause sur interaction
+            // Auto-slide avec pause sur interaction
             let autoSlideInterval;
             
             function startAutoSlide() {
@@ -1571,10 +1547,9 @@
                 }
             }
             
-            // Arrêter l'auto-slide pendant l'interaction
             gallery.addEventListener('touchstart', stopAutoSlide);
             gallery.addEventListener('touchend', () => {
-                setTimeout(startAutoSlide, 3000); // Redémarrer après 3s
+                setTimeout(startAutoSlide, 3000);
             });
             
             updateGallery(false);
@@ -1602,7 +1577,7 @@
             });
         }
 
-        // FIX: Navbar scroll effect corrigé
+        // Navbar scroll effect
         function initializeNavbar() {
             const navbar = document.getElementById('navbar');
             const scrollToTop = document.getElementById('scrollToTop');
@@ -1619,7 +1594,7 @@
                 ticking = false;
             }
 
-            // FIX: Throttle scroll events pour performance
+            // Throttle scroll events pour performance
             window.addEventListener('scroll', () => {
                 if (!ticking) {
                     requestAnimationFrame(updateNavbar);
@@ -1635,7 +1610,7 @@
                 });
             });
 
-            // FIX: Smooth scroll amélioré
+            // Smooth scroll pour la navigation
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -1645,7 +1620,6 @@
                         const elementPosition = target.getBoundingClientRect().top;
                         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-                        // FIX: Scroll plus doux sur mobile
                         window.scrollTo({
                             top: offsetPosition,
                             behavior: 'smooth'
@@ -1677,10 +1651,10 @@
             });
         }
 
-        // FIX: Fonction de désactivation des animations sur mobile
+        // Désactivation des animations sur mobile
         function disableMobileAnimations() {
             if (isMobile) {
-                // Désactiver l'animation du texte qui cause les problèmes
+                // Désactiver l'animation du texte
                 const animatedText = document.querySelector('.animated-text span');
                 if (animatedText) {
                     animatedText.style.animation = 'none';
@@ -1702,41 +1676,8 @@
             }
         }
 
-        // FIX: Prévenir les problèmes de viewport sur mobile
-        function fixMobileViewport() {
-            if (isMobile) {
-                // Désactiver le zoom
-                document.addEventListener('touchstart', function(e) {
-                    if (e.touches.length > 1) {
-                        e.preventDefault();
-                    }
-                }, { passive: false });
-
-                // Prévenir le double-tap zoom
-                let lastTouchEnd = 0;
-                document.addEventListener('touchend', function(e) {
-                    const now = (new Date()).getTime();
-                    if (now - lastTouchEnd <= 300) {
-                        e.preventDefault();
-                    }
-                    lastTouchEnd = now;
-                }, { passive: false });
-
-                // FIX: Stabiliser la hauteur du viewport
-                const vh = window.innerHeight * 0.01;
-                document.documentElement.style.setProperty('--vh', `${vh}px`);
-                
-                window.addEventListener('resize', () => {
-                    const vh = window.innerHeight * 0.01;
-                    document.documentElement.style.setProperty('--vh', `${vh}px`);
-                });
-            }
-        }
-
         // Initialize all functionality when DOM is loaded
         document.addEventListener("DOMContentLoaded", function() {
-            // FIX: Ordre d'initialisation important
-            fixMobileViewport();
             disableMobileAnimations();
             createParticles();
             initializeMobileSliders();
@@ -1746,7 +1687,7 @@
             initializeAssistance();
         });
 
-        // FIX: Performance optimization pour mobile
+        // Performance optimization pour mobile
         if ('IntersectionObserver' in window && !isMobile) {
             const imageObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
@@ -1763,19 +1704,6 @@
                 imageObserver.observe(img);
             });
         }
-
-        // FIX: Empêcher le scroll elastique sur iOS
-        document.addEventListener('touchmove', function(e) {
-            if (e.target.closest('.color-gallery-mobile')) {
-                return; // Permettre le swipe dans la gallery
-            }
-            
-            // Empêcher l'overscroll sur le reste de la page
-            if (document.body.scrollTop === 0 || 
-                document.body.scrollTop === document.body.scrollHeight - window.innerHeight) {
-                e.preventDefault();
-            }
-        }, { passive: false });
     </script>
 
 </body>
