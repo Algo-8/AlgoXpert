@@ -1672,8 +1672,9 @@
             if (isMobile) {
                 const animatedText = document.querySelector('.animated-text span');
                     if (animatedText) {
-                        // Garder l'animation mais plus lente sur mobile
-                        animatedText.style.animationDuration = '20s';
+                        // Corriger juste le timing sur mobile
+                        animatedText.style.animationDuration = '14s';
+                        animatedText.style.animationTimingFunction = 'steps(7, end)';
                     }
 
                 // Désactiver l'animation de fond
