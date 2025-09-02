@@ -299,7 +299,25 @@
             color: #ccc;
             font-weight: 500;
         }
-
+        .color-gallery-desktop {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        
+        .color-gallery-desktop img {
+            max-width: 250px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .color-gallery-desktop img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(255, 126, 95, 0.3);
+        }
         /* Améliorations des feature boxes */
         .features {
             display: flex;
@@ -925,6 +943,47 @@
         .scroll-to-top.show {
             display: flex;
         }
+        /* Desktop gallery styling */
+        .color-gallery-desktop {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .color-gallery-desktop img {
+            max-width: 250px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .color-gallery-desktop img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(255, 126, 95, 0.3);
+        }
+
+        /* Responsive gallery control */
+        @media (max-width: 768px) {
+            .color-gallery-desktop {
+                display: none !important;
+            }
+            
+            .color-gallery-mobile-wrapper {
+                display: block !important;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .color-gallery-mobile-wrapper {
+                display: none !important;
+            }
+            
+            .color-gallery-desktop {
+                display: flex !important;
+            }
+        }
     </style>
 
 </head>
@@ -1160,7 +1219,13 @@
                 These colors reflect directly on your <em>candles, targets, and even the volume profile</em>. <br>
                 Let your charts speak your style!
             </p>
-
+            <!-- Desktop gallery -->
+            <div class="color-gallery-desktop">
+                <img src="Customizablecolor_image1.png" alt="Custom 1" data-aos="zoom-in" data-aos-delay="0">
+                <img src="Customizablecolor_image2.png" alt="Custom 2" data-aos="zoom-in" data-aos-delay="100">
+                <img src="Customizablecolor_image3.png" alt="Custom 3" data-aos="zoom-in" data-aos-delay="200">
+                <img src="Customizablecolor_image4.png" alt="Custom 4" data-aos="zoom-in" data-aos-delay="300">
+            </div>
         </div>
 
         <div class="swipe-indicator-mobile">
@@ -1355,26 +1420,21 @@
             const gallery = document.getElementById('mobileGallery');
             const dots = document.querySelectorAll('.dot');
             
-            if (!gallery) return;
+            if (!gallery || dots.length === 0) return;
             
             let currentIndex = 0;
             let startX = 0;
-            let currentX = 0;
             let isDragging = false;
             
-            const imageWidth = gallery.children[0].offsetWidth + 20; // width + margin
-            
             function updateGallery() {
-                const translateX = -currentIndex * imageWidth;
+                const translateX = -currentIndex * 270; // 250px image + 20px gap
                 gallery.style.transform = `translateX(${translateX}px)`;
                 
-                // Update dots
                 dots.forEach((dot, index) => {
                     dot.classList.toggle('active', index === currentIndex);
                 });
             }
             
-            // Touch events
             gallery.addEventListener('touchstart', (e) => {
                 startX = e.touches[0].clientX;
                 isDragging = true;
@@ -1383,10 +1443,11 @@
             
             gallery.addEventListener('touchmove', (e) => {
                 if (!isDragging) return;
+                e.preventDefault();
                 
-                currentX = e.touches[0].clientX;
+                const currentX = e.touches[0].clientX;
                 const diffX = currentX - startX;
-                const currentTranslateX = -currentIndex * imageWidth;
+                const currentTranslateX = -currentIndex * 270;
                 
                 gallery.style.transform = `translateX(${currentTranslateX + diffX}px)`;
             });
@@ -1397,19 +1458,17 @@
                 isDragging = false;
                 gallery.style.transition = 'transform 0.3s ease';
                 
-                const diffX = currentX - startX;
-                const threshold = imageWidth / 3;
+                const diffX = e.changedTouches[0].clientX - startX;
                 
-                if (diffX > threshold && currentIndex > 0) {
+                if (diffX > 50 && currentIndex > 0) {
                     currentIndex--;
-                } else if (diffX < -threshold && currentIndex < gallery.children.length - 1) {
+                } else if (diffX < -50 && currentIndex < gallery.children.length - 1) {
                     currentIndex++;
                 }
                 
                 updateGallery();
             });
             
-            // Dot navigation
             dots.forEach((dot, index) => {
                 dot.addEventListener('click', () => {
                     currentIndex = index;
@@ -1417,7 +1476,6 @@
                 });
             });
             
-            // Initialize
             updateGallery();
         }
         // FAQ functionality
