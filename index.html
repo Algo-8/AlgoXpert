@@ -1737,8 +1737,17 @@
         document.addEventListener("DOMContentLoaded", function() {
             disableMobileAnimations();
             createParticles();
-            initializeMobileSliders();
-            initializeCustomGallery();
+            
+            // FIXÉ: Délai entre l'initialisation des sliders pour éviter les conflits
+            if (isMobile) {
+                initializeMobileSliders();
+                setTimeout(() => {
+                    initializeCustomGallery();
+                }, 1000); // Délai de 1 seconde entre les initialisations
+            } else {
+                initializeCustomGallery();
+            }
+            
             initializeFAQ();
             initializeNavbar();
             initializeAssistance();
