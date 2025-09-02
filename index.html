@@ -459,58 +459,35 @@
             z-index: 2;
         }
 
-        /* Desktop gallery - visible par défaut */
-        .color-gallery-desktop {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 50px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .color-gallery-desktop img {
-            width: 100%;
-            max-width: 280px;
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-            transition: all 0.5s ease;
-            border: 2px solid transparent;
-        }
-
-        .color-gallery-desktop img:hover {
-            transform: scale(1.08) rotate(2deg);
-            box-shadow: 0 20px 50px rgba(255, 126, 95, 0.4);
-            border-color: rgba(255, 126, 95, 0.5);
-        }
-
-        /* Mobile gallery - masquée par défaut */
+        /* Mobile gallery - Swipe fonctionnel */
         .color-gallery-mobile-wrapper {
             display: none;
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            margin-top: 40px;
         }
-
+        
         .color-gallery-mobile {
             display: flex;
-            gap: 20px;
-            padding: 25px;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
+            transition: transform 0.3s ease;
+            will-change: transform;
         }
-
+        
         .color-gallery-mobile img {
-            flex: 0 0 250px;
+            flex: 0 0 80%;
+            max-width: 300px;
+            margin-right: 20px;
             border-radius: 15px;
-            scroll-snap-align: center;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
             transition: all 0.3s ease;
+            cursor: grab;
         }
-
-        .color-gallery-mobile img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 12px 40px rgba(255, 126, 95, 0.3);
+        
+        .color-gallery-mobile img:active {
+            cursor: grabbing;
         }
-
+        
         .swipe-indicator-mobile {
             display: none;
             justify-content: center;
@@ -518,6 +495,28 @@
             color: #ff7e5f;
             font-weight: 600;
             animation: bounceSwipe 1.5s infinite;
+        }
+        
+        /* Indicateurs de navigation */
+        .gallery-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 126, 95, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dot.active {
+            background: #ff7e5f;
+            transform: scale(1.2);
         }
 
         @keyframes bounceSwipe {
@@ -1212,13 +1211,24 @@
         </div>
 
         <!-- Mobile gallery -->
+        <!-- Mobile gallery -->
         <div class="color-gallery-mobile-wrapper">
-            <div class="color-gallery-mobile">
+            <div class="color-gallery-mobile" id="mobileGallery">
                 <img src="Customizablecolor_image1.png" alt="Custom 1">
                 <img src="Customizablecolor_image2.png" alt="Custom 2">
                 <img src="Customizablecolor_image3.png" alt="Custom 3">
                 <img src="Customizablecolor_image4.png" alt="Custom 4">
             </div>
+            <div class="gallery-dots" id="galleryDots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+                <span class="dot" data-index="3"></span>
+            </div>
+        </div>
+        
+        <div class="swipe-indicator-mobile">
+            <span>← Swipe →</span>
         </div>
     </section>
 
@@ -1383,7 +1393,76 @@
                 }, 3500);
             });
         }
-
+        // Mobile gallery swipe functionality
+        function initializeMobileGallery() {
+            const gallery = document.getElementById('mobileGallery');
+            const dots = document.querySelectorAll('.dot');
+            
+            if (!gallery) return;
+            
+            let currentIndex = 0;
+            let startX = 0;
+            let currentX = 0;
+            let isDragging = false;
+            
+            const imageWidth = gallery.children[0].offsetWidth + 20; // width + margin
+            
+            function updateGallery() {
+                const translateX = -currentIndex * imageWidth;
+                gallery.style.transform = `translateX(${translateX}px)`;
+                
+                // Update dots
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+            }
+            
+            // Touch events
+            gallery.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                isDragging = true;
+                gallery.style.transition = 'none';
+            });
+            
+            gallery.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                
+                currentX = e.touches[0].clientX;
+                const diffX = currentX - startX;
+                const currentTranslateX = -currentIndex * imageWidth;
+                
+                gallery.style.transform = `translateX(${currentTranslateX + diffX}px)`;
+            });
+            
+            gallery.addEventListener('touchend', (e) => {
+                if (!isDragging) return;
+                
+                isDragging = false;
+                gallery.style.transition = 'transform 0.3s ease';
+                
+                const diffX = currentX - startX;
+                const threshold = imageWidth / 3;
+                
+                if (diffX > threshold && currentIndex > 0) {
+                    currentIndex--;
+                } else if (diffX < -threshold && currentIndex < gallery.children.length - 1) {
+                    currentIndex++;
+                }
+                
+                updateGallery();
+            });
+            
+            // Dot navigation
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateGallery();
+                });
+            });
+            
+            // Initialize
+            updateGallery();
+        }
         // FAQ functionality
         function initializeFAQ() {
             const faqItems = document.querySelectorAll('.faq-item');
@@ -1472,6 +1551,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             createParticles();
             initializeMobileSliders();
+            initializeMobileGallery(); // Ajouter cette ligne
             initializeFAQ();
             initializeNavbar();
             initializeAssistance();
