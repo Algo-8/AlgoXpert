@@ -1100,7 +1100,7 @@
             </div>
 
             <!-- Mobile version -->
-            <div class="mobile-slider">
+            <div class="mobile-slider" id="why-slider">
                 <div class="feature-box active">
                     <h3>Trade Smarter, Not Harder</h3>
                     <p>AlgoXpert highlights high-probability trade setups in real-time — so you can focus on execution, not guesswork.</p>
@@ -1181,7 +1181,7 @@
             </div>
 
             <!-- Mobile version -->
-            <div class="mobile-slider">
+            <div class="mobile-slider" id="features-slider">
                 <div class="feature-box active">
                     <img src="Keyfeatures_signals_Image1.png" alt="Multi-Signal Detection">
                     <h3>Multi-Signal Detection</h3>
@@ -1414,37 +1414,66 @@
 
         // Mobile slider corrigé
         function initializeMobileSliders() {
-            const sliders = document.querySelectorAll(".mobile-slider");
-            
-            sliders.forEach(slider => {
-                const boxes = slider.querySelectorAll(".feature-box");
-                let currentIndex = 0;
-                let intervalId;
-
-                function showSlide(index) {
-                    boxes.forEach(box => box.classList.remove("active"));
-                    boxes[index].classList.add("active");
+            // Slider 1: Why Choose AlgoXpert
+            const whySlider = document.getElementById("why-slider");
+            if (whySlider) {
+                const boxes1 = whySlider.querySelectorAll(".feature-box");
+                let currentIndex1 = 0;
+                let intervalId1;
+        
+                function showSlide1(index) {
+                    boxes1.forEach(box => box.classList.remove("active"));
+                    boxes1[index].classList.add("active");
                 }
-
-                function startSlider() {
-                    intervalId = setInterval(() => {
-                        currentIndex = (currentIndex + 1) % boxes.length;
-                        showSlide(currentIndex);
+        
+                function startSlider1() {
+                    intervalId1 = setInterval(() => {
+                        currentIndex1 = (currentIndex1 + 1) % boxes1.length;
+                        showSlide1(currentIndex1);
                     }, 4000);
                 }
-
-                slider.addEventListener('touchstart', () => {
-                    if (intervalId) clearInterval(intervalId);
+        
+                whySlider.addEventListener('touchstart', () => {
+                    if (intervalId1) clearInterval(intervalId1);
                 });
-
-                slider.addEventListener('touchend', () => {
-                    setTimeout(startSlider, 3000);
+        
+                whySlider.addEventListener('touchend', () => {
+                    setTimeout(startSlider1, 3000);
                 });
-
-                startSlider();
-            });
+        
+                startSlider1();
+            }
+        
+            // Slider 2: Key Features
+            const featuresSlider = document.getElementById("features-slider");
+            if (featuresSlider) {
+                const boxes2 = featuresSlider.querySelectorAll(".feature-box");
+                let currentIndex2 = 0;
+                let intervalId2;
+        
+                function showSlide2(index) {
+                    boxes2.forEach(box => box.classList.remove("active"));
+                    boxes2[index].classList.add("active");
+                }
+        
+                function startSlider2() {
+                    intervalId2 = setInterval(() => {
+                        currentIndex2 = (currentIndex2 + 1) % boxes2.length;
+                        showSlide2(currentIndex2);
+                    }, 4500); // Timing légèrement différent
+                }
+        
+                featuresSlider.addEventListener('touchstart', () => {
+                    if (intervalId2) clearInterval(intervalId2);
+                });
+        
+                featuresSlider.addEventListener('touchend', () => {
+                    setTimeout(startSlider2, 3000);
+                });
+        
+                startSlider2();
+            }
         }
-
         // Gallery mobile CORRIGÉE - sans blocage du scroll
         function initializeCustomGallery() {
             const gallery = document.getElementById('customGallery');
@@ -1663,7 +1692,23 @@
                 }
             });
         }
-
+        // Pause tous les sliders pendant le scroll
+        let scrollTimeout;
+        function pauseSlidersOnScroll() {
+            const allSliders = document.querySelectorAll('.mobile-slider');
+            allSliders.forEach(slider => {
+                slider.style.pointerEvents = 'none';
+            });
+            
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                allSliders.forEach(slider => {
+                    slider.style.pointerEvents = 'auto';
+                });
+            }, 150);
+        }
+        
+        window.addEventListener('scroll', pauseSlidersOnScroll, { passive: true });
         // Désactivation des animations sur mobile
         function disableMobileAnimations() {
             if (isMobile) {
