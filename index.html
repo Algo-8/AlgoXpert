@@ -481,11 +481,11 @@
             z-index: 2;
         }
 
-        /* Mobile gallery - Swipe fonctionnel - CORRECTION */
+        /* Mobile gallery - Swipe fonctionnel - CORRECTION COMPLÈTE */
         .color-gallery-mobile-wrapper {
             display: none;
             position: relative;
-            width: 100%;
+            width: 90%;
             max-width: 350px;
             margin: 40px auto 0;
             z-index: 3;
@@ -495,21 +495,19 @@
             display: flex;
             transition: transform 0.3s ease;
             will-change: transform;
-            overflow: hidden;
+            width: 100%;
+            touch-action: pan-y;
         }
         
         .color-gallery-mobile img {
             flex: 0 0 100%;
-            max-width: 100%;
+            width: 100%;
+            height: auto;
             border-radius: 15px;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
             transition: all 0.3s ease;
-            cursor: grab;
-            touch-action: pan-y;
-        }
-        
-        .color-gallery-mobile img:active {
-            cursor: grabbing;
+            display: block;
+            object-fit: cover;
         }
         
         .swipe-indicator-mobile {
@@ -1387,7 +1385,9 @@
             
             let currentIndex = 0;
             let startX = 0;
+            let startY = 0;
             let isDragging = false;
+            let isHorizontalSwipe = false;
             const images = gallery.querySelectorAll('img');
             
             function updateGallery() {
@@ -1402,20 +1402,34 @@
             // Touch events
             gallery.addEventListener('touchstart', (e) => {
                 startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
                 isDragging = true;
+                isHorizontalSwipe = false;
                 gallery.style.transition = 'none';
-            }, { passive: true });
+            });
             
             gallery.addEventListener('touchmove', (e) => {
                 if (!isDragging) return;
-                e.preventDefault();
                 
                 const currentX = e.touches[0].clientX;
-                const diffX = currentX - startX;
-                const currentTranslateX = -currentIndex * 100;
-                const movePercent = (diffX / gallery.offsetWidth) * 100;
+                const currentY = e.touches[0].clientY;
+                const diffX = Math.abs(currentX - startX);
+                const diffY = Math.abs(currentY - startY);
                 
-                gallery.style.transform = `translateX(${currentTranslateX + movePercent}%)`;
+                // Déterminer si c'est un swipe horizontal ou vertical
+                if (!isHorizontalSwipe && (diffX > 10 || diffY > 10)) {
+                    isHorizontalSwipe = diffX > diffY;
+                }
+                
+                // Si c'est un swipe horizontal, on gère la gallery
+                if (isHorizontalSwipe) {
+                    e.preventDefault();
+                    const moveX = currentX - startX;
+                    const currentTranslateX = -currentIndex * 100;
+                    const movePercent = (moveX / gallery.offsetWidth) * 100;
+                    
+                    gallery.style.transform = `translateX(${currentTranslateX + movePercent}%)`;
+                }
             });
             
             gallery.addEventListener('touchend', (e) => {
@@ -1424,17 +1438,20 @@
                 isDragging = false;
                 gallery.style.transition = 'transform 0.3s ease';
                 
-                const diffX = e.changedTouches[0].clientX - startX;
-                const threshold = gallery.offsetWidth * 0.2; // 20% threshold
-                
-                if (diffX > threshold && currentIndex > 0) {
-                    currentIndex--;
-                } else if (diffX < -threshold && currentIndex < images.length - 1) {
-                    currentIndex++;
+                if (isHorizontalSwipe) {
+                    const diffX = e.changedTouches[0].clientX - startX;
+                    const threshold = 50; // Seuil en pixels
+                    
+                    if (diffX > threshold && currentIndex > 0) {
+                        currentIndex--;
+                    } else if (diffX < -threshold && currentIndex < images.length - 1) {
+                        currentIndex++;
+                    }
                 }
                 
                 updateGallery();
-            }, { passive: true });
+                isHorizontalSwipe = false;
+            });
             
             // Dot navigation
             dots.forEach((dot, index) => {
