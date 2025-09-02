@@ -1457,7 +1457,7 @@
                 // Events pour arrêter/redémarrer
                 slider.element.addEventListener('touchstart', stopSlider, { passive: true });
                 slider.element.addEventListener('touchend', () => {
-                    setTimeout(startSlider, 2000);
+                    setTimeout(startSlider, 800);
                 }, { passive: true });
         
                 // Démarrage avec délai pour éviter les conflits
@@ -1583,7 +1583,7 @@
             
             gallery.addEventListener('touchstart', stopAutoSlide);
             gallery.addEventListener('touchend', () => {
-                setTimeout(startAutoSlide, 3000);
+                setTimeout(startAutoSlide, 1000);
             });
             
             updateGallery(false);
