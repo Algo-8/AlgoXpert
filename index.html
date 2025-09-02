@@ -213,14 +213,14 @@
         }
 
         @keyframes slideText {
-            0%, 12% { transform: translateY(0); }
-            14%, 26% { transform: translateY(-35px); }
-            28%, 40% { transform: translateY(-70px); }
-            42%, 54% { transform: translateY(-105px); }
-            56%, 68% { transform: translateY(-140px); }
-            70%, 82% { transform: translateY(-175px); }
-            84%, 96% { transform: translateY(-210px); }
-            98%, 100% { transform: translateY(0); }
+            0%, 14.28% { transform: translateY(0); }
+            14.29%, 28.57% { transform: translateY(-35px); }
+            28.58%, 42.86% { transform: translateY(-70px); }
+            42.87%, 57.14% { transform: translateY(-105px); }
+            57.15%, 71.43% { transform: translateY(-140px); }
+            71.44%, 85.71% { transform: translateY(-175px); }
+            85.72%, 99.99% { transform: translateY(-210px); }
+            100% { transform: translateY(0); }
         }
 
         header p {
@@ -853,6 +853,19 @@
         }
 
         /* Responsive pour mobile */
+        @media (max-width: 768px) {
+            .animated-text {
+                height: 35px !important;
+                overflow: hidden !important;
+            }
+            
+            .animated-text span {
+                height: 35px !important;
+                line-height: 35px !important;
+                animation-duration: 14s !important;
+                display: block !important;
+            }
+        }
         @media (max-width: 768px) {
             /* Désactiver les animations problématiques sur mobile */
             .color-pulse-bg {
