@@ -853,19 +853,7 @@
         }
 
         /* Responsive pour mobile */
-        @media (max-width: 768px) {
-            .animated-text {
-                height: 35px !important;
-                overflow: hidden !important;
-            }
-            
-            .animated-text span {
-                height: 35px !important;
-                line-height: 35px !important;
-                animation-duration: 14s !important;
-                display: block !important;
-            }
-        }
+    
         @media (max-width: 768px) {
             /* Désactiver les animations problématiques sur mobile */
             .color-pulse-bg {
@@ -1674,7 +1662,7 @@
                     if (animatedText) {
                         // Corriger juste le timing sur mobile
                         animatedText.style.animationDuration = '21s';
-                        animatedText.style.animationTimingFunction = 'steps(7, end)';
+                        animatedText.style.animationTimingFunction = 'ease-in-out';
                     }
 
                 // Désactiver l'animation de fond
