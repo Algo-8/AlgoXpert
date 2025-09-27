@@ -1275,9 +1275,27 @@
                     <div class="best-seller-badge">BEST SELLER</div>
                     <h3>Free Trial</h3>
                     <p>Try <span class="gradient-text">AlgoXpert</span> for free for 7 days</p>
-                    <a href="#" class="buy-now" onclick="window.location.href='https://tally.so/r/mKg9yz'; return false;">
-                        Try for Free
-                    </a>
+                    <div id="paypal-button-container-P-0VM31050NY428852DNAPAIDI"></div>
+                    <script src="https://www.paypal.com/sdk/js?client-id=AXkCEktwul232nh0rxhGPCvoyExZMmpwcYf7r7AzHaAc3V3k1qmRGCTCGMTELUGDcnXv98oz_kOz0Zo0&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
+                    <script>
+                      paypal.Buttons({
+                          style: {
+                              shape: 'rect',
+                              color: 'gold',
+                              layout: 'vertical',
+                              label: 'subscribe'
+                          },
+                          createSubscription: function(data, actions) {
+                            return actions.subscription.create({
+                              /* Creates the subscription */
+                              plan_id: 'P-0VM31050NY428852DNAPAIDI'
+                            });
+                          },
+                          onApprove: function(data, actions) {
+                            alert(data.subscriptionID); // You can add optional success message for the subscriber here
+                          }
+                      }).render('#paypal-button-container-P-0VM31050NY428852DNAPAIDI'); // Renders the PayPal button
+                    </script>
                 </div>
                 <div class="pricing-box" data-aos="fade-up" data-aos-delay="100">
                     <h3>Monthly Plan</h3>
