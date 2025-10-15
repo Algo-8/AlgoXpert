@@ -336,6 +336,28 @@
             box-shadow: 0 15px 50px rgba(255, 126, 95, 0.4);
         }
 
+        
+        /* Why Choose Section with Interactive Particles */
+        .why-algoxpert-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .why-algoxpert-section canvas#particleCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .why-algoxpert-section .container {
+            position: relative;
+            z-index: 2;
+        }
+
         /* Features */
         .features {
             display: flex;
@@ -343,6 +365,8 @@
             text-align: center;
             flex-wrap: wrap;
             gap: 30px;
+            position: relative;
+            z-index: 2;
         }
 
         .feature-box {
@@ -1413,7 +1437,157 @@
                 particles.appendChild(particle);
             }
         }
-
+        // Interactive Particles for Why Choose Section (Desktop Only)
+        function initInteractiveParticles() {
+            if (isMobile) return;
+            
+            const section = document.querySelector('.why-algoxpert-section');
+            if (!section) return;
+            
+            const canvas = document.createElement('canvas');
+            canvas.id = 'particleCanvas';
+            section.insertBefore(canvas, section.firstChild);
+            
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let mouseX = 0;
+            let mouseY = 0;
+            
+            function resizeCanvas() {
+                canvas.width = section.offsetWidth;
+                canvas.height = section.offsetHeight;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Particle class
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    this.vy = (Math.random() - 0.5) * 0.5;
+                    this.radius = Math.random() * 2 + 1;
+                    this.opacity = Math.random() * 0.5 + 0.2;
+                }
+                
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    
+                    // Bounce off edges
+                    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                    
+                    // Mouse interaction
+                    const dx = mouseX - this.x;
+                    const dy = mouseY - this.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 150) {
+                        const force = (150 - distance) / 150;
+                        this.vx += dx * force * 0.01;
+                        this.vy += dy * force * 0.01;
+                    }
+                    
+                    // Limit velocity
+                    const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+                    if (speed > 2) {
+                        this.vx = (this.vx / speed) * 2;
+                        this.vy = (this.vy / speed) * 2;
+                    }
+                }
+                
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 126, 95, ${this.opacity})`;
+                    ctx.fill();
+                    
+                    // Glow effect
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = 'rgba(255, 126, 95, 0.5)';
+                }
+            }
+            
+            // Create particles
+            for (let i = 0; i < 80; i++) {
+                particles.push(new Particle());
+            }
+            
+            // Track mouse position relative to section
+            section.addEventListener('mousemove', (e) => {
+                const rect = section.getBoundingClientRect();
+                mouseX = e.clientX - rect.left;
+                mouseY = e.clientY - rect.top;
+            });
+            
+            section.addEventListener('mouseleave', () => {
+                mouseX = -1000;
+                mouseY = -1000;
+            });
+            
+            // Animation loop
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Update and draw particles
+                particles.forEach(particle => {
+                    particle.update();
+                    particle.draw();
+                });
+                
+                // Draw connections
+                particles.forEach((p1, i) => {
+                    particles.slice(i + 1).forEach(p2 => {
+                        const dx = p1.x - p2.x;
+                        const dy = p1.y - p2.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 100) {
+                            ctx.beginPath();
+                            ctx.moveTo(p1.x, p1.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.strokeStyle = `rgba(255, 126, 95, ${0.15 * (1 - distance / 100)})`;
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
+                    });
+                });
+                
+                // Connect to mouse
+                if (mouseX > 0 && mouseY > 0) {
+                    particles.forEach(particle => {
+                        const dx = mouseX - particle.x;
+                        const dy = mouseY - particle.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 150) {
+                            ctx.beginPath();
+                            ctx.moveTo(particle.x, particle.y);
+                            ctx.lineTo(mouseX, mouseY);
+                            ctx.strokeStyle = `rgba(254, 180, 123, ${0.3 * (1 - distance / 150)})`;
+                            ctx.lineWidth = 1.5;
+                            ctx.stroke();
+                        }
+                    });
+                    
+                    // Draw mouse glow
+                    ctx.beginPath();
+                    ctx.arc(mouseX, mouseY, 5, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(254, 180, 123, 0.6)';
+                    ctx.shadowBlur = 20;
+                    ctx.shadowColor = 'rgba(254, 180, 123, 0.8)';
+                    ctx.fill();
+                }
+                
+                ctx.shadowBlur = 0;
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+        }
         // Mobile slider corrigé
         // Mobile slider corrigé - version unique
         function initializeMobileSliders() {
@@ -1730,6 +1904,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             disableMobileAnimations();
             createParticles();
+            initInteractiveParticles(); // Nouvelle animation pour Why Choose
             
             // FIXÉ: Délai entre l'initialisation des sliders pour éviter les conflits
             if (isMobile && !slidersInitialized) {
