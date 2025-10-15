@@ -292,13 +292,39 @@
             background: rgba(255, 126, 95, 0.05);
             border-radius: 15px;
             border: 1px solid rgba(255, 126, 95, 0.1);
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255, 126, 95, 0.15), rgba(254, 180, 123, 0.2));
+            transition: left 0.5s ease;
+            z-index: -1;
+            border-radius: 15px;
+        }
+
+        .stat-item:hover::before {
+            left: 0;
         }
 
         .stat-item:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 126, 95, 0.3);
-            background: rgba(255, 126, 95, 0.1);
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 126, 95, 0.4);
+            box-shadow: 0 10px 30px rgba(255, 126, 95, 0.25);
+        }
+
+        .stat-item .stat-number,
+        .stat-item .stat-label {
+            position: relative;
+            z-index: 2;
         }
 
         .stat-number {
