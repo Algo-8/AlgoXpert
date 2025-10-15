@@ -740,7 +740,133 @@
                 0 0 0 1px rgba(255, 126, 95, 0.3),
                 0 0 50px rgba(255, 126, 95, 0.2);
         }
+        /* Before/After Comparison Section */
+        .comparison-section {
+            padding: 120px 0;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            overflow: hidden;
+        }
 
+        .before-after-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .before-after-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            cursor: ew-resize;
+            user-select: none;
+        }
+
+        .before-image,
+        .after-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+
+        .before-image {
+            clip-path: polygon(0 0, var(--clip-position, 50%) 0, var(--clip-position, 50%) 100%, 0 100%);
+            z-index: 2;
+        }
+
+        .after-image {
+            z-index: 1;
+        }
+
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            left: var(--clip-position, 50%);
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #ff7e5f, #feb47b);
+            z-index: 3;
+            cursor: ew-resize;
+            transition: width 0.2s ease;
+        }
+
+        .slider-handle:hover {
+            width: 6px;
+        }
+
+        .slider-line {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .slider-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 4px 20px rgba(255, 126, 95, 0.5),
+                0 0 0 3px rgba(255, 255, 255, 0.2);
+            cursor: ew-resize;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .slider-button:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 
+                0 6px 30px rgba(255, 126, 95, 0.7),
+                0 0 0 4px rgba(255, 255, 255, 0.3);
+        }
+
+        .slider-button svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .label {
+            position: absolute;
+            top: 20px;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            z-index: 4;
+            pointer-events: none;
+            border: 1px solid rgba(255, 126, 95, 0.3);
+        }
+
+        .label-before {
+            left: 20px;
+            color: #ff6b6b;
+        }
+
+        .label-after {
+            right: 20px;
+            background: linear-gradient(135deg, rgba(255, 126, 95, 0.9), rgba(254, 180, 123, 0.9));
+            color: white;
+        }
         /* Pricing */
         .pricing {
             background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
@@ -1516,7 +1642,35 @@
             </div>
         </div>
     </section>
-
+    <!-- Before/After Comparison Section -->
+    <section class="comparison-section" data-aos="fade-up">
+        <div class="container">
+            <h2>See the <span class="gradient-text">Difference</span></h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto 50px; font-size: 18px; color: #ccc;">
+                Trading without AlgoXpert vs. Trading with AlgoXpert - The difference is clear.
+            </p>
+            
+            <div class="before-after-container">
+                <div class="before-after-wrapper">
+                    <img src="ᴀʟɢᴏxᴘᴇʀᴛ Image" alt="With AlgoXpert" class="after-image">
+                    <img src="AlgoXpert Logo.png" alt="Without AlgoXpert" class="before-image">
+                    
+                    <div class="slider-handle" id="sliderHandle">
+                        <div class="slider-line"></div>
+                        <div class="slider-button">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M15 18l-6-6 6-6"/>
+                                <path d="M9 18l6-6-6-6"/>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <div class="label label-before">Without AlgoXpert</div>
+                    <div class="label label-after">With AlgoXpert</div>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- Main Image Section -->
     <section class="image-section" data-aos="zoom-in">
         <div class="container">
@@ -1931,7 +2085,61 @@
             
             animate();
         }
-        // Mobile slider corrigé
+        // Before/After Slider functionality
+        function initializeBeforeAfterSlider() {
+            const wrapper = document.querySelector('.before-after-wrapper');
+            const beforeImage = document.querySelector('.before-image');
+            const sliderHandle = document.getElementById('sliderHandle');
+            
+            if (!wrapper || !beforeImage || !sliderHandle) return;
+            
+            let isDragging = false;
+            
+            function updateSliderPosition(x) {
+                const rect = wrapper.getBoundingClientRect();
+                const position = Math.max(0, Math.min(x - rect.left, rect.width));
+                const percentage = (position / rect.width) * 100;
+                
+                wrapper.style.setProperty('--clip-position', `${percentage}%`);
+            }
+            
+            function onMove(e) {
+                if (!isDragging) return;
+                
+                const x = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+                updateSliderPosition(x);
+            }
+            
+            function startDrag(e) {
+                isDragging = true;
+                const x = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+                updateSliderPosition(x);
+            }
+            
+            function stopDrag() {
+                isDragging = false;
+            }
+            
+            // Mouse events
+            sliderHandle.addEventListener('mousedown', startDrag);
+            wrapper.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', stopDrag);
+            
+            // Touch events
+            sliderHandle.addEventListener('touchstart', startDrag, { passive: true });
+            wrapper.addEventListener('touchmove', onMove, { passive: true });
+            document.addEventListener('touchend', stopDrag);
+            
+            // Click anywhere to move slider
+            wrapper.addEventListener('click', (e) => {
+                if (e.target !== sliderHandle && !sliderHandle.contains(e.target)) {
+                    updateSliderPosition(e.clientX);
+                }
+            });
+            
+            // Initialize at 50%
+            wrapper.style.setProperty('--clip-position', '50%');
+        }
         // Mobile slider corrigé - version unique
         function initializeMobileSliders() {
             const sliders = [
@@ -2249,6 +2457,7 @@
             createParticles();
             initInteractiveParticles(); // Nouvelle animation pour Why Choose
             initDecodingText(); // Decoding glitch text animation
+            initializeBeforeAfterSlider(); // Before/After slider
             
             // FIXÉ: Délai entre l'initialisation des sliders pour éviter les conflits
             if (isMobile && !slidersInitialized) {
