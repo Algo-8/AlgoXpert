@@ -1706,11 +1706,11 @@
 
             const textElements = animatedTextContainer.querySelectorAll('span');
 
-            function decodeText(element, finalText, duration = 800) {
+            function decodeText(element, finalText, duration = 1000) {
                 if (isDecoding) return;
                 isDecoding = true;
 
-                const steps = 10;
+                const steps = 8;
                 const stepDuration = duration / steps;
                 let currentStep = 0;
 
