@@ -867,6 +867,21 @@
             background: linear-gradient(135deg, rgba(255, 126, 95, 0.9), rgba(254, 180, 123, 0.9));
             color: white;
         }
+        @media (max-width: 768px) {
+            .label {
+                display: none;
+            }
+            
+            .slider-button {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .slider-button svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
         /* Pricing */
         .pricing {
             background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
@@ -1368,6 +1383,13 @@
             .pricing-box:hover,
             .interactive-image:hover {
                 transform: none;
+            }
+            .comparison-section {
+                padding: 80px 0;
+            }
+            
+            .before-after-wrapper {
+                border-radius: 15px;
             }
         }
 
