@@ -2438,16 +2438,20 @@
                 });
             });
 
-            // Smooth scroll pour la navigation
+            // Smooth scroll pour la navigation - VERSION CORRIGÉE
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
+                    e.stopPropagation();
+                    
+                    const href = this.getAttribute('href');
+                    const target = document.querySelector(href);
+                    
                     if (target) {
-                        const headerOffset = 10;
+                        const headerOffset = 80;
                         const elementPosition = target.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
+                        const offsetPosition = elementPosition + window.scrollY - headerOffset;
+            
                         window.scrollTo({
                             top: offsetPosition,
                             behavior: 'smooth'
