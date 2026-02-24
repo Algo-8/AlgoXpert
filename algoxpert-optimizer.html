@@ -1058,6 +1058,10 @@
             </div>
             <div style="display:flex;flex-direction:column;gap:10px;">
                 <button class="btn-save" id="authSubmitBtn" style="width:100%;">Log In</button>
+                <div class="form-group" id="usernameField" style="display:none;">
+                    <label class="form-label">Username</label>
+                    <input class="form-input" type="text" id="authUsername" placeholder="e.g. CryptoTrader42">
+                </div>
                 <p id="authToggleText" style="text-align:center;font-size:13px;color:var(--text-muted);">
                     No account? <a href="#" id="authToggleLink" style="color:var(--orange);">Sign Up</a>
                 </p>
@@ -1067,7 +1071,7 @@
 
     <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile }
         from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
     import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy }
         from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -1119,6 +1123,7 @@
         document.getElementById('authMode').textContent = isLogin ? 'Log In' : 'Sign Up';
         document.getElementById('authSubmitBtn').textContent = isLogin ? 'Log In' : 'Create Account';
         document.getElementById('authSubmitBtn').onclick = isLogin ? doLogin : doSignup;
+        document.getElementById('usernameField').style.display = isLogin ? 'none' : 'block';
         document.getElementById('authToggleText').innerHTML = isLogin
             ? `No account? <a href="#" onclick="showAuthModal('signup')" style="color:var(--orange);">Sign Up</a>`
             : `Already have an account? <a href="#" onclick="showAuthModal('login')" style="color:var(--orange);">Log In</a>`;
@@ -1144,7 +1149,9 @@
         const pass  = document.getElementById('authPass').value;
         if (pass.length < 6) { document.getElementById('authError').textContent = 'Password must be at least 6 characters.'; return; }
         try {
-            await createUserWithEmailAndPassword(auth, email, pass);
+            const username = document.getElementById('authUsername').value.trim() || 'Trader' + Math.floor(Math.random()*9999);
+            const cred = await createUserWithEmailAndPassword(auth, email, pass);
+            await updateProfile(cred.user, { displayName: username });
             window.closeAuthModal();
             showToast('✅ Account created! Welcome 🎉', 'success');
         } catch(e) {
@@ -1247,6 +1254,7 @@
             notes:        document.getElementById('f_notes').value.trim(),
             userId:       currentUser.uid,
             userEmail:    currentUser.email,
+            userName:     currentUser.displayName || currentUser.email.split('@')[0],
             added:        editingId ? (configs.find(x => x.id === editingId)||{}).added || Date.now() : Date.now()
         };
 
@@ -1346,7 +1354,7 @@
             const actions = canEdit(c)
                 ? `<button class="action-btn" onclick="openModal('${c.id}')">✏️</button>
                    <button class="action-btn delete" onclick="deleteConfig('${c.id}')">🗑️</button>`
-                : `<span style="font-size:11px;color:var(--text-muted);">by ${(c.userEmail||'').split('@')[0]}</span>`;
+                : `<span style="font-size:11px;color:var(--text-muted);">by ${c.userName || (c.userEmail||'').split('@')[0]}</span>`;
             return `<tr class="row-animate" style="animation-delay:${i*0.03}s">
                 <td><strong>${c.asset}</strong></td>
                 <td><span class="badge badge-tf">${c.timeframe||'—'}</span></td>
