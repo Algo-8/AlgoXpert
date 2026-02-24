@@ -724,6 +724,8 @@
                         <option value="sharpe">Sharpe ↓</option>
                         <option value="asset">Asset A→Z</option>
                     </select>
+                    <input class="filter-select" type="date" id="filterDateFrom" onchange="setFilter('date_from', this.value)" title="Backtest start">
+                    <input class="filter-select" type="date" id="filterDateTo" onchange="setFilter('date_to', this.value)" title="Backtest end">
                 </div>
                 <div style="overflow-x: auto;">
                     <table id="configTable">
@@ -742,6 +744,7 @@
                                 <th>Sharpe</th>
                                 <th>Max DD</th>
                                 <th>Trades</th>
+                                <th>Period</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -940,8 +943,12 @@
                     <input class="form-input" type="number" id="f_trades" placeholder="e.g. 48" min="0">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Period Tested</label>
-                    <input class="form-input" type="text" id="f_period" placeholder="e.g. Jan–Dec 2024">
+                    <label class="form-label">Period Start</label>
+                    <input class="form-input" type="date" id="f_period_start">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Period End</label>
+                    <input class="form-input" type="date" id="f_period_end">
                 </div>
                 <div class="form-group">
                     <label class="form-label">Notes</label>
@@ -980,7 +987,7 @@
             if (!c) return;
             document.getElementById('modalTitle').innerHTML = 'Edit <span>Configuration</span>';
             document.getElementById('modalSubtitle').textContent = 'Update parameters and results for this configuration.';
-            const fields = ['asset','timeframe','signal_type','sensitivity','sl','tp_level','risk_mode','bt_mode','win_rate','return_pct','pf','sharpe','dd','trades','period','notes'];
+            const fields = ['asset','timeframe','signal_type','sensitivity','sl','tp_level','risk_mode','bt_mode','win_rate','return_pct','pf','sharpe','dd','trades','period_start','period_end','notes'];
             const map = { return_pct: 'f_return', win_rate: 'f_win_rate' };
             fields.forEach(k => {
                 const id2 = map[k] || 'f_' + k;
@@ -1028,7 +1035,8 @@
             sharpe: parseFloat(document.getElementById('f_sharpe').value) || null,
             dd: parseFloat(document.getElementById('f_dd').value) || null,
             trades: parseInt(document.getElementById('f_trades').value) || null,
-            period: document.getElementById('f_period').value.trim(),
+            period_start: document.getElementById('f_period_start').value,
+            period_end: document.getElementById('f_period_end').value,
             notes: document.getElementById('f_notes').value.trim(),
             added: editingId ? (configs.find(x => x.id === editingId) || {}).added || Date.now() : Date.now()
         };
@@ -1063,6 +1071,8 @@
         }
         if (filters.signal_type) list = list.filter(c => c.signal_type === filters.signal_type);
         if (filters.risk_mode) list = list.filter(c => c.risk_mode === filters.risk_mode);
+        if (filters.date_from) list = list.filter(c => !c.period_start || c.period_start >= filters.date_from);
+        if (filters.date_to) list = list.filter(c => !c.period_end || c.period_end <= filters.date_to);
         if (sortKey === 'win_rate') list.sort((a,b) => b.win_rate - a.win_rate);
         else if (sortKey === 'return_pct') list.sort((a,b) => b.return_pct - a.return_pct);
         else if (sortKey === 'pf') list.sort((a,b) => (b.pf||0)-(a.pf||0));
@@ -1105,6 +1115,7 @@
                 <td class="${shCls}">${c.sharpe!=null?c.sharpe.toFixed(2):'—'}</td>
                 <td class="${ddCls}">${c.dd!=null?c.dd.toFixed(1)+'%':'—'}</td>
                 <td class="val-neutral">${c.trades??'—'}</td>
+                <td style="font-size:11px;color:var(--text-muted);white-space:nowrap">${c.period_start||'—'}${c.period_end?' → '+c.period_end:''}</td>
                 <td><div class="row-actions">
                     <button class="action-btn" onclick="openModal('${c.id}')">✏️</button>
                     <button class="action-btn delete" onclick="deleteConfig('${c.id}')">🗑️</button>
