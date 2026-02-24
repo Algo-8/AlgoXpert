@@ -1178,7 +1178,8 @@
                     <span class="param-chip"><span class="lbl">TP</span>${c.tp_level||'—'}</span>
                     <span class="param-chip"><span class="lbl">Risk</span>${c.risk_mode||'—'}</span>
                 </div>
-                ${c.notes?`<div style="margin-top:10px;font-size:12px;color:var(--text-muted);font-style:italic;">${c.notes}</div>`:''}
+                ${(c.period_start||c.period_end)?`<div style="margin-top:10px;font-size:12px;color:var(--text-muted);">📅 ${c.period_start||'?'} → ${c.period_end||'?'} <span style="color:var(--orange);font-weight:700;">(${calcDuration(c.period_start,c.period_end)})</span></div>`:''}
+                ${c.notes?`<div style="margin-top:6px;font-size:12px;color:var(--text-muted);font-style:italic;">${c.notes}</div>`:''}
             </div>`;
         }).join('');
     }
@@ -1281,7 +1282,19 @@
         saveData();
     }
 
+    function calcDuration(start, end) {
+        if (!start || !end) return '—';
+        const s = new Date(start);
+        const e = new Date(end);
+        const months = (e.getFullYear() - s.getFullYear()) * 12 + (e.getMonth() - s.getMonth());
+        if (months < 1) return Math.round((e - s) / (1000*60*60*24)) + ' days';
+        if (months < 12) return months + ' month' + (months > 1 ? 's' : '');
+        const years = Math.floor(months / 12);
+        const rem = months % 12;
+        return years + 'y' + (rem ? ' ' + rem + 'm' : '');
+    }
     renderAll();
+    
 
     document.getElementById('modal').addEventListener('click', e => { if (e.target === document.getElementById('modal')) closeModal(); });
     </script>
