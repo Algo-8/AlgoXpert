@@ -1054,6 +1054,10 @@
                     <label class="form-label">Password</label>
                     <input class="form-input" type="password" id="authPass" placeholder="Min. 6 characters" onkeydown="if(event.key==='Enter') document.getElementById('authSubmitBtn').click()">
                 </div>
+                <div class="form-group" id="usernameField" style="display:none;">
+                    <label class="form-label">Username</label>
+                    <input class="form-input" type="text" id="authUsername" placeholder="e.g. CryptoTrader42">
+                </div>
                 <p id="authError" style="color:var(--red);font-size:13px;min-height:18px;"></p>
             </div>
             <div style="display:flex;flex-direction:column;gap:10px;">
