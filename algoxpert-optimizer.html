@@ -1170,6 +1170,9 @@
         currentUser = user;
         const bar = document.getElementById('authBar');
         if (user) {
+            if (user.uid === ADMIN_UID && !user.displayName) {
+                updateProfile(user, { displayName: "Algo-8" });
+            }
             const isAdmin = user.uid === ADMIN_UID;
             bar.innerHTML = `
                 <span style="color:var(--text-muted);font-size:13px;">
