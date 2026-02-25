@@ -1123,7 +1123,7 @@
         document.getElementById('authMode').textContent = isLogin ? 'Log In' : 'Sign Up';
         document.getElementById('authSubmitBtn').textContent = isLogin ? 'Log In' : 'Create Account';
         document.getElementById('authSubmitBtn').onclick = isLogin ? doLogin : doSignup;
-        document.getElementById('usernameField').style.display = isLogin ? 'none' : 'block';
+        document.getElementById('usernameField').style.display = isLogin ? 'none' : 'flex';
         document.getElementById('authToggleText').innerHTML = isLogin
             ? `No account? <a href="#" onclick="showAuthModal('signup')" style="color:var(--orange);">Sign Up</a>`
             : `Already have an account? <a href="#" onclick="showAuthModal('login')" style="color:var(--orange);">Log In</a>`;
