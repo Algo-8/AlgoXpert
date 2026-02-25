@@ -1045,7 +1045,7 @@
             <button class="modal-close" onclick="closeAuthModal()">✕</button>
             <h2 id="authMode" style="margin-bottom:6px;">Log In</h2>
             <p class="modal-subtitle">Access your AlgoXpert account to add and manage configurations.</p>
-            <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px;">
+            <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px;width:100%;">
                 <div class="form-group">
                     <label class="form-label">Email</label>
                     <input class="form-input" type="email" id="authEmail" placeholder="your@email.com">
@@ -1054,7 +1054,7 @@
                     <label class="form-label">Password</label>
                     <input class="form-input" type="password" id="authPass" placeholder="Min. 6 characters" onkeydown="if(event.key==='Enter') document.getElementById('authSubmitBtn').click()">
                 </div>
-                <div class="form-group" id="usernameField" style="display:none;">
+                <div class="form-group" id="usernameField" style="display:none;flex-direction:column;width:100%;">
                     <label class="form-label">Username</label>
                     <input class="form-input" type="text" id="authUsername" placeholder="e.g. CryptoTrader42">
                 </div>
@@ -1062,10 +1062,6 @@
             </div>
             <div style="display:flex;flex-direction:column;gap:10px;">
                 <button class="btn-save" id="authSubmitBtn" style="width:100%;">Log In</button>
-                <div class="form-group" id="usernameField" style="display:none;">
-                    <label class="form-label">Username</label>
-                    <input class="form-input" type="text" id="authUsername" placeholder="e.g. CryptoTrader42">
-                </div>
                 <p id="authToggleText" style="text-align:center;font-size:13px;color:var(--text-muted);">
                     No account? <a href="#" id="authToggleLink" style="color:var(--orange);">Sign Up</a>
                 </p>
