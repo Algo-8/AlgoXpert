@@ -158,6 +158,16 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(255, 126, 95, 0.4);
         }
+        #userInfo {
+            flex-shrink: 0;
+        }
+        
+        #userEmail {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
         /* Halloween Animations in Navbar */
         .christmas-particles {
             position: absolute;
@@ -1348,7 +1358,14 @@
             .key-features-section .feature-box:hover .text-content {
                 opacity: 1 !important;
             }
+            /* Masquer l'email sur mobile */
+            #userEmail {
+                display: none !important;
+            }
             
+            #userInfo {
+                gap: 0 !important;
+            }
             .key-features-section .feature-box:hover .image-content {
                 opacity: 0 !important;
                 pointer-events: none !important;
@@ -1526,9 +1543,9 @@
                 <button class="nav-auth-btn login-btn" onclick="showAuthModal('login')">Log In</button>
                 <button class="nav-auth-btn signup-btn" onclick="showAuthModal('signup')">Sign Up</button>
             </div>
-            <div id="userInfo" style="display: none; align-items: center; gap: 12px; margin-left: auto;">
+            <div id="userInfo" style="display: none; align-items: center; gap: 12px; margin-left: auto; white-space: nowrap;">
                 <span id="userEmail" style="color: #f5f5f5; font-size: 14px;"></span>
-                <button class="nav-auth-btn logout-btn" onclick="doLogout()">Log out</button>
+                <button class="nav-auth-btn logout-btn" onclick="doLogout()" style="white-space: nowrap;">Log out</button>
             </div>
         </div>
     </nav>
