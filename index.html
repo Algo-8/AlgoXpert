@@ -10,6 +10,8 @@
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
     <!-- AOS Animation CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
@@ -118,6 +120,38 @@
         }
 
         .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 126, 95, 0.4);
+        }
+        .nav-auth-btn {
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .login-btn {
+            background: transparent;
+            color: #ff7e5f;
+            border: 1px solid rgba(255, 126, 95, 0.3);
+        }
+        
+        .login-btn:hover {
+            background: rgba(255, 126, 95, 0.1);
+            border-color: rgba(255, 126, 95, 0.6);
+        }
+        
+        .signup-btn {
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 126, 95, 0.3);
+        }
+        
+        .signup-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(255, 126, 95, 0.4);
         }
@@ -1485,7 +1519,14 @@
                 <li><a href="#faq">FAQ</a></li>
                 <li><a href="algoxpert-optimizer.html">Optimizer</a></li>
             </ul>
-            <a href="#pricing" class="nav-cta">Get Started</a>
+            <div id="authButtons" style="display: flex; gap: 12px; align-items: center;">
+                <button class="nav-auth-btn login-btn" onclick="showAuthModal('login')">Log In</button>
+                <button class="nav-auth-btn signup-btn" onclick="showAuthModal('signup')">Sign Up</button>
+            </div>
+            <div id="userInfo" style="display: none; align-items: center; gap: 12px;">
+                <span id="userEmail" style="color: #f5f5f5; font-size: 14px;"></span>
+                <button class="nav-auth-btn" onclick="doLogout()">Log out</button>
+            </div>
         </div>
     </nav>
 
@@ -2526,6 +2567,113 @@
 
         // Initialize all functionality when DOM is loaded
         document.addEventListener("DOMContentLoaded", function() {
+            // ============ FIREBASE AUTH ============
+            const FIREBASE_CONFIG = {
+                apiKey: "AIzaSyDQPFfon12Uu-iH-3E8cQkFyvmekhDFkRI",
+                authDomain: "algoxpert-d9373.firebaseapp.com",
+                projectId: "algoxpert-d9373",
+                storageBucket: "algoxpert-d9373.firebasestorage.app",
+                messagingSenderId: "946055327704",
+                appId: "1:946055327704:web:ef521d2d7d2b14aad9ccad"
+            };
+    
+            firebase.initializeApp(FIREBASE_CONFIG);
+            const auth = firebase.auth();
+    
+            let authMode = 'login';
+    
+            window.showAuthModal = function(mode) {
+                authMode = mode || 'login';
+                const modal = document.getElementById('authModal');
+                const title = document.getElementById('authModeTitle');
+                const submitBtn = document.getElementById('authSubmitBtn');
+                const usernameField = document.getElementById('usernameField');
+                const toggleText = document.getElementById('authToggleText');
+                
+                title.textContent = authMode === 'login' ? 'Log In' : 'Sign Up';
+                submitBtn.textContent = authMode === 'login' ? 'Log In' : 'Create Account';
+                usernameField.style.display = authMode === 'login' ? 'none' : 'block';
+                toggleText.innerHTML = authMode === 'login'
+                    ? 'No account? <a href="#" onclick="toggleAuthMode(event)" style="color: #ff7e5f;">Sign Up</a>'
+                    : 'Already have an account? <a href="#" onclick="toggleAuthMode(event)" style="color: #ff7e5f;">Log In</a>';
+                
+                document.getElementById('authError').textContent = '';
+                document.getElementById('authEmail').value = '';
+                document.getElementById('authPass').value = '';
+                if (document.getElementById('authUsername')) document.getElementById('authUsername').value = '';
+                
+                modal.style.display = 'flex';
+            };
+    
+            window.closeAuthModal = function() {
+                document.getElementById('authModal').style.display = 'none';
+            };
+    
+            window.toggleAuthMode = function(e) {
+                e.preventDefault();
+                authMode = authMode === 'login' ? 'signup' : 'login';
+                showAuthModal(authMode);
+            };
+    
+            window.handleAuth = async function() {
+                const email = document.getElementById('authEmail').value.trim();
+                const pass = document.getElementById('authPass').value;
+                const errorEl = document.getElementById('authError');
+                
+                try {
+                    if (authMode === 'login') {
+                        await auth.signInWithEmailAndPassword(email, pass);
+                        closeAuthModal();
+                    } else {
+                        if (pass.length < 6) {
+                            errorEl.textContent = 'Password must be at least 6 characters.';
+                            return;
+                        }
+                        const username = document.getElementById('authUsername').value.trim() || 'Trader' + Math.floor(Math.random()*9999);
+                        const cred = await auth.createUserWithEmailAndPassword(email, pass);
+                        await cred.user.updateProfile({ displayName: username });
+                        closeAuthModal();
+                    }
+                } catch(e) {
+                    errorEl.textContent = e.code === 'auth/email-already-in-use' ? 'Email already in use.' 
+                        : e.code === 'auth/invalid-email' ? 'Invalid email address.'
+                        : e.code === 'auth/wrong-password' ? 'Invalid password.'
+                        : 'Error: ' + e.message;
+                }
+            };
+    
+            window.doLogout = function() {
+                auth.signOut();
+            };
+    
+            // Écouter les changements d'état d'authentification
+            auth.onAuthStateChanged(user => {
+                const authButtons = document.getElementById('authButtons');
+                const userInfo = document.getElementById('userInfo');
+                const userEmail = document.getElementById('userEmail');
+                
+                if (user) {
+                    authButtons.style.display = 'none';
+                    userInfo.style.display = 'flex';
+                    userEmail.textContent = user.email;
+                } else {
+                    authButtons.style.display = 'flex';
+                    userInfo.style.display = 'none';
+                }
+            });
+    
+            // Fermer le modal en cliquant à l'extérieur
+            document.getElementById('authModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('authModal')) {
+                    closeAuthModal();
+                }
+            });
+    
+            // Enter key support
+            document.getElementById('authPass').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') handleAuth();
+            });
+            // ============ FIN FIREBASE AUTH ============
             disableMobileAnimations();
             createParticles();
             initInteractiveParticles(); // Nouvelle animation pour Why Choose
@@ -2567,6 +2715,36 @@
             });
         }
     </script>
-
+    <!-- Auth Modal -->
+    <div class="modal-overlay" id="authModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: linear-gradient(145deg, #1e1e1e, #2c2c2c); border: 1px solid rgba(255, 126, 95, 0.2); border-radius: 20px; padding: 40px; width: 100%; max-width: 420px; position: relative;">
+            <button onclick="closeAuthModal()" style="position: absolute; top: 20px; right: 20px; background: #333; border: 1px solid rgba(255, 126, 95, 0.2); border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #ccc; font-size: 18px; transition: all 0.2s;">✕</button>
+            
+            <h2 id="authModeTitle" style="font-size: 28px; font-weight: 700; margin-bottom: 6px; color: #fff;">Log In</h2>
+            <p style="color: #888; font-size: 14px; margin-bottom: 30px;">Access your AlgoXpert account</p>
+            
+            <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
+                <div>
+                    <label style="display: block; font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Email</label>
+                    <input type="email" id="authEmail" placeholder="your@email.com" style="width: 100%; background: #333; border: 1px solid rgba(255, 126, 95, 0.2); border-radius: 10px; padding: 11px 14px; color: #f5f5f5; font-family: 'Poppins', sans-serif; font-size: 14px; outline: none;">
+                </div>
+                <div>
+                    <label style="display: block; font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Password</label>
+                    <input type="password" id="authPass" placeholder="Min. 6 characters" style="width: 100%; background: #333; border: 1px solid rgba(255, 126, 95, 0.2); border-radius: 10px; padding: 11px 14px; color: #f5f5f5; font-family: 'Poppins', sans-serif; font-size: 14px; outline: none;">
+                </div>
+                <div id="usernameField" style="display: none;">
+                    <label style="display: block; font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Username</label>
+                    <input type="text" id="authUsername" placeholder="e.g. CryptoTrader42" style="width: 100%; background: #333; border: 1px solid rgba(255, 126, 95, 0.2); border-radius: 10px; padding: 11px 14px; color: #f5f5f5; font-family: 'Poppins', sans-serif; font-size: 14px; outline: none;">
+                </div>
+                <p id="authError" style="color: #ff4757; font-size: 13px; min-height: 18px;"></p>
+            </div>
+            
+            <button id="authSubmitBtn" onclick="handleAuth()" style="width: 100%; background: linear-gradient(135deg, #ff7e5f, #feb47b); border: none; border-radius: 10px; padding: 14px; color: white; font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 126, 95, 0.3); margin-bottom: 10px;">Log In</button>
+            
+            <p id="authToggleText" style="text-align: center; font-size: 13px; color: #888;">
+                No account? <a href="#" id="authToggleLink" onclick="toggleAuthMode(event)" style="color: #ff7e5f; text-decoration: none;">Sign Up</a>
+            </p>
+        </div>
+    </div>
 </body>
 </html>
