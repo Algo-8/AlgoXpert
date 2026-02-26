@@ -1393,7 +1393,7 @@
             return;
         }
         tbody.innerHTML = list.map((c, i) => {
-            const wrC    = c.win_rate >= 60 ? 'var(--green)' : c.win_rate >= 50 ? 'var(--yellow)' : 'var(--red)';
+            const wrC    = c.win_rate >= 60 ? '#00a86b' : c.win_rate >= 50 ? 'var(--green)' : c.win_rate >= 35 ? 'var(--yellow)' : 'var(--red)';
             const retCls = c.return_pct >= 0 ? 'val-positive' : 'val-negative';
             const pfCls  = !c.pf ? 'val-neutral' : c.pf>=1.5 ? 'val-positive' : c.pf>=1 ? 'val-neutral' : 'val-negative';
             const shCls  = !c.sharpe ? 'val-neutral' : c.sharpe>=1 ? 'val-positive' : c.sharpe>=0 ? 'val-neutral' : 'val-negative';
@@ -1451,7 +1451,7 @@
         const sorted = Object.values(byAsset).sort((a,b) => score(b)-score(a));
         grid.innerHTML = sorted.map((c, i) => {
             const medal  = i===0?'🥇':i===1?'🥈':i===2?'🥉':`#${i+1}`;
-            const wrC    = c.win_rate>=60?'var(--green)':c.win_rate>=50?'var(--yellow)':'var(--red)';
+            const wrC = c.win_rate>=60?'#00a86b':c.win_rate>=50?'var(--green)':c.win_rate>=35?'var(--yellow)':'var(--red)';
             const retCls = c.return_pct>=0?'val-positive':'val-negative';
             const dur    = calcDuration(c.period_start, c.period_end);
             return `<div class="compare-card" style="animation:rowIn 0.3s ease ${i*0.05}s both;">
@@ -1492,7 +1492,7 @@
         if (!configs.length) { grid.innerHTML = `<div class="empty-state"><div class="empty-icon">⚔️</div><p>Add configurations first.</p></div>`; return; }
         grid.innerHTML = configs.map((c,i) => {
             const sel = selectedCompare.includes(c.id);
-            const wrC = c.win_rate>=60?'var(--green)':c.win_rate>=50?'var(--yellow)':'var(--red)';
+            const wrC = c.win_rate>=60?'#00a86b':c.win_rate>=50?'var(--green)':c.win_rate>=35?'var(--yellow)':'var(--red)';
             return `<div class="compare-card ${sel?'selected':''}" onclick="toggleCompare('${c.id}')" style="animation:rowIn 0.3s ease ${i*0.05}s both;">
                 <div class="compare-card-top">
                     <div>
