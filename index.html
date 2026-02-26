@@ -2966,16 +2966,23 @@
                 db.collection('subscriptions').doc(user.uid).get().then(doc => {
                     if (doc.exists) {
                         const sub = doc.data();
-                        document.getElementById('subPlan').textContent = sub.plan || 'No Plan';
-                        
-                        const status = sub.status || 'inactive';
-                        const statusEl = document.getElementById('subStatus');
-                        statusEl.textContent = status.toUpperCase();
-                        statusEl.className = 'status-badge status-' + status;
-                        
-                        const startDate = sub.startDate ? sub.startDate.toDate() : new Date();
                         const renewDate = sub.renewDate ? sub.renewDate.toDate() : new Date();
+                        const now = new Date();
                         
+                        // ✅ VÉRIFIER SI L'ABONNEMENT EST EXPIRÉ
+                        const isExpired = renewDate < now;
+                        const actualStatus = isExpired ? 'expired' : (sub.status || 'active');
+                        
+                        // Afficher le plan
+                        document.getElementById('subPlan').textContent = isExpired ? 'Expired' : (sub.plan || 'No Plan');
+                        
+                        // Afficher le statut
+                        const statusEl = document.getElementById('subStatus');
+                        statusEl.textContent = actualStatus.toUpperCase();
+                        statusEl.className = 'status-badge status-' + actualStatus;
+                        
+                        // Afficher les dates
+                        const startDate = sub.startDate ? sub.startDate.toDate() : new Date();
                         document.getElementById('subStart').textContent = startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
                         document.getElementById('subRenew').textContent = renewDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
                     } else {
