@@ -12,6 +12,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
     <!-- AOS Animation CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
@@ -2848,6 +2852,7 @@
     
             firebase.initializeApp(FIREBASE_CONFIG);
             const auth = firebase.auth();
+            const db = firebase.firestore();
     
             let authMode = 'login';
     
@@ -2957,13 +2962,31 @@
                 document.getElementById('profileNameFull').textContent = displayName;
                 document.getElementById('profileEmailFull').textContent = user.email;
                 
-                // TODO: Fetch subscription data from Firestore
-                // For now, show placeholder data
-                document.getElementById('subPlan').textContent = 'Monthly Plan';
-                document.getElementById('subStatus').textContent = 'Active';
-                document.getElementById('subStatus').className = 'status-badge status-active';
-                document.getElementById('subStart').textContent = 'Jan 15, 2025';
-                document.getElementById('subRenew').textContent = 'Feb 15, 2025';
+                // Fetch subscription data from Firestore
+                db.collection('subscriptions').doc(user.uid).get().then(doc => {
+                    if (doc.exists) {
+                        const sub = doc.data();
+                        document.getElementById('subPlan').textContent = sub.plan || 'No Plan';
+                        
+                        const status = sub.status || 'inactive';
+                        const statusEl = document.getElementById('subStatus');
+                        statusEl.textContent = status.toUpperCase();
+                        statusEl.className = 'status-badge status-' + status;
+                        
+                        const startDate = sub.startDate ? sub.startDate.toDate() : new Date();
+                        const renewDate = sub.renewDate ? sub.renewDate.toDate() : new Date();
+                        
+                        document.getElementById('subStart').textContent = startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                        document.getElementById('subRenew').textContent = renewDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                    } else {
+                        // No subscription found
+                        document.getElementById('subPlan').textContent = 'No Active Plan';
+                        document.getElementById('subStatus').textContent = 'INACTIVE';
+                        document.getElementById('subStatus').className = 'status-badge status-expired';
+                        document.getElementById('subStart').textContent = '—';
+                        document.getElementById('subRenew').textContent = '—';
+                    }
+                });
             } else {
                 authButtons.style.display = 'flex';
                 userInfo.style.display = 'none';
