@@ -690,6 +690,51 @@
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg2); }
         ::-webkit-scrollbar-thumb { background: rgba(255,126,95,0.3); border-radius: 3px; }
+        /* ASSET AUTOCOMPLETE */
+        .asset-autocomplete-wrapper { position: relative; }
+        .asset-dropdown {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0; right: 0;
+            background: var(--bg3);
+            border: 1px solid var(--border-bright);
+            border-radius: 10px;
+            max-height: 220px;
+            overflow-y: auto;
+            z-index: 9999;
+            display: none;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+        }
+        .asset-dropdown.open { display: block; }
+        .asset-option {
+            padding: 9px 14px;
+            cursor: pointer;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.15s;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .asset-option:last-child { border-bottom: none; }
+        .asset-option:hover, .asset-option.active { background: rgba(255,126,95,0.12); }
+        .asset-option .asset-ticker { font-weight: 700; font-family: 'Space Mono', monospace; color: var(--text); }
+        .asset-option .asset-name { font-size: 11px; color: var(--text-muted); }
+        .asset-option .asset-cat {
+            margin-left: auto;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 5px;
+            background: rgba(43,192,228,0.15);
+            color: var(--blue);
+            white-space: nowrap;
+        }
+        .asset-option .asset-cat.crypto { background: rgba(255,211,42,0.12); color: var(--yellow); }
+        .asset-option .asset-cat.forex  { background: rgba(0,229,160,0.12);  color: var(--green); }
+        .asset-option .asset-cat.stock  { background: rgba(255,126,95,0.12); color: var(--orange); }
+        .asset-option .asset-cat.index  { background: rgba(43,192,228,0.15); color: var(--blue); }
+        .asset-option .asset-cat.commodity { background: rgba(255,71,87,0.12); color: var(--red); }
 
         /* ROW ANIMATION */
         @keyframes rowIn {
@@ -925,9 +970,10 @@
 
             <div class="form-grid">
                 <div class="form-divider full">🗂 Asset & Timeframe</div>
-                <div class="form-group">
+                <div class="form-group asset-autocomplete-wrapper">
                     <label class="form-label">Asset / Ticker *</label>
-                    <input class="form-input" type="text" id="f_asset" placeholder="e.g. BTC/USDT, AAPL, EUR/USD">
+                    <input class="form-input" type="text" id="f_asset" placeholder="Tape BTC, ETH, AAPL..." autocomplete="off">
+                    <div class="asset-dropdown" id="assetDropdown"></div>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Timeframe *</label>
@@ -1528,6 +1574,265 @@
     // ─── CLOSE MODALS ON OVERLAY CLICK ────────────────────────
     document.getElementById('modal').addEventListener('click', e => { if (e.target === document.getElementById('modal')) closeModal(); });
     document.getElementById('authModal').addEventListener('click', e => { if (e.target === document.getElementById('authModal')) window.closeAuthModal(); });
+    // ─── ASSET AUTOCOMPLETE ────────────────────────────────────
+    const ASSETS = [
+        // ── CRYPTO ──
+        {t:'BTCUSDT',  n:'Bitcoin',          c:'crypto'},
+        {t:'ETHUSDT',  n:'Ethereum',         c:'crypto'},
+        {t:'SOLUSDT',  n:'Solana',           c:'crypto'},
+        {t:'BNBUSDT',  n:'BNB',              c:'crypto'},
+        {t:'XRPUSDT',  n:'Ripple',           c:'crypto'},
+        {t:'ADAUSDT',  n:'Cardano',          c:'crypto'},
+        {t:'DOGEUSDT', n:'Dogecoin',         c:'crypto'},
+        {t:'AVAXUSDT', n:'Avalanche',        c:'crypto'},
+        {t:'DOTUSDT',  n:'Polkadot',         c:'crypto'},
+        {t:'MATICUSDT',n:'Polygon',          c:'crypto'},
+        {t:'LINKUSDT', n:'Chainlink',        c:'crypto'},
+        {t:'LTCUSDT',  n:'Litecoin',         c:'crypto'},
+        {t:'UNIUSDT',  n:'Uniswap',          c:'crypto'},
+        {t:'ATOMUSDT', n:'Cosmos',           c:'crypto'},
+        {t:'ETCUSDT',  n:'Ethereum Classic', c:'crypto'},
+        {t:'XLMUSDT',  n:'Stellar',          c:'crypto'},
+        {t:'APTUSDT',  n:'Aptos',            c:'crypto'},
+        {t:'ARBUSDT',  n:'Arbitrum',         c:'crypto'},
+        {t:'OPUSDT',   n:'Optimism',         c:'crypto'},
+        {t:'INJUSDT',  n:'Injective',        c:'crypto'},
+        {t:'SUIUSDT',  n:'Sui',              c:'crypto'},
+        {t:'SEIUSDT',  n:'Sei',              c:'crypto'},
+        {t:'TIAUSDT',  n:'Celestia',         c:'crypto'},
+        {t:'WLDUSDT',  n:'Worldcoin',        c:'crypto'},
+        {t:'FETUSDT',  n:'Fetch.ai',         c:'crypto'},
+        {t:'RENDERUSDT',n:'Render',          c:'crypto'},
+        {t:'NEARUSDT', n:'NEAR Protocol',    c:'crypto'},
+        {t:'FILUSDT',  n:'Filecoin',         c:'crypto'},
+        {t:'AAVEUSDT', n:'Aave',             c:'crypto'},
+        {t:'SHIBUSDT', n:'Shiba Inu',        c:'crypto'},
+        {t:'PEPEUSDT', n:'Pepe',             c:'crypto'},
+        {t:'FLOKIUSDT',n:'Floki',            c:'crypto'},
+        {t:'TRXUSDT',  n:'Tron',             c:'crypto'},
+        {t:'TONUSDT',  n:'Toncoin',          c:'crypto'},
+        {t:'HBARUSDT', n:'Hedera',           c:'crypto'},
+        {t:'ALGOUSDT', n:'Algorand',         c:'crypto'},
+        {t:'ICPUSDT',  n:'Internet Computer',c:'crypto'},
+        {t:'VETUSDT',  n:'VeChain',          c:'crypto'},
+        {t:'SANDUSDT', n:'The Sandbox',      c:'crypto'},
+        {t:'MANAUSDT', n:'Decentraland',     c:'crypto'},
+        {t:'AXSUSDT',  n:'Axie Infinity',    c:'crypto'},
+        {t:'GRTUSDT',  n:'The Graph',        c:'crypto'},
+        {t:'MKRUSDT',  n:'Maker',            c:'crypto'},
+        {t:'SNXUSDT',  n:'Synthetix',        c:'crypto'},
+        {t:'CRVUSDT',  n:'Curve',            c:'crypto'},
+        {t:'LDOUSDT',  n:'Lido DAO',         c:'crypto'},
+        {t:'STXUSDT',  n:'Stacks',           c:'crypto'},
+        {t:'RNDRUSDT', n:'Render Token',     c:'crypto'},
+        {t:'DYDXUSDT', n:'dYdX',             c:'crypto'},
+        {t:'GMXUSDT',  n:'GMX',              c:'crypto'},
+        {t:'RUNEUSDT', n:'THORChain',        c:'crypto'},
+        {t:'KSMUSDT',  n:'Kusama',           c:'crypto'},
+        {t:'XTZUSDT',  n:'Tezos',            c:'crypto'},
+        {t:'EGLDUSDT', n:'MultiversX',       c:'crypto'},
+        {t:'FLOWUSDT', n:'Flow',             c:'crypto'},
+        {t:'ZILUSDT',  n:'Zilliqa',          c:'crypto'},
+        {t:'ENJUSDT',  n:'Enjin Coin',       c:'crypto'},
+        {t:'CHZUSDT',  n:'Chiliz',           c:'crypto'},
+        {t:'GALAUSDT', n:'Gala',             c:'crypto'},
+        {t:'IMXUSDT',  n:'Immutable X',      c:'crypto'},
+        {t:'LRCUSDT',  n:'Loopring',         c:'crypto'},
+        {t:'1INCHUSDT',n:'1inch',            c:'crypto'},
+        {t:'COMPUSDT', n:'Compound',         c:'crypto'},
+        {t:'YFIUSDT',  n:'Yearn Finance',    c:'crypto'},
+        {t:'SUSHIUSDT',n:'SushiSwap',        c:'crypto'},
+        {t:'CAKEUSDT', n:'PancakeSwap',      c:'crypto'},
+        {t:'APEUSDT',  n:'ApeCoin',          c:'crypto'},
+        {t:'CFXUSDT',  n:'Conflux',          c:'crypto'},
+        {t:'QNTUSDT',  n:'Quant',            c:'crypto'},
+        {t:'TUSDT',    n:'Threshold',        c:'crypto'},
+        {t:'WOOUSDT',  n:'WOO Network',      c:'crypto'},
+        {t:'BLUETUSDT',n:'BlueTech',         c:'crypto'},
+        {t:'BTCEUR',   n:'Bitcoin / EUR',    c:'crypto'},
+        {t:'ETHBTC',   n:'Ethereum / BTC',   c:'crypto'},
+        {t:'SOLUSDT.P',n:'Solana Perp',      c:'crypto'},
+        // ── FOREX ──
+        {t:'EURUSD',   n:'Euro / US Dollar',          c:'forex'},
+        {t:'GBPUSD',   n:'Pound / US Dollar',         c:'forex'},
+        {t:'USDJPY',   n:'US Dollar / Yen',           c:'forex'},
+        {t:'USDCHF',   n:'US Dollar / Franc',         c:'forex'},
+        {t:'AUDUSD',   n:'Australian Dollar / USD',   c:'forex'},
+        {t:'USDCAD',   n:'US Dollar / Canadian',      c:'forex'},
+        {t:'NZDUSD',   n:'New Zealand Dollar / USD',  c:'forex'},
+        {t:'EURGBP',   n:'Euro / Pound',              c:'forex'},
+        {t:'EURJPY',   n:'Euro / Yen',                c:'forex'},
+        {t:'GBPJPY',   n:'Pound / Yen',               c:'forex'},
+        {t:'AUDJPY',   n:'AUD / Yen',                 c:'forex'},
+        {t:'CADJPY',   n:'CAD / Yen',                 c:'forex'},
+        {t:'CHFJPY',   n:'CHF / Yen',                 c:'forex'},
+        {t:'EURCHF',   n:'Euro / Franc',              c:'forex'},
+        {t:'GBPAUD',   n:'Pound / AUD',               c:'forex'},
+        {t:'GBPCAD',   n:'Pound / CAD',               c:'forex'},
+        {t:'AUDCAD',   n:'AUD / CAD',                 c:'forex'},
+        {t:'AUDNZD',   n:'AUD / NZD',                 c:'forex'},
+        {t:'USDMXN',   n:'USD / Mexican Peso',        c:'forex'},
+        {t:'USDZAR',   n:'USD / South African Rand',  c:'forex'},
+        {t:'USDTRY',   n:'USD / Turkish Lira',        c:'forex'},
+        {t:'USDSEK',   n:'USD / Swedish Krona',       c:'forex'},
+        {t:'USDNOK',   n:'USD / Norwegian Krone',     c:'forex'},
+        {t:'USDDKK',   n:'USD / Danish Krone',        c:'forex'},
+        {t:'USDSGD',   n:'USD / Singapore Dollar',    c:'forex'},
+        {t:'USDHKD',   n:'USD / Hong Kong Dollar',    c:'forex'},
+        {t:'USDCNH',   n:'USD / Chinese Yuan',        c:'forex'},
+        {t:'XAUUSD',   n:'Gold / USD',                c:'commodity'},
+        {t:'XAGUSD',   n:'Silver / USD',              c:'commodity'},
+        {t:'XPTUSD',   n:'Platinum / USD',            c:'commodity'},
+        // ── INDICES ──
+        {t:'SPX',      n:'S&P 500',                   c:'index'},
+        {t:'SPY',      n:'S&P 500 ETF',               c:'index'},
+        {t:'QQQ',      n:'Nasdaq 100 ETF',            c:'index'},
+        {t:'NDX',      n:'Nasdaq 100',                c:'index'},
+        {t:'DJI',      n:'Dow Jones',                 c:'index'},
+        {t:'DIA',      n:'Dow Jones ETF',             c:'index'},
+        {t:'RUT',      n:'Russell 2000',              c:'index'},
+        {t:'IWM',      n:'Russell 2000 ETF',          c:'index'},
+        {t:'VIX',      n:'Volatility Index',          c:'index'},
+        {t:'DAX',      n:'Germany 40',                c:'index'},
+        {t:'CAC40',    n:'France 40',                 c:'index'},
+        {t:'FTSE100',  n:'UK 100',                    c:'index'},
+        {t:'NI225',    n:'Nikkei 225',                c:'index'},
+        {t:'HSI',      n:'Hang Seng',                 c:'index'},
+        {t:'ASX200',   n:'Australia 200',             c:'index'},
+        {t:'ES1!',     n:'S&P 500 Futures',           c:'index'},
+        {t:'NQ1!',     n:'Nasdaq Futures',            c:'index'},
+        {t:'YM1!',     n:'Dow Futures',               c:'index'},
+        // ── COMMODITIES ──
+        {t:'USOIL',    n:'US Crude Oil (WTI)',        c:'commodity'},
+        {t:'UKOIL',    n:'Brent Crude Oil',           c:'commodity'},
+        {t:'NGAS',     n:'Natural Gas',               c:'commodity'},
+        {t:'CORN',     n:'Corn',                      c:'commodity'},
+        {t:'WHEAT',    n:'Wheat',                     c:'commodity'},
+        {t:'SOYBN',    n:'Soybeans',                  c:'commodity'},
+        {t:'COPPER',   n:'Copper',                    c:'commodity'},
+        {t:'CL1!',     n:'Crude Oil Futures',         c:'commodity'},
+        {t:'GC1!',     n:'Gold Futures',              c:'commodity'},
+        {t:'SI1!',     n:'Silver Futures',            c:'commodity'},
+        // ── STOCKS US ──
+        {t:'AAPL',     n:'Apple',                     c:'stock'},
+        {t:'MSFT',     n:'Microsoft',                 c:'stock'},
+        {t:'NVDA',     n:'NVIDIA',                    c:'stock'},
+        {t:'GOOGL',    n:'Alphabet (Google)',          c:'stock'},
+        {t:'AMZN',     n:'Amazon',                    c:'stock'},
+        {t:'META',     n:'Meta Platforms',            c:'stock'},
+        {t:'TSLA',     n:'Tesla',                     c:'stock'},
+        {t:'NFLX',     n:'Netflix',                   c:'stock'},
+        {t:'AMD',      n:'AMD',                       c:'stock'},
+        {t:'INTC',     n:'Intel',                     c:'stock'},
+        {t:'CRM',      n:'Salesforce',                c:'stock'},
+        {t:'ORCL',     n:'Oracle',                    c:'stock'},
+        {t:'ADBE',     n:'Adobe',                     c:'stock'},
+        {t:'PYPL',     n:'PayPal',                    c:'stock'},
+        {t:'SQ',       n:'Block (Square)',            c:'stock'},
+        {t:'SHOP',     n:'Shopify',                   c:'stock'},
+        {t:'UBER',     n:'Uber',                      c:'stock'},
+        {t:'LYFT',     n:'Lyft',                      c:'stock'},
+        {t:'COIN',     n:'Coinbase',                  c:'stock'},
+        {t:'MSTR',     n:'MicroStrategy',             c:'stock'},
+        {t:'MARA',     n:'Marathon Digital',          c:'stock'},
+        {t:'RIOT',     n:'Riot Platforms',            c:'stock'},
+        {t:'BA',       n:'Boeing',                    c:'stock'},
+        {t:'JPM',      n:'JPMorgan Chase',            c:'stock'},
+        {t:'GS',       n:'Goldman Sachs',             c:'stock'},
+        {t:'BAC',      n:'Bank of America',           c:'stock'},
+        {t:'V',        n:'Visa',                      c:'stock'},
+        {t:'MA',       n:'Mastercard',                c:'stock'},
+        {t:'DIS',      n:'Disney',                    c:'stock'},
+        {t:'WMT',      n:'Walmart',                   c:'stock'},
+        {t:'KO',       n:'Coca-Cola',                 c:'stock'},
+        {t:'PEP',      n:'PepsiCo',                   c:'stock'},
+        {t:'MCD',      n:'McDonald\'s',               c:'stock'},
+        {t:'PFE',      n:'Pfizer',                    c:'stock'},
+        {t:'JNJ',      n:'Johnson & Johnson',         c:'stock'},
+        {t:'XOM',      n:'ExxonMobil',                c:'stock'},
+        {t:'CVX',      n:'Chevron',                   c:'stock'},
+        {t:'PLTR',     n:'Palantir',                  c:'stock'},
+        {t:'RBLX',     n:'Roblox',                    c:'stock'},
+        {t:'SNAP',     n:'Snap',                      c:'stock'},
+        {t:'TWTR',     n:'Twitter/X',                 c:'stock'},
+        {t:'HOOD',     n:'Robinhood',                 c:'stock'},
+        {t:'AI',       n:'C3.ai',                     c:'stock'},
+        {t:'SMCI',     n:'Super Micro Computer',      c:'stock'},
+        {t:'ARM',      n:'ARM Holdings',              c:'stock'},
+        {t:'AVGO',     n:'Broadcom',                  c:'stock'},
+        {t:'QCOM',     n:'Qualcomm',                  c:'stock'},
+        {t:'MU',       n:'Micron Technology',         c:'stock'},
+        {t:'TSM',      n:'TSMC',                      c:'stock'},
+        {t:'BABA',     n:'Alibaba',                   c:'stock'},
+        {t:'JD',       n:'JD.com',                    c:'stock'},
+        {t:'NIO',      n:'NIO',                       c:'stock'},
+        {t:'XPEV',     n:'XPeng',                     c:'stock'},
+        {t:'RIVN',     n:'Rivian',                    c:'stock'},
+        {t:'LCID',     n:'Lucid Motors',              c:'stock'},
+        {t:'GME',      n:'GameStop',                  c:'stock'},
+        {t:'AMC',      n:'AMC Entertainment',         c:'stock'},
+        {t:'BB',       n:'BlackBerry',                c:'stock'},
+        // ── STOCKS EU / autres ──
+        {t:'ASML',     n:'ASML Holding',              c:'stock'},
+        {t:'SAP',      n:'SAP SE',                    c:'stock'},
+        {t:'LVMH',     n:'LVMH',                      c:'stock'},
+        {t:'TTE',      n:'TotalEnergies',             c:'stock'},
+        {t:'SAN',      n:'Banco Santander',           c:'stock'},
+    ];
+    
+    let acIndex = -1;
+    
+    const assetInput    = document.getElementById('f_asset');
+    const assetDropdown = document.getElementById('assetDropdown');
+    
+    function showAssetDropdown(query) {
+        const q = query.trim().toUpperCase();
+        if (!q) { assetDropdown.classList.remove('open'); return; }
+        const matches = ASSETS.filter(a =>
+            a.t.includes(q) || a.n.toUpperCase().includes(q)
+        ).slice(0, 10);
+        if (!matches.length) { assetDropdown.classList.remove('open'); return; }
+        acIndex = -1;
+        assetDropdown.innerHTML = matches.map((a, i) =>
+            `<div class="asset-option" data-ticker="${a.t}" data-i="${i}">
+                <span class="asset-ticker">${a.t}</span>
+                <span class="asset-name">${a.n}</span>
+                <span class="asset-cat ${a.c}">${a.c.toUpperCase()}</span>
+            </div>`
+        ).join('');
+        assetDropdown.classList.add('open');
+        assetDropdown.querySelectorAll('.asset-option').forEach(el => {
+            el.addEventListener('mousedown', e => {
+                e.preventDefault();
+                assetInput.value = el.dataset.ticker;
+                assetDropdown.classList.remove('open');
+            });
+        });
+    }
+    
+    assetInput.addEventListener('input',  e => showAssetDropdown(e.target.value));
+    assetInput.addEventListener('focus',  e => showAssetDropdown(e.target.value));
+    assetInput.addEventListener('blur',   () => setTimeout(() => assetDropdown.classList.remove('open'), 150));
+    assetInput.addEventListener('keydown', e => {
+        const opts = assetDropdown.querySelectorAll('.asset-option');
+        if (!opts.length) return;
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            acIndex = Math.min(acIndex + 1, opts.length - 1);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            acIndex = Math.max(acIndex - 1, 0);
+        } else if (e.key === 'Enter' && acIndex >= 0) {
+            e.preventDefault();
+            assetInput.value = opts[acIndex].dataset.ticker;
+            assetDropdown.classList.remove('open');
+            return;
+        } else if (e.key === 'Escape') {
+            assetDropdown.classList.remove('open'); return;
+        } else return;
+        opts.forEach((o, i) => o.classList.toggle('active', i === acIndex));
+        opts[acIndex]?.scrollIntoView({ block: 'nearest' });
+    });
 
     </script>
 </body>
