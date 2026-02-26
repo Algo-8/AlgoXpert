@@ -4,80 +4,301 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AlgoXpert - Confirmation</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="AlgoXpert Logo.png">
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
-      padding: 0;
-      background: #1a1a1a;
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
       color: #f5f5f5;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      text-align: center;
+      min-height: 100vh;
+      padding: 20px;
     }
     .container {
-      background-color: #2c2c2c;
+      background: linear-gradient(145deg, #1e1e1e, #2c2c2c);
       padding: 40px 30px;
-      border-radius: 16px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      border-radius: 20px;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+      text-align: center;
       max-width: 500px;
-      width: 90%;
+      width: 100%;
+      border: 1px solid rgba(255, 126, 95, 0.2);
     }
     h1 {
-      color: #ff7e47;
-      margin-bottom: 20px;
+      font-size: 32px;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #ff7e5f, #feb47b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
     p {
-      margin-bottom: 20px;
       font-size: 16px;
       color: #ccc;
+      margin-bottom: 20px;
+      line-height: 1.6;
     }
-    button {
+    .step {
+      display: none;
+    }
+    .step.active {
+      display: block;
+    }
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin: 20px 0;
+    }
+    .form-group {
+      text-align: left;
+    }
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .form-input {
       width: 100%;
-      padding: 12px;
-      margin-top: 20px;
-      background: #ff7e47;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      color: #fff;
-      cursor: pointer;
+      background: #333;
+      border: 1px solid rgba(255, 126, 95, 0.2);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: #f5f5f5;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      outline: none;
     }
-    button:hover {
-      background: #ff9a6c;
+    .form-input:focus {
+      border-color: #ff7e5f;
+    }
+    .btn {
+      width: 100%;
+      background: linear-gradient(135deg, #ff7e5f, #feb47b);
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 126, 95, 0.3);
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 126, 95, 0.4);
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(255, 126, 95, 0.3);
+      color: #ff7e5f;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 126, 95, 0.1);
+    }
+    .error {
+      color: #ff4757;
+      font-size: 13px;
+      margin-top: 10px;
+    }
+    .success-icon {
+      font-size: 64px;
+      margin-bottom: 20px;
+      animation: bounce 1s ease;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    .toggle-text {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #888;
+    }
+    .toggle-link {
+      color: #ff7e5f;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .toggle-link:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-
 <div class="container">
-  <h1>Almost Done!</h1>
-  <p>We have received your payment. Please click the button below to complete your confirmation:</p>
-  <button id="confirmButton">Confirm my TradingView username</button>
+  <!-- STEP 1: Authentication -->
+  <div id="step1" class="step active">
+    <h1>Almost Done! 🎉</h1>
+    <p>Please log in or create an account to activate your subscription:</p>
+    
+    <div class="auth-form">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" id="authEmail" class="form-input" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" id="authPass" class="form-input" placeholder="Min. 6 characters">
+      </div>
+      <div id="usernameField" class="form-group" style="display: none;">
+        <label class="form-label">Username (optional)</label>
+        <input type="text" id="authUsername" class="form-input" placeholder="e.g. CryptoTrader42">
+      </div>
+      <p id="authError" class="error"></p>
+      <button id="authBtn" class="btn" onclick="handleAuth()">Log In</button>
+    </div>
+    
+    <p class="toggle-text">
+      <span id="togglePrompt">No account?</span>
+      <a class="toggle-link" onclick="toggleAuthMode()"><span id="toggleLink">Sign Up</span></a>
+    </p>
+  </div>
+
+  <!-- STEP 2: Confirmation -->
+  <div id="step2" class="step">
+    <div class="success-icon">✅</div>
+    <h1>Subscription Activated!</h1>
+    <p>Your AlgoXpert subscription is now active. Click below to confirm your TradingView username:</p>
+    <button class="btn" onclick="goToTally()">Confirm TradingView Username</button>
+    <button class="btn btn-secondary" style="margin-top: 10px;" onclick="window.location.href='index.html'">Go to Homepage</button>
+  </div>
 </div>
 
 <script>
-  // Récupérer sub_id et plan depuis l'URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const subId = urlParams.get('sub_id');
-  const plan = urlParams.get('plan');
+const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyDQPFfon12Uu-iH-3E8cQkFyvmekhDFkRI",
+    authDomain: "algoxpert-d9373.firebaseapp.com",
+    projectId: "algoxpert-d9373",
+    storageBucket: "algoxpert-d9373.firebasestorage.app",
+    messagingSenderId: "946055327704",
+    appId: "1:946055327704:web:ef521d2d7d2b14aad9ccad"
+};
 
-  document.getElementById('confirmButton').addEventListener('click', function() {
-    let url = "https://tally.so/r/wbg600"; // Ton lien Tally
+firebase.initializeApp(FIREBASE_CONFIG);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+// Get params from URL
+const urlParams = new URLSearchParams(window.location.search);
+const subId = urlParams.get('sub_id');
+const planParam = urlParams.get('plan');
+
+let authMode = 'login';
+
+function toggleAuthMode() {
+    authMode = authMode === 'login' ? 'signup' : 'login';
+    document.getElementById('authBtn').textContent = authMode === 'login' ? 'Log In' : 'Create Account';
+    document.getElementById('usernameField').style.display = authMode === 'login' ? 'none' : 'block';
+    document.getElementById('togglePrompt').textContent = authMode === 'login' ? 'No account?' : 'Already have an account?';
+    document.getElementById('toggleLink').textContent = authMode === 'login' ? 'Sign Up' : 'Log In';
+    document.getElementById('authError').textContent = '';
+}
+
+async function handleAuth() {
+    const email = document.getElementById('authEmail').value.trim();
+    const pass = document.getElementById('authPass').value;
+    const errorEl = document.getElementById('authError');
+    
+    if (!email || !pass) {
+        errorEl.textContent = 'Please fill in all fields.';
+        return;
+    }
+    
+    try {
+        let user;
+        if (authMode === 'login') {
+            const cred = await auth.signInWithEmailAndPassword(email, pass);
+            user = cred.user;
+        } else {
+            if (pass.length < 6) {
+                errorEl.textContent = 'Password must be at least 6 characters.';
+                return;
+            }
+            const username = document.getElementById('authUsername').value.trim() || 'Trader' + Math.floor(Math.random()*9999);
+            const cred = await auth.createUserWithEmailAndPassword(email, pass);
+            user = cred.user;
+            await user.updateProfile({ displayName: username });
+        }
+        
+        // Save subscription to Firestore
+        await saveSubscription(user.uid, user.email);
+        
+        // Show step 2
+        document.getElementById('step1').classList.remove('active');
+        document.getElementById('step2').classList.add('active');
+        
+    } catch(e) {
+        errorEl.textContent = e.code === 'auth/email-already-in-use' ? 'Email already in use.' 
+            : e.code === 'auth/invalid-email' ? 'Invalid email address.'
+            : e.code === 'auth/wrong-password' ? 'Invalid password.'
+            : 'Error: ' + e.message;
+    }
+}
+
+async function saveSubscription(userId, userEmail) {
+    // Parse plan
+    let planType, price;
+    if (planParam === '29.99_mois') {
+        planType = 'Monthly Plan';
+        price = 29.99;
+    } else if (planParam === '299.99_an') {
+        planType = 'Annual Plan';
+        price = 299.99;
+    } else {
+        planType = 'Free Trial';
+        price = 0;
+    }
+    
+    const now = new Date();
+    const renewDate = new Date(now);
+    
+    // Calculate renew date
+    if (planParam === '29.99_mois') {
+        renewDate.setMonth(renewDate.getMonth() + 1);
+    } else if (planParam === '299.99_an') {
+        renewDate.setFullYear(renewDate.getFullYear() + 1);
+    } else {
+        renewDate.setDate(renewDate.getDate() + 7); // 7 days trial
+    }
+    
+    // Save to Firestore
+    await db.collection('subscriptions').doc(userId).set({
+        userId: userId,
+        userEmail: userEmail,
+        subscriptionId: subId || 'manual_' + Date.now(),
+        plan: planType,
+        price: price,
+        status: 'active',
+        startDate: firebase.firestore.Timestamp.fromDate(now),
+        renewDate: firebase.firestore.Timestamp.fromDate(renewDate),
+        createdAt: firebase.firestore.Timestamp.fromDate(now),
+        updatedAt: firebase.firestore.Timestamp.fromDate(now)
+    });
+}
+
+function goToTally() {
+    let url = "https://tally.so/r/wbg600";
     let queryParams = [];
     if (subId) queryParams.push("sub_id=" + encodeURIComponent(subId));
-    if (plan) queryParams.push("plan=" + encodeURIComponent(plan));
+    if (planParam) queryParams.push("plan=" + encodeURIComponent(planParam));
     if (queryParams.length > 0) {
-      url += "?" + queryParams.join("&");
+        url += "?" + queryParams.join("&");
     }
     window.location.href = url;
-  });
+}
 </script>
-
 </body>
 </html>
