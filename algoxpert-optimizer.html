@@ -1621,6 +1621,13 @@
 
     // ─── TAB SWITCH ────────────────────────────────────────────
     function switchTab(name, btn) {
+        // Bloquer les onglets protégés si non connecté
+        const protectedTabs = ['best', 'compare'];
+        if (!currentUser && protectedTabs.includes(name)) {
+            showToast('⚠️ Please log in to access this tab', 'error');
+            showAuthModal('signup');
+            return;
+        }
         document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById('tab-' + name).classList.add('active');
