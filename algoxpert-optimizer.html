@@ -685,7 +685,56 @@
             white-space: nowrap;
         }
         .period-badge .arrow { color: var(--orange); }
-
+        /* BLUR GATE */
+        .blur-gate {
+            position: relative;
+        }
+        .blur-gate .blur-overlay {
+            position: absolute;
+            inset: 0;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            background: rgba(10,10,10,0.55);
+            z-index: 10;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-align: center;
+            padding: 20px;
+        }
+        .blur-overlay-icon { font-size: 36px; }
+        .blur-overlay h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .blur-overlay p {
+            color: #aaa;
+            font-size: 14px;
+            max-width: 300px;
+            line-height: 1.5;
+        }
+        .blur-overlay-btn {
+            background: linear-gradient(135deg, var(--orange), var(--peach));
+            border: none;
+            border-radius: 10px;
+            padding: 12px 28px;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 4px;
+            box-shadow: 0 4px 15px rgba(255,126,95,0.4);
+            transition: all 0.3s;
+        }
+        .blur-overlay-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,126,95,0.5);
+        }
         /* SCROLLBAR */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg2); }
@@ -810,7 +859,19 @@
                 <button class="add-btn" onclick="openModal()">+ Add Config</button>
             </div>
 
-            <div class="table-wrapper">
+            <div class="table-wrapper blur-gate" id="tableGate">
+                <div class="blur-overlay" id="tableBlurOverlay" style="display:none;">
+                    <div class="blur-overlay-icon">🔒</div>
+                    <h3>Members Only</h3>
+                    <p>Create a free account to access all optimized configurations shared by the community.</p>
+                    <button class="blur-overlay-btn" onclick="showAuthModal('signup')">
+                        Sign Up for Free
+                    </button>
+                    <span style="font-size:12px;color:#666;">
+                        Already have an account?
+                        <a href="#" onclick="showAuthModal('login')" style="color:var(--orange);">Log In</a>
+                    </span>
+                </div>
                 <div class="table-top">
                     <input class="search-input" type="text" placeholder="🔍  Search asset, signal..." oninput="filterTable(this.value)">
                     <select class="filter-select" onchange="setFilter('signal_type', this.value)">
@@ -1214,6 +1275,9 @@
     // ─── AUTH STATE ────────────────────────────────────────────
     onAuthStateChanged(auth, user => {
         currentUser = user;
+        // Blur gate
+        const overlay = document.getElementById('tableBlurOverlay');
+        if (overlay) overlay.style.display = user ? 'none' : 'flex';
         const bar = document.getElementById('authBar');
         if (user) {
             if (user.uid === ADMIN_UID) {
